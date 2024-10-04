@@ -3,9 +3,11 @@ from tkinter import ttk
 from datetime import datetime
 import json, tkinter, string
 from tkinter import messagebox, simpledialog
+import cx_Oracle
 
 class dashBoard_student:
     def __init__(self, studentView,fullName,id):
+
         self.studentView = studentView
         self.fullName=fullName
         self.id=id
@@ -13,9 +15,17 @@ class dashBoard_student:
         self.lop = ""
         self.dob = ""
         self.address = ""
+
         self.studentView.geometry('925x530+300+200')
         self.studentView.title('Dashboard - Trang chủ học sinh')
         self.studentView.config(bg='white')
+
+        try:
+            self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
+        except cx_Oracle.DatabaseError as er:
+            print('There is an error in the Oracle database:',er)
+        self.cur = self.con.cursor()
+
         self.studentInfoView()
         self.refreshInfoView()
 
@@ -42,8 +52,6 @@ class dashBoard_student:
         self.tree.column("score",width=45,anchor='nw')
         self.tree.heading("time_completed",text='Thời gian hoàn thành')
         self.tree.place(x=230,y=280,width=635)
-        # data=self.load_student_result(r'data\Accounts.json')     
-        # self.insert(data)
         
         scrollx.place(x=230,y=505,width=635)
         scrollx.config(command=self.tree.xview)
@@ -77,7 +85,7 @@ class dashBoard_student:
         self.gdcdButton.place(x=10,y=430)
         
 
-    def select_subject(self, subject): # Yêu cầu nhập số đề
+    def select_subject(self, subject):
         filepath = f"data/{subject}.json"
         while True:
             self.soDe = simpledialog.askinteger("Chọn số đề", "Nhập số đề bạn muốn làm:", initialvalue=0) 
@@ -113,21 +121,20 @@ class dashBoard_student:
         
 #--------------------------------- KHỞI TẠO GIAO DIỆN CẬP NHẬT THÔNG TIN HỌC SINH
     def refreshInfoView(self):
-        filepath = r"data\Accounts.json"
-        try:
-            with open(filepath, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-        except FileNotFoundError:
-            data = []
+        self.cur.execute('select * from SinhVien')
+        data = self.cur.fetchall()
         for student in data:
-            if student.get("id") == self.id:
-                self.fullName = student.get("fullname", "")
-                self.gender = student.get("gender", "")
-                self.lop = student.get("class", "")
-                self.dob = student.get("dob", "")
-                self.address = student.get("address", "")
+            if student[0] == self.id:
+                print(student)
+                self.fullName = student[1]
+                if student[2] != None:
+                    self.dob = student[2].strftime('%d-%m-%Y')
+                else:
+                    self.dob = student[2]
+                self.gender = student[3]
+                self.address = student[4]
+                self.lop = student[5]
 
-                # Cập nhật lại các label
                 self.nameLabel.config(text=f"Họ và tên: {self.fullName}")
                 self.classLabel.config(text=f'Lớp: {self.lop}')
                 self.genderLabel.config(text=f'Giới tính: {self.gender}')
@@ -280,5 +287,5 @@ class dashBoard_student:
 
 if __name__ == "__main__":
     studentView = Tk()
-    obj = dashBoard_student(studentView,'Dinh Thi Ngoc Tram','2033225436')
+    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HV00001')
     studentView.mainloop()

@@ -18,11 +18,11 @@ class signin:
             con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
         except cx_Oracle.DatabaseError as er:
             print('There is an error in the Oracle database:',er)
+        cur = con.cursor()
 
         def signin():
             id=user.get()
             passWord=passw.get()
-            cur = con.cursor()
             cur.execute('select * from TAIKHOAN')
             data = cur.fetchall()
             try:
