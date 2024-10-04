@@ -1,8 +1,9 @@
 import cx_Oracle
+from datetime import datetime
 
 
 try:
-	con = cx_Oracle.connect('QLTracNghiem/123@localhost:1521/free')
+	con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
 
 except cx_Oracle.DatabaseError as er:
 	print('There is an error in the Oracle database:', er)
@@ -26,9 +27,15 @@ else:
 
 		# fetchone() is used fetch one record from top of the result set
 		a='HV00001'
-		cur.execute('select * from SINHVIEN where MSSV=:a',{'a':a})
+		Class = "Hello"
+		address = "rsw"
+		dob = input()
+		dob = datetime.strptime(dob, "%d-%m-%Y")
+		cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
+		con.commit()
+		cur.execute('select NGAYSINH from SINHVIEN where MSSV=:a',{'a':a})
 		rows = cur.fetchall()
-		print(rows[0][4])
+		print(rows)
 
 	except cx_Oracle.DatabaseError as er:
 		print('There is an error in the Oracle database:', er)

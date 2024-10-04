@@ -125,7 +125,6 @@ class dashBoard_student:
         data = self.cur.fetchall()
         for student in data:
             if student[0] == self.id:
-                print(student)
                 self.fullName = student[1]
                 if student[2] != None:
                     self.dob = student[2].strftime('%d-%m-%Y')
@@ -179,7 +178,7 @@ class dashBoard_student:
         addressEntry.insert(0,self.address)
 
         def checkDOB(dob):
-            ngay_sinh = datetime.strptime(dob, "%d/%m/%Y")
+            ngay_sinh = dob
             ngay_hien_tai = datetime.now()
             tuoi = ngay_hien_tai.year - ngay_sinh.year - ((ngay_hien_tai.month, ngay_hien_tai.day) < (ngay_sinh.month, ngay_sinh.day))
             if tuoi >= 16:
@@ -189,10 +188,10 @@ class dashBoard_student:
                 return False
             
         def checkClass(Class):
-            Class = int(Class)
-            if Class < 10 or Class > 12:
-                messagebox.showerror('Error','Lớp không hợp lệ')
-                return False
+            # Class = int(Class)
+            # if Class < 10 or Class > 12:
+            #     messagebox.showerror('Error','Lớp không hợp lệ')
+            #     return False
             return True
 
         def updateData():
@@ -200,10 +199,14 @@ class dashBoard_student:
             gender=genderEntry.get()
             Class=classEntry.get()
             dob=dobEntry.get()
+            dob = datetime.strptime(dob, "%d-%m-%Y")
             address=addressEntry.get()
-
-            # cur.execute('select * from TAIKHOAN')
-
+            if checkDOB(dob) == True:
+                self.cur.execute("UPDATE SINHVIEN SET HOTENSV = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSSV = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
+                self.con.commit()
+                userExist=True
+            if not userExist:
+                    messagebox.showwarning("Lỗi","Không tìm thấy mã số")
             self.refreshInfoView()
             window.destroy()
         
