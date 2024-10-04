@@ -100,6 +100,7 @@ class signin:
                     
                     p=r'[A-Za-z0-9_#@$%&*^+=]{8,}'
                     if passWord==passWordConfirm and re.fullmatch(p,passWord): #kiểm tra mật khẩu có đúng định dạng và id có phải là một chuối 10 chữ số k
+                        passWord = cur.callfunc("f_encryptData", cx_Oracle.STRING, [passWord])
                         cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id': id, 'passWord': passWord})
                         con.commit()
                         messagebox.showinfo('Sign up','Đăng ký thành công')
