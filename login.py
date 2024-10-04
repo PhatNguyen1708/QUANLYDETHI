@@ -91,7 +91,7 @@ class signin:
                             messagebox.showerror("Wrong ID",'Vui lòng thêm ký tự \'GV\' vào phía trước tài khoản')
                             return
                     elif typeAccount == "Student":
-                        if not re.search(r'^',id):
+                        if not re.search(r'^HV',id):
                             messagebox.showerror("Wrong ID",'Vui lòng thêm ký tự \'HV\' vào phía trước tài khoản')
                             return
                     else:
@@ -102,6 +102,10 @@ class signin:
                     if passWord==passWordConfirm and re.fullmatch(p,passWord): #kiểm tra mật khẩu có đúng định dạng và id có phải là một chuối 10 chữ số k
                         passWord = cur.callfunc("f_encryptData", cx_Oracle.STRING, [passWord])
                         cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id': id, 'passWord': passWord})
+                        if re.search(r'^HV',id):
+                            cur.execute('INSERT INTO SINHVIEN (MSSV, HOTENSV) VALUES (:MSSV, :HOTENSV)', {'MSSV': id, 'HOTENSV': fullName})
+                        else:
+                            cur.execute('INSERT INTO GIAOVIEN (MSGV, hotengv) VALUES (:MSSV, :hotengv)', {'MSSV': id, 'hotengv': fullName})
                         con.commit()
                         messagebox.showinfo('Sign up','Đăng ký thành công')
                         sign()
