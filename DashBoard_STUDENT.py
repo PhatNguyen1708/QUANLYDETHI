@@ -201,28 +201,8 @@ class dashBoard_student:
             Class=classEntry.get()
             dob=dobEntry.get()
             address=addressEntry.get()
-            newData={
-                "fullname": fullname,
-                "gender": gender,
-                "class": Class,
-                "dob": dob,
-                "address": address
-            }
-            filepath=r"data\Accounts.json"
-            try:
-                with open(filepath,'r',encoding='utf-8') as file:
-                    data = json.load(file)
-            except FileNotFoundError:
-                data = []
-            userExist = False
-            for student in data:
-                if student["id"] == self.id and checkDOB(dob) == True and checkClass(Class) == True:
-                    student.update(newData)
-                    userExist=True
-            if not userExist:
-                    messagebox.showwarning("Lỗi","Không tìm thấy mã số")
-            with open(filepath,'w',encoding='utf-8') as file:
-                json.dump(data,file,ensure_ascii=False)
+
+            # cur.execute('select * from TAIKHOAN')
 
             self.refreshInfoView()
             window.destroy()

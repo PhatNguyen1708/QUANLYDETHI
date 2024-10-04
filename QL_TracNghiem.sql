@@ -184,8 +184,12 @@ INSERT INTO TAIKHOAN(ID, MATKHAU) VALUES('HV00003',f_encryptData('123'));
 SELECT ID, f_decryptData(MATKHAU) AS MATKHAU FROM TAIKHOAN;
 
 delete
-from taikhoan
-where id = 'HV00004'
+from SINHVIEN
+where MSSV = 'HV00004'
+
+delete
+from Taikhoan
+where ID='HV00004'
 
 UPDATE SINHVIEN
 SET LOP = '13DHBM01', DIACHI = 'HCM'

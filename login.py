@@ -105,7 +105,7 @@ class signin:
                         if re.search(r'^HV',id):
                             cur.execute('INSERT INTO SINHVIEN (MSSV, HOTENSV) VALUES (:MSSV, :HOTENSV)', {'MSSV': id, 'HOTENSV': fullName})
                         else:
-                            cur.execute('INSERT INTO GIAOVIEN (MSGV, hotengv) VALUES (:MSSV, :hotengv)', {'MSSV': id, 'hotengv': fullName})
+                            cur.execute('INSERT INTO GIAOVIEN (MSGV, hotengv) VALUES (:MSGV, :hotengv)', {'MSGV': id, 'hotengv': fullName})
                         con.commit()
                         messagebox.showinfo('Sign up','Đăng ký thành công')
                         sign()
