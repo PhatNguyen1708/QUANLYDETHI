@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SchemaObject class="oracle.dbtools.crest.model.design.relational.SchemaObject" name="QL_TRACNGHIEM" directorySegmentName="seg_0" id="3E84628E-C3F4-763E-313A-FAA330958EB7">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<importedID>3CE1A7B8-9768-F457-2C19-B0136C3AE772</importedID>
+</SchemaObject>

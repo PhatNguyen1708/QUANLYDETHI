@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="DDB4D718-9F0C-A6DC-44C8-88F8F63C0375" containerWithKeyObject="1F5EC334-0F77-7732-F4B6-B1EECA9C7AF5" localFKIndex="25FA998A-E032-47CA-1658-EDD5C6F1D9CD" name="FK_DETHI_MACAUHOI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>FK_DETHI_MACAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 04:13:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<importedID>597B7EA0-7DDC-3071-6953-15C0964E6C53</importedID>
+<referredTableLongName>QL_TRACNGHIEM.CAUHOI</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>95401692-B761-94B8-EB9A-56A4E4682331</referredTableID>
+<keyObject>EADF4860-75A8-0B98-A3C3-63A4E29659C1</keyObject>
+<referredKeyID>EADF4860-75A8-0B98-A3C3-63A4E29659C1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>MACAUHOI,MAMONHOC</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

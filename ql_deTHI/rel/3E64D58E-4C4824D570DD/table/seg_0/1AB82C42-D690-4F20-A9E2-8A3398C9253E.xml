@@ -1,0 +1,160 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1AB82C42-D690-4F20-A9E2-8A3398C9253E" schemaObject="612C1239-4059-AC9B-65C8-8D315955A495" name="SINHVIEN">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>SINHVIEN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MSSV" id="7FD05A41-06B4-65A8-F7A5-0FD9DEBBCBF6">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>MSSV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="90239A79-6970-8564-D5CD-031B1A2D744B" referredColumn="70337B11-44FE-837B-6BD2-837C261CFEE6"/>
+</associations>
+</Column>
+<Column name="HOTENSV" id="815616EB-93CD-0BC2-7E45-E590DA21D477">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>HOTENSV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NGAYSINH" id="0DFE3BCC-1D06-2B0C-297A-D2817C86DA7C">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>NGAYSINH</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GIOITINH" id="84A623AD-F2A4-4784-4952-D6586626CE92">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>GIOITINH</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TINHTRANG" id="DD8EAB1B-CCF2-71DF-7979-EDF9688F2D85">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>TINHTRANG</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DIACHI" id="2D4F0504-8F38-73F9-7C7E-BF09F9D8C68B">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>DIACHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LOP" id="95EEF93E-172C-1454-4E26-F21839236154">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>SINHVIEN</sourceObjSchema>
+<sourceObjName>LOP</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="68E0F82D-61C4-29F1-A8B8-AE443CE565C2" name="PK_MSSV">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_MSSV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7FD05A41-06B4-65A8-F7A5-0FD9DEBBCBF6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="637EA632-5950-0D47-181E-80683DD06E2D" schemaObject="612C1239-4059-AC9B-65C8-8D315955A495" name="PK_MSSV">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_MSSV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7FD05A41-06B4-65A8-F7A5-0FD9DEBBCBF6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A040DB38-1B1C-2645-4DC7-5372CCD548B3" name="FK_SINHVIEN">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7FD05A41-06B4-65A8-F7A5-0FD9DEBBCBF6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

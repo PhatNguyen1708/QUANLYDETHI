@@ -1,0 +1,82 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="SINHVIEN" directorySegmentName="seg_0" id="1AB82C42-D690-4F20-A9E2-8A3398C9253E">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>B53EB6D9-96EB-209D-A93E-B3C5E25D6508</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="NGAYSINH" id="0DFE3BCC-1D06-2B0C-297A-D2817C86DA7C">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DIACHI" id="2D4F0504-8F38-73F9-7C7E-BF09F9D8C68B">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MSSV" id="7FD05A41-06B4-65A8-F7A5-0FD9DEBBCBF6">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="HOTENSV" id="815616EB-93CD-0BC2-7E45-E590DA21D477">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="GIOITINH" id="84A623AD-F2A4-4784-4952-D6586626CE92">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="LOP" id="95EEF93E-172C-1454-4E26-F21839236154">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TINHTRANG" id="DD8EAB1B-CCF2-71DF-7979-EDF9688F2D85">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_MSSV" id="637EA632-5950-0D47-181E-80683DD06E2D">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<segment>85168151-A0B8-20AD-0929-A1CDEA2B443E</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_SINHVIEN" id="A040DB38-1B1C-2645-4DC7-5372CCD548B3">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_MSSV" id="68E0F82D-61C4-29F1-A8B8-AE443CE565C2">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<segment>85168151-A0B8-20AD-0929-A1CDEA2B443E</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<existingIndex>637EA632-5950-0D47-181E-80683DD06E2D</existingIndex>
+<indexSegment>85168151-A0B8-20AD-0929-A1CDEA2B443E</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

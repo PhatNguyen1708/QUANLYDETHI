@@ -1,0 +1,176 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="95401692-B761-94B8-EB9A-56A4E4682331" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="CAUHOI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>CAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MAMONHOC" id="EAE75BC1-44DA-56BF-8BB5-1D1E57E6581A">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>MAMONHOC</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CCCCE20D-4EF3-6A64-A092-7085A2B02A66" referredColumn="813EE5F4-A96A-B73A-F4B3-601192CF82DA"/>
+</associations>
+</Column>
+<Column name="MACAUHOI" id="8CA3B6D3-A15B-BC93-67C6-B6B6F44E9A32">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>MACAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CAUHOI" id="95D4A6A6-67CF-0A75-C0EE-3A49BF983BF0">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>CAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>1000</dataTypeSize>
+<ownDataTypeParameters>1000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DAPANA" id="6EAFBEEE-89C2-CD64-8AE0-015A448C6A6B">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>DAPANA</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DAPANB" id="E5B0D64F-5CFC-D7C3-CE87-8755BDFCA737">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>DAPANB</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DAPANC" id="B3C25DFB-03FB-DE9E-D150-3859D1DB8DFA">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>DAPANC</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DAPAND" id="DA914D2B-B1C1-45CF-1537-E81C0A0E7D4C">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>DAPAND</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DAPAN_DUNG" id="1577A254-9D8F-5462-C8DF-99BC9565EEAD">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>CAUHOI</sourceObjSchema>
+<sourceObjName>DAPAN_DUNG</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EADF4860-75A8-0B98-A3C3-63A4E29659C1" name="PK_CAUHOI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_CAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8CA3B6D3-A15B-BC93-67C6-B6B6F44E9A32"/>
+<colUsage columnID="EAE75BC1-44DA-56BF-8BB5-1D1E57E6581A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C27FBA79-37BA-FA10-0171-100FD06DC469" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="PK_CAUHOI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_CAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8CA3B6D3-A15B-BC93-67C6-B6B6F44E9A32"/>
+<colUsage columnID="EAE75BC1-44DA-56BF-8BB5-1D1E57E6581A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8813149A-D3BB-AE2F-D18F-2E42719276AA" name="FK_CAUHOI_MAMONHOC">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EAE75BC1-44DA-56BF-8BB5-1D1E57E6581A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

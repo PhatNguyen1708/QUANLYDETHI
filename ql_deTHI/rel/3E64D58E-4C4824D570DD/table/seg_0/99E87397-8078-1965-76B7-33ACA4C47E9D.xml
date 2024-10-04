@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="99E87397-8078-1965-76B7-33ACA4C47E9D" schemaObject="612C1239-4059-AC9B-65C8-8D315955A495" name="TAIKHOAN">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>TAIKHOAN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="70337B11-44FE-837B-6BD2-837C261CFEE6">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>TAIKHOAN</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MATKHAU" id="BFF55056-93DB-7297-57A6-0C1B347094D8">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>TAIKHOAN</sourceObjSchema>
+<sourceObjName>MATKHAU</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="558EC99D-16B6-BD8F-19C2-BD3CA457C938" name="PK_ID">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_ID</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="70337B11-44FE-837B-6BD2-837C261CFEE6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="530C828A-4C17-9D06-BB1A-F91DA85C04F9" schemaObject="612C1239-4059-AC9B-65C8-8D315955A495" name="PK_ID">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_ID</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="70337B11-44FE-837B-6BD2-837C261CFEE6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

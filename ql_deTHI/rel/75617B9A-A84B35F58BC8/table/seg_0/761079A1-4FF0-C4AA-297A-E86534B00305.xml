@@ -1,0 +1,145 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="761079A1-4FF0-C4AA-297A-E86534B00305" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="KETQUA">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>KETQUA</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MSSV" id="01A0C8E2-DFCC-9403-D080-00A914CD927C">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>KETQUA</sourceObjSchema>
+<sourceObjName>MSSV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E6C37053-D3C7-C9AF-0B06-13780848240A" referredColumn="D5CDB4AD-39D7-9E38-4348-6E83EB413626"/>
+</associations>
+</Column>
+<Column name="MAMONHOC" id="5D3A7353-7E2B-B7B3-8FC2-ABB08CA50A26">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>KETQUA</sourceObjSchema>
+<sourceObjName>MAMONHOC</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C4809D21-DB4F-3288-44E3-099D777B27A9" referredColumn="813EE5F4-A96A-B73A-F4B3-601192CF82DA"/>
+</associations>
+</Column>
+<Column name="MADETHI" id="763EAA2B-4A7D-C1F7-F924-F629788FB244">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>KETQUA</sourceObjSchema>
+<sourceObjName>MADETHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DIEMTHI" id="10E18E1B-8AEF-4A88-30F5-9E441F0DC697">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>KETQUA</sourceObjSchema>
+<sourceObjName>DIEMTHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT021</logicalDatatype>
+<dataTypePrecision>126</dataTypePrecision>
+<ownDataTypeParameters>,126,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="THOIGIAN_HOANTHANH" id="33B34493-4099-7CD3-8AC9-102691F9B15C">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>KETQUA</sourceObjSchema>
+<sourceObjName>THOIGIAN_HOANTHANH</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="945DD88D-9AE3-28A3-3BE2-FEF5F293C620" name="PK_KETQUA">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_KETQUA</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01A0C8E2-DFCC-9403-D080-00A914CD927C"/>
+<colUsage columnID="763EAA2B-4A7D-C1F7-F924-F629788FB244"/>
+<colUsage columnID="5D3A7353-7E2B-B7B3-8FC2-ABB08CA50A26"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4723CAB9-B06D-0638-F4DC-3DD086FF70CE" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="PK_KETQUA">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_KETQUA</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01A0C8E2-DFCC-9403-D080-00A914CD927C"/>
+<colUsage columnID="763EAA2B-4A7D-C1F7-F924-F629788FB244"/>
+<colUsage columnID="5D3A7353-7E2B-B7B3-8FC2-ABB08CA50A26"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1E97BCB0-154A-8CD7-1889-1FD522AC77CE" name="FK_KETQUA_MSSV">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="01A0C8E2-DFCC-9403-D080-00A914CD927C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="350BEB52-557A-542E-54E4-C4AE81F10AB8" name="FK_KETQUA_MAMONHOC">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:44:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5D3A7353-7E2B-B7B3-8FC2-ABB08CA50A26"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

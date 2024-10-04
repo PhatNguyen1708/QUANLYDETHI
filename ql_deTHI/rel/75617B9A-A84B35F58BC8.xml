@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<relationalModel class="oracle.dbtools.crest.model.design.relational.RelationalDesign" name="QL_TracNghiem" id="75617B9A-1EEB-42C7-7F47-A84B35F58BC8" mainViewID="4837F119-4C52-B49E-EA52-223B3C663F36">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:49 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+<selectedRDBMSSite>79C73AAF-E1A7-E669-7DF0-025EE81A2AFC</selectedRDBMSSite>
+<importConnectionStamps>
+<importConnectionStamp class="oracle.dbtools.crest.imports.DBConnectionStamp">
+<connName>QL_TracNghiem</connName>
+<connUser>QL_TracNghiem</connUser>
+<connType>1</connType>
+</importConnectionStamp>
+</importConnectionStamps>
+</relationalModel>

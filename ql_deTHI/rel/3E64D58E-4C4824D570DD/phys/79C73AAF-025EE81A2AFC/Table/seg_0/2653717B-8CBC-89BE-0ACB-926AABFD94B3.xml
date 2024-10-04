@@ -1,0 +1,82 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="CAUHOI" directorySegmentName="seg_0" id="2653717B-8CBC-89BE-0ACB-926AABFD94B3">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>DA3AF9AD-ADFC-731B-B643-F84F4EA45B5C</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DAPANC" id="00D759DD-C5F2-A892-FA15-9C3199018BC2">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MADETHI" id="1EB5B8F9-435C-170A-798A-CEB3DA7C0870">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MACAUHOI" id="40118C17-5396-3CB8-1374-12A3199E7215">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPAND" id="B4912280-0C27-F1CC-0099-C22C2D4EBD39">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPAN_DUNG" id="C7E1B040-ACB9-B217-589D-0380A457A788">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPANA" id="DFB88CA3-90F9-0E03-7BCA-B0554C48F010">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPANB" id="FA03424B-3EC9-7BDE-6045-EEBB3DBDE9B3">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_MACAUHOI" id="A55F2BDF-70A4-4592-E66D-75409EF2E3CD">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<segment>567CBDC9-F865-13BB-A657-97C745499CA8</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CAUHOI_MADETHI" id="124D138F-A619-A828-0224-0A1A7CDDFAB0">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_MACAUHOI" id="4DAACD3D-929D-1946-1338-B169395E1992">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<segment>567CBDC9-F865-13BB-A657-97C745499CA8</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<existingIndex>A55F2BDF-70A4-4592-E66D-75409EF2E3CD</existingIndex>
+<indexSegment>567CBDC9-F865-13BB-A657-97C745499CA8</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

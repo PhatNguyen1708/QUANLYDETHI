@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="DBA02891-014F-FB80-8629-6D33609C7887">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</ProcessModel>

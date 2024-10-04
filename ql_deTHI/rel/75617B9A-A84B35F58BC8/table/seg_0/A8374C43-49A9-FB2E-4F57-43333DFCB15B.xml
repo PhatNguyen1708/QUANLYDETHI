@@ -1,0 +1,96 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A8374C43-49A9-FB2E-4F57-43333DFCB15B" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="TAIKHOAN">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>TAIKHOAN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="B9A934F5-5862-C9F1-F848-B40514A2728A">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>TAIKHOAN</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1FB9116F-ADA9-1B69-0F44-A8CA671B7C1F" referredColumn="C95764F1-1A4B-752A-B350-AC0870338260"/>
+<colAssociation fkAssociation="7D2518AF-44C8-08C7-0C2B-31995FF212D4" referredColumn="D5CDB4AD-39D7-9E38-4348-6E83EB413626"/>
+</associations>
+</Column>
+<Column name="MATKHAU" id="D6D8B3D2-6373-DD90-82F0-D8B721E7976F">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>TAIKHOAN</sourceObjSchema>
+<sourceObjName>MATKHAU</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="36CA6ED7-1CE5-36C0-B124-0C07FB435988" name="PK_TAIKHOAN">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_TAIKHOAN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9A934F5-5862-C9F1-F848-B40514A2728A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="56B27EAB-4636-B85F-160F-501B0698652B" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="PK_TAIKHOAN">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_TAIKHOAN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9A934F5-5862-C9F1-F848-B40514A2728A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="908ED496-E990-CF3C-42F6-48116B2F9193" name="FK_TAIKHOAN_GV">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9A934F5-5862-C9F1-F848-B40514A2728A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1BD09268-DAB1-C991-0D12-168ECEAB7BAC" name="FK_TAIKHOAN_ID">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9A934F5-5862-C9F1-F848-B40514A2728A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

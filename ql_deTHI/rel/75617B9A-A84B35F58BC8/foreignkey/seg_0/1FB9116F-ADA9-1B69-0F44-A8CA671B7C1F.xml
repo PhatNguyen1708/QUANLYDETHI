@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="1FB9116F-ADA9-1B69-0F44-A8CA671B7C1F" containerWithKeyObject="A8374C43-49A9-FB2E-4F57-43333DFCB15B" localFKIndex="908ED496-E990-CF3C-42F6-48116B2F9193" name="FK_TAIKHOAN_GV">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>FK_TAIKHOAN_GV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<referredTableLongName>QL_TRACNGHIEM.GIAOVIEN</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>9349F589-43CF-5A61-12BB-315C9A6DADC7</referredTableID>
+<keyObject>849223E6-2F08-E36E-88A3-050F2D1B9FAB</keyObject>
+<referredKeyID>849223E6-2F08-E36E-88A3-050F2D1B9FAB</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>MSGV</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

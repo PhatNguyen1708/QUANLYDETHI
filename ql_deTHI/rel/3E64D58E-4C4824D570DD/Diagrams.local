@@ -1,0 +1,4 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="main_view" objectID="79499DCD-26AE-A4CE-7141-37612E684539" name="QLTracNghiem" visible="false"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="CAUHOI" directorySegmentName="seg_0" id="95401692-B761-94B8-EB9A-56A4E4682331">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>3E84628E-C3F4-763E-313A-FAA330958EB7</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>0180CC07-0278-F2E0-45DB-D6F48E080DB6</segment>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DAPAN_DUNG" id="1577A254-9D8F-5462-C8DF-99BC9565EEAD">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPANA" id="6EAFBEEE-89C2-CD64-8AE0-015A448C6A6B">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MACAUHOI" id="8CA3B6D3-A15B-BC93-67C6-B6B6F44E9A32">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="CAUHOI" id="95D4A6A6-67CF-0A75-C0EE-3A49BF983BF0">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPANC" id="B3C25DFB-03FB-DE9E-D150-3859D1DB8DFA">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPAND" id="DA914D2B-B1C1-45CF-1537-E81C0A0E7D4C">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="DAPANB" id="E5B0D64F-5CFC-D7C3-CE87-8755BDFCA737">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MAMONHOC" id="EAE75BC1-44DA-56BF-8BB5-1D1E57E6581A">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_CAUHOI" id="C27FBA79-37BA-FA10-0171-100FD06DC469">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>3E84628E-C3F4-763E-313A-FAA330958EB7</schemaObject>
+<segment>733500BD-16A2-2DA2-A073-C9E1D70ED533</segment>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CAUHOI_MAMONHOC" id="8813149A-D3BB-AE2F-D18F-2E42719276AA">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_CAUHOI" id="EADF4860-75A8-0B98-A3C3-63A4E29659C1">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<segment>733500BD-16A2-2DA2-A073-C9E1D70ED533</segment>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+<existingIndex>C27FBA79-37BA-FA10-0171-100FD06DC469</existingIndex>
+<indexSegment>733500BD-16A2-2DA2-A073-C9E1D70ED533</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

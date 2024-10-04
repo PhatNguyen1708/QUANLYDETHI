@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="MDSYS" directorySegmentName="seg_0" id="MDSYS">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjName>MDSYS</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:49 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>992FD2CA-3E61-2F74-3592-4E540FE57504</schemaObject>
+<nullInstance>true</nullInstance>
+<storableNullInstance>true</storableNullInstance>
+</UserOraclev10g>

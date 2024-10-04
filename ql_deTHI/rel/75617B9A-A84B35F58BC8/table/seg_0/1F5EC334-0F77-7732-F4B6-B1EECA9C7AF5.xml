@@ -1,0 +1,148 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1F5EC334-0F77-7732-F4B6-B1EECA9C7AF5" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="DETHI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>DETHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MADETHI" id="CA26460D-120D-561F-A53C-9EDC54D90A18">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>DETHI</sourceObjSchema>
+<sourceObjName>MADETHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MAMONHOC" id="08127563-5725-2D15-31F9-09732C3C9820">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>DETHI</sourceObjSchema>
+<sourceObjName>MAMONHOC</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FDDB6B2B-B3D6-F41A-2C64-171F12C00346" referredColumn="813EE5F4-A96A-B73A-F4B3-601192CF82DA"/>
+<colAssociation fkAssociation="DDB4D718-9F0C-A6DC-44C8-88F8F63C0375" referredColumn="EAE75BC1-44DA-56BF-8BB5-1D1E57E6581A"/>
+</associations>
+</Column>
+<Column name="MACAUHOI" id="B344B4F6-4F92-1EB9-6228-FF04320A0809">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>DETHI</sourceObjSchema>
+<sourceObjName>MACAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DDB4D718-9F0C-A6DC-44C8-88F8F63C0375" referredColumn="8CA3B6D3-A15B-BC93-67C6-B6B6F44E9A32"/>
+</associations>
+</Column>
+<Column name="THOIGIAN_BATDAU" id="ED5E9720-B7AE-2084-463A-F669AE45DF13">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>DETHI</sourceObjSchema>
+<sourceObjName>THOIGIAN_BATDAU</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SOCAUHOI" id="4EC24FB7-5877-9DEE-33A0-684E3057546F">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>DETHI</sourceObjSchema>
+<sourceObjName>SOCAUHOI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>*</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,*,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="53BBE3BE-A812-E08E-665C-7D2C5EFF67AD" name="PK_DETHI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_DETHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CA26460D-120D-561F-A53C-9EDC54D90A18"/>
+<colUsage columnID="08127563-5725-2D15-31F9-09732C3C9820"/>
+<colUsage columnID="B344B4F6-4F92-1EB9-6228-FF04320A0809"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3E57A63F-5BEE-8E94-C42C-2FBED20B352F" schemaObject="3E84628E-C3F4-763E-313A-FAA330958EB7" name="PK_DETHI">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_DETHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CA26460D-120D-561F-A53C-9EDC54D90A18"/>
+<colUsage columnID="08127563-5725-2D15-31F9-09732C3C9820"/>
+<colUsage columnID="B344B4F6-4F92-1EB9-6228-FF04320A0809"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7005A901-901D-8758-3C2D-CCCA8E730115" name="FK_DETHI_MAMONHOC">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08127563-5725-2D15-31F9-09732C3C9820"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="25FA998A-E032-47CA-1658-EDD5C6F1D9CD" name="FK_DETHI_MACAUHOI">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 04:13:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B344B4F6-4F92-1EB9-6228-FF04320A0809"/>
+<colUsage columnID="08127563-5725-2D15-31F9-09732C3C9820"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,130 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="CE02659E-942A-2B78-367F-14A54AFABC91" schemaObject="612C1239-4059-AC9B-65C8-8D315955A495" name="GIAOVIEN">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>GIAOVIEN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MSGV" id="02521C6F-4833-45DC-242E-3754E1E17A62">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>GIAOVIEN</sourceObjSchema>
+<sourceObjName>MSGV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>12 BYTE</dataTypeSize>
+<ownDataTypeParameters>12 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A6B269C2-899B-79EA-D2A2-087D9EE3E1D1" referredColumn="70337B11-44FE-837B-6BD2-837C261CFEE6"/>
+</associations>
+</Column>
+<Column name="HOTENGV" id="6D0FD352-4647-CC2C-F04B-D2B4E08C5E97">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>GIAOVIEN</sourceObjSchema>
+<sourceObjName>HOTENGV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NGAYSINH" id="D1782192-4FE3-E1F1-490D-878367EDD01F">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>GIAOVIEN</sourceObjSchema>
+<sourceObjName>NGAYSINH</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GIOITINH" id="F5FDB0E6-D8A9-8439-26FD-7A2FAFBCB7DC">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>GIAOVIEN</sourceObjSchema>
+<sourceObjName>GIOITINH</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DIACHI" id="38D77FD3-FAD1-89AE-726C-67E540DBE60B">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>GIAOVIEN</sourceObjSchema>
+<sourceObjName>DIACHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="6EF46B81-74EC-4FC7-0F4D-826801F3F31D" name="PK_MSGV">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_MSGV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="02521C6F-4833-45DC-242E-3754E1E17A62"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A39CA18D-3674-9B92-9B1D-9E25E1802AC2" schemaObject="612C1239-4059-AC9B-65C8-8D315955A495" name="PK_MSGV">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>PK_MSGV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="02521C6F-4833-45DC-242E-3754E1E17A62"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B45AD029-97FB-291D-A58C-76CE0060CE13" name="FK_GIAOVIEN">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="02521C6F-4833-45DC-242E-3754E1E17A62"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

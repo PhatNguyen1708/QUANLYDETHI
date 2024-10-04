@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A6B269C2-899B-79EA-D2A2-087D9EE3E1D1" containerWithKeyObject="CE02659E-942A-2B78-367F-14A54AFABC91" localFKIndex="B45AD029-97FB-291D-A58C-76CE0060CE13" name="FK_GIAOVIEN">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>FK_GIAOVIEN</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<referredTableLongName>QLTRACNGHIEM.TAIKHOAN</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>99E87397-8078-1965-76B7-33ACA4C47E9D</referredTableID>
+<keyObject>558EC99D-16B6-BD8F-19C2-BD3CA457C938</keyObject>
+<referredKeyID>558EC99D-16B6-BD8F-19C2-BD3CA457C938</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

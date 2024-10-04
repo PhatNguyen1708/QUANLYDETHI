@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="GIAOVIEN" directorySegmentName="seg_0" id="9349F589-43CF-5A61-12BB-315C9A6DADC7">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:52 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>3E84628E-C3F4-763E-313A-FAA330958EB7</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>50DE8DE4-6198-F3F3-B34E-CE27C9537BFA</segment>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="HOTENGV" id="28B92E17-167A-95E2-3E16-B832699F1E7F">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="GIOITINH" id="64DD9D27-5900-98C6-1426-DCDB991BE5E7">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MAMONHOC" id="753B75E5-64BC-2F30-46E5-AC7E944E8D98">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NGAYSINH" id="9530BE5B-6897-873C-FD9C-8A193D01B3F0">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MSGV" id="C95764F1-1A4B-752A-B350-AC0870338260">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:53 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_GIAOVIEN" id="D1A2E105-52F1-ACB5-9439-09FA001450E4">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>3E84628E-C3F4-763E-313A-FAA330958EB7</schemaObject>
+<segment>DF69F52D-0C0F-54A0-CC7E-6CDC6DA8AB63</segment>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_GV_MAMONHOC" id="6FA6BC41-B08B-33EB-A646-62DF1057B53A">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_GIAOVIEN" id="849223E6-2F08-E36E-88A3-050F2D1B9FAB">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<segment>DF69F52D-0C0F-54A0-CC7E-6CDC6DA8AB63</segment>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+<existingIndex>D1A2E105-52F1-ACB5-9439-09FA001450E4</existingIndex>
+<indexSegment>DF69F52D-0C0F-54A0-CC7E-6CDC6DA8AB63</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

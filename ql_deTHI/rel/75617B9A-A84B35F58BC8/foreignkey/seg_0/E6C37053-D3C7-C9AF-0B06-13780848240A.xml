@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E6C37053-D3C7-C9AF-0B06-13780848240A" containerWithKeyObject="761079A1-4FF0-C4AA-297A-E86534B00305" localFKIndex="1E97BCB0-154A-8CD7-1889-1FD522AC77CE" name="FK_KETQUA_MSSV">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>FK_KETQUA_MSSV</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<referredTableLongName>QL_TRACNGHIEM.SINHVIEN</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>58DF5293-DDA7-4B24-E816-50E4BCF1DA2F</referredTableID>
+<keyObject>358DF3CC-B69F-F088-C761-7FEBEFA1DBF2</keyObject>
+<referredKeyID>358DF3CC-B69F-F088-C761-7FEBEFA1DBF2</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>MSSV</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="76DCF571-13C2-25EF-C2AF-3CA4EB3163FC" containerWithKeyObject="2653717B-8CBC-89BE-0ACB-926AABFD94B3" localFKIndex="124D138F-A619-A828-0224-0A1A7CDDFAB0" name="FK_CAUHOI_MADETHI">
+<sourceConnName>QLTracNghiem</sourceConnName>
+<sourceObjSchema>QLTRACNGHIEM</sourceObjSchema>
+<sourceObjName>FK_CAUHOI_MADETHI</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<referredTableLongName>QLTRACNGHIEM.DETHI</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>F0A6F548-3FFF-53F2-5D67-22B5299496E3</referredTableID>
+<keyObject>55A5F3CC-98AE-90F7-CA82-098CD1613A95</keyObject>
+<referredKeyID>55A5F3CC-98AE-90F7-CA82-098CD1613A95</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>MADETHI</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

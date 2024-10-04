@@ -1,0 +1,82 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="KETQUA" directorySegmentName="seg_0" id="7EA2564E-7AF5-41C1-9B35-9A97D645C41B">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>DA3AF9AD-ADFC-731B-B643-F84F4EA45B5C</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="DIEMTHI" id="1457295F-838B-90BF-30FB-75D3A9B9C6FB">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MADETHI" id="32546858-3E88-03C9-84D0-382DD3CDE533">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MAMONHOC" id="43E1B4D7-34F1-3FCA-1232-C8FB4371FC04">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TENMONHOC" id="46241929-8E2A-5743-6B3E-9724586C99A6">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MSSV" id="C25F3072-52EB-A314-36BA-3AB56E89C7BA">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_KETQUA" id="ECAD2630-9F74-D689-27FD-8AF18DAF5DF5">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<segment>567CBDC9-F865-13BB-A657-97C745499CA8</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_KETQUA_MAMONHOC" id="4D49F8AA-7FF2-077B-EF25-1BD457E3D085">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_KETQUA_MSSV" id="7AC619BA-8A4C-3B6E-964A-93CE90C7AD55">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_KETQUA_MADETHI" id="8A6FA4E9-D3B6-4113-AA98-6B101165E8FE">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:51:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_KETQUA" id="3AAD5702-9678-48D9-5AE0-F9B123F577E8">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<segment>567CBDC9-F865-13BB-A657-97C745499CA8</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<existingIndex>ECAD2630-9F74-D689-27FD-8AF18DAF5DF5</existingIndex>
+<indexSegment>567CBDC9-F865-13BB-A657-97C745499CA8</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BusinessInfoDesign class="oracle.dbtools.crest.model.businessinfo.BusinessInfoDesign" name="Business Information" id="A4AD22E5-3B57-9B04-D702-71567CDE9D86">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:01 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</BusinessInfoDesign>

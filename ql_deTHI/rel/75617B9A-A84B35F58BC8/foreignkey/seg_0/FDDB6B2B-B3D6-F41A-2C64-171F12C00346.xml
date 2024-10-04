@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="FDDB6B2B-B3D6-F41A-2C64-171F12C00346" containerWithKeyObject="1F5EC334-0F77-7732-F4B6-B1EECA9C7AF5" localFKIndex="7005A901-901D-8758-3C2D-CCCA8E730115" name="FK_DETHI_MAMONHOC">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjSchema>QL_TRACNGHIEM</sourceObjSchema>
+<sourceObjName>FK_DETHI_MAMONHOC</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<referredTableLongName>QL_TRACNGHIEM.MONHOC</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>631F2D7A-AA4A-B8B2-F266-B4BFF9D38859</referredTableID>
+<keyObject>315A2736-80B7-9E45-8287-67F0D7AF211D</keyObject>
+<referredKeyID>315A2736-80B7-9E45-8287-67F0D7AF211D</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>MAMONHOC</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

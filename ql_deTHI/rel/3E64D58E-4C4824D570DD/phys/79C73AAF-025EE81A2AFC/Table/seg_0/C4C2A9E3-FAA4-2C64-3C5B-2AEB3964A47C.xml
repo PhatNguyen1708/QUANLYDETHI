@@ -1,0 +1,55 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="MONHOC" directorySegmentName="seg_0" id="C4C2A9E3-FAA4-2C64-3C5B-2AEB3964A47C">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:54 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>DA3AF9AD-ADFC-731B-B643-F84F4EA45B5C</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="TENMONHOC" id="5FFB3299-3CEF-EE65-5982-7E23D4097B7A">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SOCHI" id="93F2C05F-F97D-82D1-BBD9-8501CE1CBCDE">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="MAMONHOC" id="BC9662BB-D136-6362-26A6-702868BFB08C">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:56 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_MAMONHOC" id="B60C9FC8-A089-A870-DAD4-AF8C63ECE45A">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>612C1239-4059-AC9B-65C8-8D315955A495</schemaObject>
+<segment>567CBDC9-F865-13BB-A657-97C745499CA8</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+</IndexProxy>
+</indexProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_MAMONHOC" id="298595A3-4977-38E1-36DA-26C1C2B870AC">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:50:59 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<segment>567CBDC9-F865-13BB-A657-97C745499CA8</segment>
+<tableSpace>503A6D93-A521-52E3-6E1D-4C5349A45209</tableSpace>
+<existingIndex>B60C9FC8-A089-A870-DAD4-AF8C63ECE45A</existingIndex>
+<indexSegment>567CBDC9-F865-13BB-A657-97C745499CA8</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

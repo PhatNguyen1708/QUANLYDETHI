@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="QL_TRACNGHIEM" directorySegmentName="seg_0" id="5BB07B58-B640-C2FE-569C-252B2F5BBD53">
+<sourceConnName>QL_TracNghiem</sourceConnName>
+<sourceObjName>QL_TRACNGHIEM</sourceObjName>
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:49 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<schemaObject>3E84628E-C3F4-763E-313A-FAA330958EB7</schemaObject>
+<defTableSpace>28C80D90-0A7E-610F-1746-659BD6257754</defTableSpace>
+<privileges>CREATE TABLE, CREATE SESSION</privileges>
+<quotaItems>
+<QuotaItem class="oracle.dbtools.crest.model.design.storage.oracle.v10g.QuotaItemOraclev10g" name="QuotaItem1" id="07E6C829-AB94-A339-5761-D9E2F7BDFE6B">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:44:58 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<size>104857600</size>
+<tableSpace>28C80D90-0A7E-610F-1746-659BD6257754</tableSpace>
+</QuotaItem>
+</quotaItems>
+</UserOraclev10g>

@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="1AC06C0E-49A0-F7F4-BE93-646171A19C94" mainViewID="28483BC8-C49F-5DBB-E197-0597BD558C33">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:00 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>
