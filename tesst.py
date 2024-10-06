@@ -26,14 +26,14 @@ else:
 		# print(rows)
 
 		# fetchone() is used fetch one record from top of the result set
-		a='HV00001'
+		a='HS00001'
 		Class = "Hello"
 		address = "rsw"
-		dob = input()
-		dob = datetime.strptime(dob, "%d-%m-%Y")
-		cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
-		con.commit()
-		cur.execute('select NGAYSINH from SINHVIEN where MSSV=:a',{'a':a})
+		# dob = input()
+		# dob = datetime.strptime(dob, "%d-%m-%Y")
+		# cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
+		# con.commit()
+		cur.execute('select * from HOCSINH where MSHS=:a',{'a':a})
 		rows = cur.fetchall()
 		print(rows)
 

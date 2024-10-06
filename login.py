@@ -28,11 +28,11 @@ class signin:
             try:
                 accountFound=False
                 for account in data:
-                    if id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]) and re.search(r'^HV',id):
+                    if id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]) and re.search(r'^HS',id):
                         screen=Tk()
-                        cur.execute('select HOTENSV from TAIKHOAN,SINHVIEN where TAIKHOAN.ID=SINHVIEN.MSSV and TAIKHOAN.ID=:a',{'a':account[0]})
-                        sv_name=cur.fetchall()
-                        obj=dashBoard_student(screen,sv_name[0][0],account[0])
+                        cur.execute('select HOTENHS from TAIKHOAN,HOCSINH where TAIKHOAN.ID=HOCSINH.MSHS and TAIKHOAN.ID=:a',{'a':account[0]})
+                        HS_name=cur.fetchall()
+                        obj=dashBoard_student(screen,HS_name[0][0],account[0])
                         root.destroy()
                         screen.mainloop()
                         accountFound=True
@@ -91,8 +91,8 @@ class signin:
                             messagebox.showerror("Wrong ID",'Vui lòng thêm ký tự \'GV\' vào phía trước tài khoản')
                             return
                     elif typeAccount == "Student":
-                        if not re.search(r'^HV',id):
-                            messagebox.showerror("Wrong ID",'Vui lòng thêm ký tự \'HV\' vào phía trước tài khoản')
+                        if not re.search(r'^HS',id):
+                            messagebox.showerror("Wrong ID",'Vui lòng thêm ký tự \'HS\' vào phía trước tài khoản')
                             return
                     else:
                         messagebox.showwarning("Wrong type account",'Vui lòng chọn kiểu tài khoản')
@@ -102,8 +102,8 @@ class signin:
                     if passWord==passWordConfirm and re.fullmatch(p,passWord): #kiểm tra mật khẩu có đúng định dạng và id có phải là một chuối 10 chữ số k
                         passWord = cur.callfunc("f_encryptData", cx_Oracle.STRING, [passWord])
                         cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id': id, 'passWord': passWord})
-                        if re.search(r'^HV',id):
-                            cur.execute('INSERT INTO SINHVIEN (MSSV, HOTENSV) VALUES (:MSSV, :HOTENSV)', {'MSSV': id, 'HOTENSV': fullName})
+                        if re.search(r'^HS',id):
+                            cur.execute('INSERT INTO HOCSINH (MSHS, HOTENHS) VALUES (:MSHS, :HOTENHS)', {'MSHS': id, 'HOTENHS': fullName})
                         else:
                             cur.execute('INSERT INTO GIAOVIEN (MSGV, hotengv) VALUES (:MSGV, :hotengv)', {'MSGV': id, 'hotengv': fullName})
                         con.commit()

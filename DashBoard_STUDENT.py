@@ -61,28 +61,6 @@ class dashBoard_student:
         
 
         self.refreshButton=Button(self.studentView, text='Refresh',bg='#64a587',fg='black',command=self.refresh,activebackground='white',font=('Arial',7,'bold'),width=10).place(x=855,y=505)
-
-#--------------------------- Khởi tạo frame chứa lựa chọn môn học & các func xử lí
-        self.menuLabel = Label(leftFrame, text='Danh sách môn học', fg='black', bg='#64a587', font=('Arial', 15, 'bold'))
-        self.menuLabel.place(x=3, y=0)
-        self.toanButton=Button(leftFrame,text='Toán học',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('toan'),state='disabled')
-        self.toanButton.place(x=10,y=30)
-        self.vatlyButton=Button(leftFrame,text='Vật lý',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('vatly'))
-        self.vatlyButton.place(x=10,y=80)
-        self.hoahocButton=Button(leftFrame,text='Hóa học',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('hoahoc'))
-        self.hoahocButton.place(x=10,y=130)
-        self.sinhhocButton=Button(leftFrame,text='Sinh học',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('sinhhoc'))
-        self.sinhhocButton.place(x=10,y=180)
-        self.vanButton=Button(leftFrame,text='Ngữ văn',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('van'),state='disabled')
-        self.vanButton.place(x=10,y=230)
-        self.anhButton=Button(leftFrame,text='Anh văn',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('anh'))
-        self.anhButton.place(x=10,y=280)
-        self.suButton=Button(leftFrame,text='Lịch sử',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('su'))
-        self.suButton.place(x=10,y=330)
-        self.diaButton=Button(leftFrame,text='Địa lý',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('dia'))
-        self.diaButton.place(x=10,y=380)
-        self.gdcdButton=Button(leftFrame,text='GDCD',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=lambda: self.select_subject('gdcd'))
-        self.gdcdButton.place(x=10,y=430)
         
 
     def select_subject(self, subject):
@@ -121,9 +99,10 @@ class dashBoard_student:
         
 #--------------------------------- KHỞI TẠO GIAO DIỆN CẬP NHẬT THÔNG TIN HỌC SINH
     def refreshInfoView(self):
-        self.cur.execute('select * from SinhVien')
+        self.cur.execute('select * from HOCSINH')
         data = self.cur.fetchall()
         for student in data:
+            print(student)
             if student[0] == self.id:
                 self.fullName = student[1]
                 if student[2] != None:
@@ -202,7 +181,7 @@ class dashBoard_student:
             dob = datetime.strptime(dob, "%d-%m-%Y")
             address=addressEntry.get()
             if checkDOB(dob) == True:
-                self.cur.execute("UPDATE SINHVIEN SET HOTENSV = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSSV = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
+                self.cur.execute("UPDATE HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
                 self.con.commit()
                 userExist=True
             if not userExist:
@@ -270,5 +249,5 @@ class dashBoard_student:
 
 if __name__ == "__main__":
     studentView = Tk()
-    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HV00001')
+    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HS00001')
     studentView.mainloop()
