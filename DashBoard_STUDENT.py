@@ -19,7 +19,7 @@ class dashBoard_student:
         self.studentView.geometry('925x530+300+200')
         self.studentView.title('Dashboard - Trang chủ học sinh')
         self.studentView.config(bg='white')
-
+        self.studentView.resizable(width=FALSE, height=FALSE)
         try:
             self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
         except cx_Oracle.DatabaseError as er:

@@ -3,23 +3,48 @@ from tkinter import ttk
 from tkinter import Tk
 import json
 from PIL import Image,ImageTk
+from tkinter import messagebox, simpledialog
+import cx_Oracle
+from datetime import datetime
 
 
 class dashBoard_teacher:
-    def __init__(self, dB, fullname):
+    def __init__(self, dB, fullname,id):
         self.dB=dB
         self.fullname=fullname
+        self.id = id
+        self.gender = ""
+        self.dob = ""
+
         self.dB.geometry('925x700+300+200')
         self.dB.title('Dashboard - Trang chủ giáo viên')
         self.dB.config(bg='white')
+        self.dB.resizable(width=FALSE, height=FALSE)
+
+        try:
+            self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
+        except cx_Oracle.DatabaseError as er:
+            print('There is an error in the Oracle database:',er)
+        self.cur = self.con.cursor()
 
         title=Label(self.dB,text='Hệ thống quản lí câu hỏi, đề thi trắc nghiệm',bg='white',fg='#57a1f8', font=('Arial', 20, 'bold')).place(x=260,y=2)
 
         leftFrame=Frame(self.dB,bd=0,relief=RIDGE, bg='#57a1f8')
         leftFrame.place(x=0, y=0, width=210, height=700)
 
-        self.user_label = Label(self.dB, text=f"Teacher: {self.fullname}", bg='white', fg='#57a1f8', font=('Arial', 12, 'bold'))
-        self.user_label.place(relx=1, rely=0, anchor=NE,y=670)
+        self.nameLabel = Label(leftFrame, text=f"Họ và tên: \n{self.fullname}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.nameLabel.place(x=10, y=20)
+
+        self.idLabel = Label(leftFrame, text=f"MSGV: {self.id}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.idLabel.place(x=10, y=70)
+
+        self.genderLabel = Label(leftFrame, text=f"Giới Tính: {self.gender}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.genderLabel.place(x=10, y=100)
+
+        self.dobLabel = Label(leftFrame, text=f"Ngày sinh: {self.dob}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.dobLabel.place(x=10, y=130)
+
+        self.refreshInfoView()
 
 
 #-------------------------------------- KHỞI TẠO CÁC NÚT LỰA CHỌN MÔN HỌC 
@@ -128,6 +153,97 @@ class dashBoard_teacher:
             content = file.read()
 
         text = Label(window,text=content,bg='white',justify='left',wraplength=520).place(x=20,y=50)
+
+#-------------------------------- CÁC FUNC CẬP NHẬT THÔNG TIN CỦA GIÁO VIÊN
+    def refreshInfoView(self):
+        self.cur.execute('select * from GIAOVIEN')
+        data = self.cur.fetchall()
+        for teacher in data:
+            print(teacher)
+            if teacher[0] == self.id:
+                self.fullName = teacher[1]
+                if teacher[2] != None:
+                    self.dob = teacher[2].strftime('%d-%m-%Y')
+                else:
+                    self.dob = teacher[2]
+                self.gender = teacher[3]
+
+                self.nameLabel.config(text=f"Họ và tên: \n{self.fullName}")
+                self.genderLabel.config(text=f'Giới tính: {self.gender}')
+                self.dobLabel.config(text=f'Ngày sinh: {self.dob}')
+                break
+
+    def updateInfo(self):
+        window = Toplevel(self.studentView)
+        window.title("Cập nhật thông tin học sinh")
+        window.geometry('450x300+550+350')
+        window.config(background='white')
+
+        updateLabel = Label(window,text='Cập nhật thông tin học sinh', bg='white',  fg='black', font=('Arial', 15, 'bold')).place(x=90,y=10)
+
+        fullnameLabel=Label(window,text='Họ và tên: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=45)
+        fullnameEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+        fullnameEntry.place(x=110,y=45)
+        fullnameEntry.insert(0,self.fullName)
+
+        idLabel=Label(window,text='Mã số: ' + self.id, bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=75)
+
+        genderLabel=Label(window,text='Giới tính: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=200,y=75)
+        genderEntry=Entry(window,width=16, bg='white',font=('Arial', 13))
+        genderEntry.place(x=280,y=75)
+        genderEntry.insert(0,self.gender)
+
+
+        classLabel=Label(window,text='Lớp: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=105)
+        classEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+        classEntry.place(x=110,y=105)
+        classEntry.insert(0,str(self.lop))
+
+        dobLabel=Label(window,text='Ngày sinh: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=135)
+        dobEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+        dobEntry.place(x=110,y=135)
+        dobEntry.insert(0,self.dob)
+
+        addressLabel=Label(window,text='Địa chỉ: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=165)
+        addressEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+        addressEntry.place(x=110,y=165)
+        addressEntry.insert(0,self.address)
+
+        def checkDOB(dob):
+            ngay_sinh = dob
+            ngay_hien_tai = datetime.now()
+            tuoi = ngay_hien_tai.year - ngay_sinh.year - ((ngay_hien_tai.month, ngay_hien_tai.day) < (ngay_sinh.month, ngay_sinh.day))
+            if tuoi >= 16:
+                return True
+            else:
+                messagebox.showerror('Error','Tuổi không hợp lệ')
+                return False
+            
+        def checkClass(Class):
+            # Class = int(Class)
+            # if Class < 10 or Class > 12:
+            #     messagebox.showerror('Error','Lớp không hợp lệ')
+            #     return False
+            return True
+
+        def updateData():
+            fullname=fullnameEntry.get()
+            gender=genderEntry.get()
+            Class=classEntry.get()
+            dob=dobEntry.get()
+            dob = datetime.strptime(dob, "%d-%m-%Y")
+            address=addressEntry.get()
+            if checkDOB(dob) == True:
+                self.cur.execute("UPDATE HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
+                self.con.commit()
+                userExist=True
+            if not userExist:
+                    messagebox.showwarning("Lỗi","Không tìm thấy mã số")
+            self.refreshInfoView()
+            window.destroy()
+        
+        updateButton = Button(window,text='Cập nhật thông tin',activebackground='white',bg='#64a587', font=('Arial', 10, 'bold'),command=updateData).place(x=160,y=200)
+
 
 #-------------------------------- CÁC FUNC LÀM VIỆC VỚI BẢNG KQHT
     def search(self):
@@ -290,5 +406,5 @@ class dashBoard_teacher:
 
 if __name__ == "__main__":
     menu=Tk()
-    obj=dashBoard_teacher(menu,'Dinh Thi Ngoc Tram')
+    obj=dashBoard_teacher(menu,'Trần Thị Kiều','GV0009')
     menu.mainloop()

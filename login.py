@@ -41,7 +41,7 @@ class signin:
                         screen=Tk()
                         cur.execute('select HOTENGV from TAIKHOAN,GIAOVIEN where TAIKHOAN.ID=GIAOVIEN.MSGV and TAIKHOAN.ID=:a',{'a':account[0]})
                         gv_name=cur.fetchall()
-                        obj=dashBoard_teacher(screen,gv_name[0][0])
+                        obj=dashBoard_teacher(screen,gv_name[0][0],account[0])
                         root.destroy()  
                         screen.mainloop()
                         accountFound=True
