@@ -102,7 +102,6 @@ class dashBoard_student:
         self.cur.execute('select * from HOCSINH')
         data = self.cur.fetchall()
         for student in data:
-            print(student)
             if student[0] == self.id:
                 self.fullName = student[1]
                 if student[2] != None:
