@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="ql_deTHI" id="9D919C21-C25E-9760-ED7C-DC9D433F6C6B" version="3.5">
+<createdBy>nphat</createdBy>
+<createdTime>2024-09-26 03:39:00 UTC</createdTime>
+<ownerDesignName>ql_deTHI</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>9D919C21-C25E-9760-ED7C-DC9D433F6C6B</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="D207DC82-E84B-41C6-B33C-671F94A56846">
+<designStoragePath>C:\</designStoragePath>
+</designDescr>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="0B79C78E-DD0E-ED8F-DC50-01FCA735FEDE">
+<designStoragePath>C:\</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>
