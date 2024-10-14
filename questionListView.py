@@ -5,9 +5,8 @@ from Teachers import *
 from tkinter import *
 
 class Application:
-    def __init__(self,teacherView,jsonFilePath):
+    def __init__(self,teacherView):
         super().__init__()
-        self.jsonFilePath=jsonFilePath
         self.teacherView=teacherView
         self.questions = Questions()
         self.teacher = Teacher()
@@ -35,7 +34,7 @@ class Application:
         scrolly = Scrollbar(self.teacherView, orient="vertical")
         scrollx = Scrollbar(self.teacherView, orient="horizontal")
 
-        self.tree = ttk.Treeview(self.teacherView, columns=("question", "A","B","C","D", "answer"), yscrollcommand = scrolly.set, xscrollcommand=scrollx.set)
+        self.tree = ttk.Treeview(self.teacherView, columns=("MACAUHOI", "CAUHOI", "DAPANA","DAPANB","DAPANC","DAPAND", "DAPAN_DUNG"), yscrollcommand = scrolly.set, xscrollcommand=scrollx.set)
 
         scrollx.place(x=20,y=330, width=880)
         scrolly.place(x=900,y=50,height=280)
@@ -45,22 +44,24 @@ class Application:
 
         self.tree.heading("#0", text="ID")
         self.tree.column("#0",width=45,anchor='nw')
-        self.tree.heading("question", text="Question")
-        self.tree.heading("A", text="A")
-        self.tree.heading("B", text="B")
-        self.tree.heading("C", text="C")
-        self.tree.heading("D", text="D")
-        self.tree.heading("answer", text="Answer")
-        self.tree.column("answer",width=60,anchor='nw')
+        self.tree.heading("MACAUHOI", text="MACAUHOI")
+        self.tree.heading("CAUHOI", text="Question")
+        self.tree.heading("DAPANA", text="A")
+        self.tree.heading("DAPANB", text="B")
+        self.tree.heading("DAPANC", text="C")
+        self.tree.heading("DAPAND", text="D")
+        self.tree.heading("DAPAN_DUNG", text="Answer")
+        self.tree.column("DAPAN_DUNG",width=60,anchor='nw')
         self.tree.place(x=20,y=50,width=880,height=280)
-        self.load_questions(self.jsonFilePath)
+
+        self.load_questions()
         self.display_questions()
         
-        self.countLabel=Label(self.teacherView,text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()),bg='white',font=('Arial', 13, 'italic'))
-        self.countLabel.place(x=10,y=410)
+        # self.countLabel=Label(self.teacherView,text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()),bg='white',font=('Arial', 13, 'italic'))
+        # self.countLabel.place(x=10,y=410)
 
-    def load_questions(self,jsonFilePath):
-        self.teacher.add_question_file(self.jsonFilePath)
+    def load_questions(self):
+        self.teacher.add_question_file()
         
     def create_question(self):
         create_window = Toplevel(self.teacherView)
@@ -197,21 +198,22 @@ class Application:
     def display_questions(self):
         self.tree.delete(*self.tree.get_children())
         for idx, question in enumerate(self.teacher.questions, 1):
-            question_text, A,B,C,D,answer = self.teacher.display_question(idx - 1)
-            self.tree.insert("", "end", text=str(idx), values=(question_text,A,B,C,D,answer))
+            print(question)
+            id,question_text, A,B,C,D,answer = self.teacher.display_question(idx-1)
+            self.tree.insert("", "end", text=str(idx), values=(id,question_text,A,B,C,D,answer))
 
     def count_question(self):
-        return self.questions.count_ques(self.jsonFilePath)
+        return self.questions.count_ques()
     
     def refreshTabel(self):
-        # self.tree.delete(*self.tree.get_children())
+        self.tree.delete(*self.tree.get_children())
         self.display_questions()
         self.countLabel.config(text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()))
 
 
 if __name__ == "__main__":
     teacherView=Tk()
-    obj = Application(teacherView,r"data\dia.json")
+    obj = Application(teacherView)
     teacherView.mainloop()
 
 
