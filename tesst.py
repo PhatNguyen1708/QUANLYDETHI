@@ -33,9 +33,9 @@ else:
 		# dob = datetime.strptime(dob, "%d-%m-%Y")
 		# cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
 		# con.commit()
-		cur.execute('select * from HOCSINH where MSHS=:a',{'a':a})
-		rows = cur.fetchall()
-		print(rows)
+		cur.execute('select * from cauhoi')
+		rows = cur.fetchone()
+		print(cur.callfunc("f_decryptData", cx_Oracle.STRING, [rows[7]]))
 
 	except cx_Oracle.DatabaseError as er:
 		print('There is an error in the Oracle database:', er)

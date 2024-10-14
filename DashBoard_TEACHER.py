@@ -32,7 +32,10 @@ class dashBoard_teacher:
         leftFrame=Frame(self.dB,bd=0,relief=RIDGE, bg='#57a1f8')
         leftFrame.place(x=0, y=0, width=210, height=700)
 
-        self.nameLabel = Label(leftFrame, text=f"Họ và tên: \n{self.fullname}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.inflable = Label(leftFrame, bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'),width=18,height=8)
+        self.inflable.place(x=10, y=20)
+
+        self.nameLabel = Label(leftFrame, text=f"Họ và tên: \n{self.fullname}",fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
         self.nameLabel.place(x=10, y=20)
 
         self.idLabel = Label(leftFrame, text=f"MSGV: {self.id}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
@@ -130,8 +133,8 @@ class dashBoard_teacher:
         self.tree2.heading("dob",text='Ngày sinh')
         self.tree2.heading("address",text='Địa chỉ')
         self.tree2.place(x=230,y=410,width=635)
-        # data=self.load_student_accounts(r'data\Accounts.json')
-        # self.insert_Data(data)
+        data=self.load_student_accounts()
+        self.insert_Data(data)
         
         scrollx2.place(x=230,y=635,width=635)
         scrollx2.config(command=self.tree2.xview)
@@ -159,7 +162,6 @@ class dashBoard_teacher:
         self.cur.execute('select * from GIAOVIEN')
         data = self.cur.fetchall()
         for teacher in data:
-            print(teacher)
             if teacher[0] == self.id:
                 self.fullName = teacher[1]
                 if teacher[2] != None:
@@ -173,76 +175,76 @@ class dashBoard_teacher:
                 self.dobLabel.config(text=f'Ngày sinh: {self.dob}')
                 break
 
-    def updateInfo(self):
-        window = Toplevel(self.studentView)
-        window.title("Cập nhật thông tin học sinh")
-        window.geometry('450x300+550+350')
-        window.config(background='white')
+    # def updateInfo(self):
+    #     window = Toplevel(self.studentView)
+    #     window.title("Cập nhật thông tin ")
+    #     window.geometry('450x300+550+350')
+    #     window.config(background='white')
 
-        updateLabel = Label(window,text='Cập nhật thông tin học sinh', bg='white',  fg='black', font=('Arial', 15, 'bold')).place(x=90,y=10)
+    #     updateLabel = Label(window,text='Cập nhật thông tin học sinh', bg='white',  fg='black', font=('Arial', 15, 'bold')).place(x=90,y=10)
 
-        fullnameLabel=Label(window,text='Họ và tên: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=45)
-        fullnameEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-        fullnameEntry.place(x=110,y=45)
-        fullnameEntry.insert(0,self.fullName)
+    #     fullnameLabel=Label(window,text='Họ và tên: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=45)
+    #     fullnameEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+    #     fullnameEntry.place(x=110,y=45)
+    #     fullnameEntry.insert(0,self.fullName)
 
-        idLabel=Label(window,text='Mã số: ' + self.id, bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=75)
+    #     idLabel=Label(window,text='Mã số: ' + self.id, bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=75)
 
-        genderLabel=Label(window,text='Giới tính: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=200,y=75)
-        genderEntry=Entry(window,width=16, bg='white',font=('Arial', 13))
-        genderEntry.place(x=280,y=75)
-        genderEntry.insert(0,self.gender)
+    #     genderLabel=Label(window,text='Giới tính: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=200,y=75)
+    #     genderEntry=Entry(window,width=16, bg='white',font=('Arial', 13))
+    #     genderEntry.place(x=280,y=75)
+    #     genderEntry.insert(0,self.gender)
 
 
-        classLabel=Label(window,text='Lớp: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=105)
-        classEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-        classEntry.place(x=110,y=105)
-        classEntry.insert(0,str(self.lop))
+    #     classLabel=Label(window,text='Lớp: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=105)
+    #     classEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+    #     classEntry.place(x=110,y=105)
+    #     classEntry.insert(0,str(self.lop))
 
-        dobLabel=Label(window,text='Ngày sinh: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=135)
-        dobEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-        dobEntry.place(x=110,y=135)
-        dobEntry.insert(0,self.dob)
+    #     dobLabel=Label(window,text='Ngày sinh: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=135)
+    #     dobEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+    #     dobEntry.place(x=110,y=135)
+    #     dobEntry.insert(0,self.dob)
 
-        addressLabel=Label(window,text='Địa chỉ: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=165)
-        addressEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-        addressEntry.place(x=110,y=165)
-        addressEntry.insert(0,self.address)
+    #     addressLabel=Label(window,text='Địa chỉ: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=165)
+    #     addressEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
+    #     addressEntry.place(x=110,y=165)
+    #     addressEntry.insert(0,self.address)
 
-        def checkDOB(dob):
-            ngay_sinh = dob
-            ngay_hien_tai = datetime.now()
-            tuoi = ngay_hien_tai.year - ngay_sinh.year - ((ngay_hien_tai.month, ngay_hien_tai.day) < (ngay_sinh.month, ngay_sinh.day))
-            if tuoi >= 16:
-                return True
-            else:
-                messagebox.showerror('Error','Tuổi không hợp lệ')
-                return False
+    #     def checkDOB(dob):
+    #         ngay_sinh = dob
+    #         ngay_hien_tai = datetime.now()
+    #         tuoi = ngay_hien_tai.year - ngay_sinh.year - ((ngay_hien_tai.month, ngay_hien_tai.day) < (ngay_sinh.month, ngay_sinh.day))
+    #         if tuoi >= 16:
+    #             return True
+    #         else:
+    #             messagebox.showerror('Error','Tuổi không hợp lệ')
+    #             return False
             
-        def checkClass(Class):
-            # Class = int(Class)
-            # if Class < 10 or Class > 12:
-            #     messagebox.showerror('Error','Lớp không hợp lệ')
-            #     return False
-            return True
+    #     def checkClass(Class):
+    #         # Class = int(Class)
+    #         # if Class < 10 or Class > 12:
+    #         #     messagebox.showerror('Error','Lớp không hợp lệ')
+    #         #     return False
+    #         return True
 
-        def updateData():
-            fullname=fullnameEntry.get()
-            gender=genderEntry.get()
-            Class=classEntry.get()
-            dob=dobEntry.get()
-            dob = datetime.strptime(dob, "%d-%m-%Y")
-            address=addressEntry.get()
-            if checkDOB(dob) == True:
-                self.cur.execute("UPDATE HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
-                self.con.commit()
-                userExist=True
-            if not userExist:
-                    messagebox.showwarning("Lỗi","Không tìm thấy mã số")
-            self.refreshInfoView()
-            window.destroy()
+    #     def updateData():
+    #         fullname=fullnameEntry.get()
+    #         gender=genderEntry.get()
+    #         Class=classEntry.get()
+    #         dob=dobEntry.get()
+    #         dob = datetime.strptime(dob, "%d-%m-%Y")
+    #         address=addressEntry.get()
+    #         if checkDOB(dob) == True:
+    #             self.cur.execute("UPDATE HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
+    #             self.con.commit()
+    #             userExist=True
+    #         if not userExist:
+    #                 messagebox.showwarning("Lỗi","Không tìm thấy mã số")
+    #         self.refreshInfoView()
+    #         window.destroy()
         
-        updateButton = Button(window,text='Cập nhật thông tin',activebackground='white',bg='#64a587', font=('Arial', 10, 'bold'),command=updateData).place(x=160,y=200)
+    #     updateButton = Button(window,text='Cập nhật thông tin',activebackground='white',bg='#64a587', font=('Arial', 10, 'bold'),command=updateData).place(x=160,y=200)
 
 
 #-------------------------------- CÁC FUNC LÀM VIỆC VỚI BẢNG KQHT
@@ -322,39 +324,36 @@ class dashBoard_teacher:
                 self.tree.insert("", "end", text=str(idx), values=(id,fullname, subject, soDe, score, time_completed))
                 idx +=1
 
-    def load_student_accounts(self,file_path):
-        with open(file_path, "r", encoding="utf-8") as file:
-            accounts_data = json.load(file)
-        student_accounts = [account for account in accounts_data if account.get("type") == "Student"]
+    def load_student_accounts(self):
+        self.cur.execute('select * from HOCSINH')
+        student_accounts = self.cur.fetchall()
         return student_accounts
 
     def count_students(self,filepath):
-        try:
-            with open(filepath, 'r', encoding='utf-8') as file:
-                data = json.load(file)
-                student_count = sum(1 for user in data if user.get('type', '') == 'Student')
-                return student_count
-        except FileNotFoundError:
-            print("File not found!")
+        self.cur.execute('select * from HOCSINH')
+        student_accounts = self.cur.fetchall()
+        if len(student_accounts)!=0:
+            return len(student_accounts)
+        else:
             return 0
     
     def view(self):
         for result in self.tree.get_children():
             self.tree.delete(result)
         self.tree.delete(*self.tree.get_children())
-        data=self.load_student_accounts(r'data\Accounts.json')
+        data=self.load_student_accounts()
         self.insert_resultData(data)
 
 #-------------------------------- CÁC FUNC LÀM VIỆC VỚI BẢNG TTHS
     def insert_Data(self, data):
         idx=1
         for i, user in enumerate(data):
-            id=user.get("id","")
-            fullname = user.get("fullname", "")
-            gender = user.get("gender", "")
-            lop = user.get("class", "")
-            dob = user.get("dob", "")
-            address = user.get("address", "")
+            id=user[0]
+            fullname = user[1]
+            gender = user[3]
+            lop = user[5]
+            dob = user[2].strftime('%d-%m-%Y')
+            address = user[4]
             self.tree2.insert("", "end", text=str(idx), values=(id,fullname, gender, lop, dob, address))
             idx +=1
 
@@ -406,5 +405,5 @@ class dashBoard_teacher:
 
 if __name__ == "__main__":
     menu=Tk()
-    obj=dashBoard_teacher(menu,'Trần Thị Kiều','GV0009')
+    obj=dashBoard_teacher(menu,'Trần Thị Kiều','GV0003')
     menu.mainloop()

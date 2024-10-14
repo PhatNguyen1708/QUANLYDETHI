@@ -1,5 +1,5 @@
 from Questions import *
-from crawlWebtoJSON import *
+from   import *
 from tkinter import messagebox
 
 class Teacher(Questions):

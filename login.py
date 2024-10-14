@@ -101,7 +101,7 @@ class signin:
                     p=r'[A-Za-z0-9_#@$%&*^+=]{8,}'
                     if passWord==passWordConfirm and re.fullmatch(p,passWord): #kiểm tra mật khẩu có đúng định dạng và id có phải là một chuối 10 chữ số k
                         passWord = cur.callfunc("f_encryptData", cx_Oracle.STRING, [passWord])
-                        cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id': id, 'passWord': passWord})
+                        cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id':  id, 'passWord': passWord})
                         if re.search(r'^HS',id):
                             cur.execute('INSERT INTO HOCSINH (MSHS, HOTENHS) VALUES (:MSHS, :HOTENHS)', {'MSHS': id, 'HOTENHS': fullName})
                         else:
