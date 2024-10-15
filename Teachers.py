@@ -2,11 +2,15 @@ from Questions import *
 from tkinter import messagebox
 
 class Teacher(Questions):
-    def __init__(self):
+    def __init__(self,subject_code):
         super().__init__()
+        self.subject_code = subject_code
         
     def add_question_file(self):
-        super().getQues()
+        if self.subject_code:
+            super().getQues(self.subject_code)
+        else:
+            print("Mã môn học không tồn tại!")
 
     def Create(self,question, options, answer,filepath):
         question_data = {

@@ -31,8 +31,11 @@ class dashBoard_student:
 
         title = Label(self.studentView, text='Hệ thống làm bài tập trắc nghiệm', bg='white', fg='black', font=('Arial', 20, 'bold')).place(x=320, y=0)
 
-        leftFrame = Frame(self.studentView, bd=0, relief=RIDGE, bg='#64a587')
-        leftFrame.place(x=0, y=0, width=210, height=530)
+        self.leftFrame = Frame(self.studentView, bd=0, relief=RIDGE, bg='#64a587')
+        self.leftFrame.place(x=0, y=0, width=210, height=530)
+
+        self.test = Label(self.leftFrame,text="hello")
+        self.test.place(x=10,y=10)
 
         self.helpButton=Button(self.studentView, text='?',bg='#64a587',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 

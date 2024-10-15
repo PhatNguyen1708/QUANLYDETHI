@@ -15,9 +15,9 @@ class Questions():
             print('There is an error in the Oracle database:',er)
         self.cursor = self.con.cursor()
 
-    def getQues(self):
-        query = "SELECT MACAUHOI, CAUHOI, DAPANA, DAPANB, DAPANC, DAPAND, DAPAN_DUNG FROM CAUHOI"
-        self.cursor.execute(query)
+    def getQues(self, subject_code):
+        query = "SELECT MACAUHOI, CAUHOI, DAPANA, DAPANB, DAPANC, DAPAND, DAPAN_DUNG FROM CAUHOI WHERE MAMONHOC = :subject_code"
+        self.cursor.execute(query, subject_code = subject_code)
         
         self.questions = []
         
@@ -32,15 +32,15 @@ class Questions():
 
             self.questions.append(question_data)
     
-    def add_fileJson(self,jsonFilePath):
-        file=open(jsonFilePath,"r",encoding='utf-8')
-        y=json.load(file)
-        for i in y:
-            self.questions.append(i)
+    # def add_fileJson(self,jsonFilePath):
+    #     file=open(jsonFilePath,"r",encoding='utf-8')
+    #     y=json.load(file)
+    #     for i in y:
+    #         self.questions.append(i)
 
-    def save_question(self,jsonFilePath):
-        with open(jsonFilePath, 'w',encoding='utf-8') as file:
-            json.dump(self.questions,file, indent=4)
+    # def save_question(self,jsonFilePath):
+    #     with open(jsonFilePath, 'w',encoding='utf-8') as file:
+    #         json.dump(self.questions,file, indent=4)
 
     def display_question(self, index):
             if 0 <= index < len(self.questions):

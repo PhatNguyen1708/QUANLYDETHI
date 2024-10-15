@@ -2,9 +2,17 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import *
 import json, ast, re, string, os.path
-from crawlWebtoJSON import Crawl
 from Questions import Questions
 from questionListView import Application
+
+class anh:
+    def __init__(self):
+        super().__init__
+        self.questions=Questions()
+        teacherView=Tk()
+        subject_code = "MH00001"
+        obj=Application(teacherView, self.questions, subject_code)
+        teacherView.mainloop()
 
 class sinhhoc:
     def __init__(self):
@@ -46,14 +54,6 @@ class van:
         obj=Application(teacherView,r'data\van.json')
         teacherView.mainloop()
 
-class anh:
-    def __init__(self):
-        super().__init__
-        self.questions=Questions()
-        teacherView=Tk()
-        obj=Application(teacherView,r'data\anh.json')
-        teacherView.mainloop()
-
 class su:
     def __init__(self):
         super().__init__
@@ -79,5 +79,5 @@ class gdcd:
         teacherView.mainloop()
 
 if __name__=='__main__':
-    sinhhoc()
+    anh()
 

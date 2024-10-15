@@ -5,11 +5,11 @@ from Teachers import *
 from tkinter import *
 
 class Application:
-    def __init__(self,teacherView):
+    def __init__(self,teacherView,subject_code):
         super().__init__()
         self.teacherView=teacherView
         self.questions = Questions()
-        self.teacher = Teacher()
+        self.teacher = Teacher(subject_code)
 
         #### khởi tạo window
         self.teacherView.title("Quiz Management System")
@@ -198,7 +198,6 @@ class Application:
     def display_questions(self):
         self.tree.delete(*self.tree.get_children())
         for idx, question in enumerate(self.teacher.questions, 1):
-            print(question)
             id,question_text, A,B,C,D,answer = self.teacher.display_question(idx-1)
             self.tree.insert("", "end", text=str(idx), values=(id,question_text,A,B,C,D,answer))
 
@@ -212,10 +211,8 @@ class Application:
 
 
 if __name__ == "__main__":
+    questions=Questions()
     teacherView=Tk()
-    obj = Application(teacherView)
+    subject_code = "MH00001"
+    obj = Application(teacherView, subject_code)
     teacherView.mainloop()
-
-
-
-

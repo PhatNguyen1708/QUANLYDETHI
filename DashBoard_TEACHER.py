@@ -6,6 +6,8 @@ from PIL import Image,ImageTk
 from tkinter import messagebox, simpledialog
 import cx_Oracle
 from datetime import datetime
+from subjects import *
+from functools import partial
 
 
 class dashBoard_teacher:
@@ -29,32 +31,39 @@ class dashBoard_teacher:
 
         title=Label(self.dB,text='Hệ thống quản lí câu hỏi, đề thi trắc nghiệm',bg='white',fg='#57a1f8', font=('Arial', 20, 'bold')).place(x=260,y=2)
 
-        leftFrame=Frame(self.dB,bd=0,relief=RIDGE, bg='#57a1f8')
-        leftFrame.place(x=0, y=0, width=210, height=700)
+        self.leftFrame=Frame(self.dB,bd=0,relief=RIDGE, bg='#57a1f8')
+        self.leftFrame.place(x=0, y=0, width=210, height=700)
 
-        self.inflable = Label(leftFrame, bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'),width=18,height=8)
+        self.inflable = Label(self.leftFrame, bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'),width=18,height=8)
         self.inflable.place(x=10, y=20)
 
-        self.nameLabel = Label(leftFrame, text=f"Họ và tên: \n{self.fullname}",fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.nameLabel = Label(self.leftFrame, text=f"Họ và tên: \n{self.fullname}",fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
         self.nameLabel.place(x=10, y=20)
 
-        self.idLabel = Label(leftFrame, text=f"MSGV: {self.id}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.idLabel = Label(self.leftFrame, text=f"MSGV: {self.id}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
         self.idLabel.place(x=10, y=70)
 
-        self.genderLabel = Label(leftFrame, text=f"Giới Tính: {self.gender}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.genderLabel = Label(self.leftFrame, text=f"Giới Tính: {self.gender}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
         self.genderLabel.place(x=10, y=100)
 
-        self.dobLabel = Label(leftFrame, text=f"Ngày sinh: {self.dob}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
+        self.dobLabel = Label(self.leftFrame, text=f"Ngày sinh: {self.dob}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
         self.dobLabel.place(x=10, y=130)
 
         self.refreshInfoView()
+        self.DSMONHOC()
 
+        self.questionButton = Button(self.leftFrame, text='Truy vấn câu hỏi', font=('Arial', 15, 'bold'), 
+                                     width=15, bg='white', bd=0, 
+                                     activebackground='#57a1f8', 
+                                     command=self.query_questions)
+        self.questionButton.place(x=10, y=350)
 
 #-------------------------------------- KHỞI TẠO CÁC NÚT LỰA CHỌN MÔN HỌC 
-
-        # self.menuLabel=Label(leftFrame,text='Danh sách môn học',fg='white',bg='#57a1f8',font=('Arial', 15, 'bold'))
-        # self.menuLabel.place(x=3,y=0)
-        # self.toanButton=Button(leftFrame,text='Toán học',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.toanhoc,state='disabled')
+        self.menuLabel=Label(self.leftFrame,text='Danh sách môn học',fg='white',bg='#57a1f8',font=('Arial', 15, 'bold'))
+        self.menuLabel.place(x=10,y=230)
+        # self.anhButton=Button(self.leftFrame,text='Anh văn',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=partial(self.question,"1"))
+        # self.anhButton.place(x=10,y=190)
+        # self.toanButton=Button(self.leftFrame,text='Toán học',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.toanhoc,state='disabled')
         # self.toanButton.place(x=10,y=30)
         # self.vatlyButton=Button(leftFrame,text='Vật lý',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.vatly)
         # self.vatlyButton.place(x=10,y=80)
@@ -64,8 +73,6 @@ class dashBoard_teacher:
         # self.sinhhocButton.place(x=10,y=180)
         # self.vanButton=Button(leftFrame,text='Ngữ văn',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.vanhoc,state='disabled')
         # self.vanButton.place(x=10,y=230)
-        # self.anhButton=Button(leftFrame,text='Anh văn',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.anhhoc)
-        # self.anhButton.place(x=10,y=280)
         # self.suButton=Button(leftFrame,text='Lịch sử',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.suhoc)
         # self.suButton.place(x=10,y=330)
         # self.diaButton=Button(leftFrame,text='Địa lý',font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=self.diahoc)
@@ -144,7 +151,7 @@ class dashBoard_teacher:
 
         self.helpButton=Button(self.dB, text='?',bg='#57a1f8',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 
-        
+
     def help(self):
         window = Toplevel(self.dB)
         window.title("Hướng dẫn sử đụng")
@@ -358,52 +365,72 @@ class dashBoard_teacher:
             idx +=1
 
 #-------------------------------------- CÁC FUNCTION KHI LỰA CHỌN MÔN HỌC
-    # def hoahoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.hoahocwindow=hoahoc()
+ 
 
-    # def sinhhoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.sinhhocwindow=sinhhoc()
+    def question(self,subject_code):
+        self.window=Toplevel(self.dB)
+        self.window.destroy()
+        teacherView=Tk()
+        obj=Application(teacherView, subject_code)
+        teacherView.mainloop()
 
-    # def vatly(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.vatlywindow=vatly()    
-    
-    # def toanhoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.toanwindow=toan()  
+    def DSMONHOC(self):
+        self.cur.execute('select TENMONHOC from MONHOC,GIAOVIEN where MSGV =:a and GIAOVIEN.MAMONHOC = MONHOC.MAMONHOC',{'a':self.id})
+        data = self.cur.fetchall()
+        print(data)
+        if data == []:
+            return
+        self.cur.execute('select MAMONHOC from GIAOVIEN where MSGV =:a',{'a':self.id})
+        tenmon = self.cur.fetchall()
+        button = Button(self.leftFrame,text=data[0][0],font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=partial(self.question,tenmon[0][0]))
+        button.place(x=10,y=290)
+        
 
-    # def vanhoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.vanwindow=van()  
+    def query_questions(self):
+        question_window = Toplevel(self.dB)
+        question_window.title("Truy vấn câu hỏi")
+        question_window.geometry('600x400+400+200')
+        question_window.config(bg='white')
 
-    # def anhhoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.anhwindow=anh()  
+        # Nhãn tiêu đề
+        titleLabel = Label(question_window, text='Danh sách câu hỏi', bg='white', fg='black', 
+                           font=('Arial', 15, 'bold')).pack(pady=10)
 
-    # def suhoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.suwindow=su()  
+        # Bảng để hiển thị câu hỏi
+        self.questions_tree = ttk.Treeview(question_window, columns=("MACAUHOI", "CAUHOI", "DAPANA", "DAPANB", "DAPANC", "DAPAND"), show='headings')
+        self.questions_tree.heading("MACAUHOI", text='Mã câu hỏi')
+        self.questions_tree.heading("CAUHOI", text='Câu hỏi')
+        self.questions_tree.heading("DAPANA", text='Đáp án A')
+        self.questions_tree.heading("DAPANB", text='Đáp án B')
+        self.questions_tree.heading("DAPANC", text='Đáp án C')
+        self.questions_tree.heading("DAPAND", text='Đáp án D')
 
-    # def diahoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.diawindow=dia()  
+        self.questions_tree.pack(fill=BOTH, expand=True)
 
-    # def gdcdhoc(self):
-    #     self.window=Toplevel(self.dB)
-    #     self.window.destroy()
-    #     self.gdcdwindow=gdcd()  
+        # Thực hiện truy vấn câu hỏi từ cơ sở dữ liệu
+        self.load_questions()
+
+    def load_questions(self):
+        # Lấy mã môn học của giáo viên từ cơ sở dữ liệu
+        self.cur.execute("SELECT MAMONHOC FROM GIAOVIEN WHERE MSGV = :id", {'id': self.id})
+        subject_code = self.cur.fetchone()
+
+        if subject_code:
+            subject_code = subject_code[0]
+
+            # Truy vấn câu hỏi theo mã môn học
+            self.cur.execute("SELECT MACAUHOI, CAUHOI, DAPANA, DAPANB, DAPANC, DAPAND FROM CAUHOI WHERE MAMONHOC = :subject_code", 
+                             {'subject_code': subject_code})
+            questions = self.cur.fetchall()
+
+            # Hiển thị câu hỏi vào bảng
+            for question in questions:
+                self.questions_tree.insert('', 'end', values=question)
+        else:
+            messagebox.showwarning("Thông báo", "Không tìm thấy môn học của giáo viên.")
+
 
 if __name__ == "__main__":
     menu=Tk()
-    obj=dashBoard_teacher(menu,'Trần Thị Kiều','GV0003')
+    obj=dashBoard_teacher(menu,'Trần Thị Kiều','GV0001')
     menu.mainloop()
