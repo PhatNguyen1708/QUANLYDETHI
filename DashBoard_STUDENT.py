@@ -34,9 +34,6 @@ class dashBoard_student:
         self.leftFrame = Frame(self.studentView, bd=0, relief=RIDGE, bg='#64a587')
         self.leftFrame.place(x=0, y=0, width=210, height=530)
 
-        self.test = Label(self.leftFrame,text="hello")
-        self.test.place(x=10,y=10)
-
         self.helpButton=Button(self.studentView, text='?',bg='#64a587',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 
 #--------------------------------- KHỞI TẠO BẢNG KẾT QUẢ HỌC TẬP CỦA HỌC SINH
@@ -169,7 +166,7 @@ class dashBoard_student:
                 return False
             
         def checkClass(Class):
-            # Class = int(Class)
+            # self.cur.execute('select * from HOCSINH')
             # if Class < 10 or Class > 12:
             #     messagebox.showerror('Error','Lớp không hợp lệ')
             #     return False
@@ -235,6 +232,7 @@ class dashBoard_student:
             self.tree.delete(result)
         data=self.load_student_result(r'data\Accounts.json')    
         self.insert(data)
+
 
     def help(self):
         window = Toplevel(self.studentView)

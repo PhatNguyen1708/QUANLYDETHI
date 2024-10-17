@@ -6,7 +6,7 @@ from PIL import Image,ImageTk
 from tkinter import messagebox, simpledialog
 import cx_Oracle
 from datetime import datetime
-from subjects import *
+from questionListView import *
 from functools import partial
 
 
@@ -52,11 +52,11 @@ class dashBoard_teacher:
         self.refreshInfoView()
         self.DSMONHOC()
 
-        self.questionButton = Button(self.leftFrame, text='Truy vấn câu hỏi', font=('Arial', 15, 'bold'), 
-                                     width=15, bg='white', bd=0, 
-                                     activebackground='#57a1f8', 
-                                     command=self.query_questions)
-        self.questionButton.place(x=10, y=350)
+        # self.questionButton = Button(self.leftFrame, text='Truy vấn câu hỏi', font=('Arial', 15, 'bold'), 
+        #                              width=15, bg='white', bd=0, 
+        #                              activebackground='#57a1f8', 
+        #                              command=self.query_questions)
+        # self.questionButton.place(x=10, y=350)
 
 #-------------------------------------- KHỞI TẠO CÁC NÚT LỰA CHỌN MÔN HỌC 
         self.menuLabel=Label(self.leftFrame,text='Danh sách môn học',fg='white',bg='#57a1f8',font=('Arial', 15, 'bold'))
@@ -365,8 +365,6 @@ class dashBoard_teacher:
             idx +=1
 
 #-------------------------------------- CÁC FUNCTION KHI LỰA CHỌN MÔN HỌC
- 
-
     def question(self,subject_code):
         self.window=Toplevel(self.dB)
         self.window.destroy()
