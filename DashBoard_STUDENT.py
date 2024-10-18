@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from datetime import datetime
+from datetime import datetime, timedelta
 import json, tkinter, string
 from tkinter import messagebox, simpledialog
 import cx_Oracle
@@ -15,7 +15,7 @@ class dashBoard_student:
         self.dob = ""
         self.address = ""
         self.funtion = None
-        self.ketqua()
+        self.exam_schedule()
 
         self.studentView.geometry('925x530+300+200')
         self.studentView.title('Dashboard - Trang chủ học sinh')
@@ -35,20 +35,23 @@ class dashBoard_student:
         self.frame_funtion = Frame(self.studentView, bd=0, relief=RIDGE, bg='Silver')
         self.frame_funtion.place(x=0, y=0, width=210, height=530)
         
-        self.title_funtion = Label(self.frame_funtion,text="Danh sách chức năng",bg="silver",font=('Arial', 11, 'bold'))
-        self.title_funtion.place(x=30,y=10)
+        self.title_funtion = Label(self.frame_funtion,text="Danh sách chức năng",bg="silver",font=('Arial', 13, 'bold'))
+        self.title_funtion.place(x=17,y=10)
 
         self.updateButton = Button(self.frame_funtion,text='Cập nhật thông tin',activeforeground='white',fg='black',bg='white', font=('Arial', 10, 'bold'),command=self.updateInfo)
         self.updateButton.place(x=10,y=50,width=190,height=30)
 
-        self.ketquaButton = Button(self.frame_funtion,text='Kết quả học tập',activeforeground='white',fg='black',bg='white', font=('Arial', 10, 'bold'),command=self.ketqua)
-        self.ketquaButton.place(x=10,y=90,width=190,height=30)
+        self.exam_resultsButton = Button(self.frame_funtion,text='Kết quả học tập',activeforeground='white',fg='black',bg='white', font=('Arial', 10, 'bold'),command=self.exam_results)
+        self.exam_resultsButton.place(x=10,y=90,width=190,height=30)
         
+        self.exam_scheduleButton = Button(self.frame_funtion,text='Lịch Thi',activeforeground='white',fg='black',bg='white', font=('Arial', 10, 'bold'),command=self.exam_schedule)
+        self.exam_scheduleButton.place(x=10,y=130,width=190,height=30)
 
         self.helpButton=Button(self.studentView, text='?',bg='#64a587',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 
+
 #--------------------------------- KHỞI TẠO BẢNG KẾT QUẢ HỌC TẬP CỦA HỌC SINH
-    def ketqua(self):
+    def exam_results(self):
         #-------kiểm tra xem có cái frame chưa nè
         if self.funtion:
             self.funtion.destroy()
@@ -216,6 +219,17 @@ class dashBoard_student:
         updateButton = Button(self.funtion,text='Cập nhật thông tin',activebackground='white',bg='#64a587', font=('Arial', 10, 'bold'),command=updateData).place(x=300,y=200)
 
 #---------------------------------- TẠO LỊCH THI
+    def exam_schedule(self):
+         #-------kiểm tra xem có cái frame chưa nè
+        if self.funtion:
+            self.funtion.destroy()
+
+        #-------tạo frame đồ đó
+        self.funtion = Frame(self.studentView, bd=0, relief=RIDGE, bg='white',width=712,height=328,highlightbackground="black", highlightthickness=2)
+        self.funtion.place(x=210,y=200)
+
+        
+
 
 
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
