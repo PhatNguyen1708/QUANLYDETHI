@@ -26,16 +26,19 @@ else:
 		# print(rows)
 
 		# fetchone() is used fetch one record from top of the result set
-		a='HS00001'
+		mahs='HS00001'
 		Class = "Hello"
 		address = "rsw"
+		sode = "DT00001"
+		mamonhoc = "MH00003"
 		# dob = input()
 		# dob = datetime.strptime(dob, "%d-%m-%Y")
 		# cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
 		# con.commit()
-		cur.execute('select * from cauhoi')
-		rows = cur.fetchone()
-		print(cur.callfunc("f_decryptData", cx_Oracle.STRING, [rows[7]]))
+		cur.execute('select cauhoi,dapana,dapanb,dapanc,dapand from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
+		rows = cur.fetchall()
+		for data in rows:
+			print(data)
 
 	except cx_Oracle.DatabaseError as er:
 		print('There is an error in the Oracle database:', er)

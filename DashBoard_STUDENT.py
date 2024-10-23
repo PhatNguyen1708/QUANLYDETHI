@@ -232,43 +232,11 @@ class dashBoard_student:
 
 
 
-#--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
-    def load_student_result(self, filepath):
-        with open(filepath, "r", encoding="utf-8") as file:
-            accounts_data = json.load(file)
-        student_accounts = [account for account in accounts_data if account.get("type") == "Student" and account.get("id") == self.id]
-        return student_accounts
-    
-    def insert(self,data):
-        idx=1
-        for i, user in enumerate(data):
-            quizzes = user.get("quizzes", [])
-            for quiz in quizzes:
-                score = quiz.get("score", "")
-                subject = quiz.get("subject", "")
-                if subject == 'hoahoc':
-                    subject = 'Hóa học'
-                elif subject == 'sinhhoc':
-                    subject = 'Sinh học'
-                elif subject == 'vatly':
-                    subject = 'Vật lý'
-                elif subject == 'toan':
-                    subject = 'Toán'
-                elif subject == 'van':
-                    subject = 'Ngữ Văn'
-                elif subject == 'anh':
-                    subject = 'Tiếng Anh'
-                elif subject == 'su':
-                    subject = 'Lịch sử'
-                elif subject == 'dia':
-                    subject = 'Địa lý'
-                elif subject == 'gdcd':
-                    subject = 'GDCD'
-                soDe = quiz.get("soDe", "")
-                time_completed = quiz.get("time_completed", "")
-                self.tree.insert("", "end", text=str(idx), values=(subject, soDe, score, time_completed))
-                idx +=1
+        
 
+
+
+#--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
     def refresh(self):
         for result in self.tree.get_children():
             self.tree.delete(result)
