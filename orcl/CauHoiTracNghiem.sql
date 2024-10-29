@@ -368,4 +368,6 @@ DROP TABLE DETHI_MONHOC
 DROP TABLE MONHOC
 DROP TABLE DETHI
 
-
+select cauhoi,dapana,dapanb,dapanc,dapand,f_decryptData(DAPAN_DUNG) 
+from dethi, dethi_monhoc , cauhoi 
+where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc

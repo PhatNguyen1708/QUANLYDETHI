@@ -4,13 +4,12 @@ import json, random, datetime
 import cx_Oracle
 
 class QuizApp: 
-    def __init__(self, window,soDe,mamonhoc, subject,id):
+    def __init__(self, window,soDe,mamonhoc,id):
 
         self.id=id
         self.soDe=soDe
         self.mamonhoc=mamonhoc
 
-        self.subject=subject
         try:
             self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
         except cx_Oracle.DatabaseError as er:
@@ -23,7 +22,7 @@ class QuizApp:
         self.window.config(bg='white')
 #------------------------ KHỞI TẠO CÁC KHUNG VÀ CHÈN CÂU HỎI, ĐÁP ÁN
 
-        self.questions = self.load_questions_from_file(self.soDe,self.mamonhoc)
+        self.questions = list(self.load_questions_from_file(self.soDe,self.mamonhoc))
         self.questions = self.shuffle_subarray(self.questions,0,len(self.questions)-1)# RANDOM CÂU HỎI NÈ
     
         self.num_questions = min(len(self.questions), 10)
@@ -77,12 +76,8 @@ class QuizApp:
         question_data = self.questions[index] #lấy dữ liệu câu hỏi từ index được truyền vào
         self.question_label.config(text=question_data[0]) #chèn câu hỏi vào label
         
-        #RANDOM VỊ TRÍ CÂU HỎI NÈ
-        arr = [1,2,3,4]
-        arr = self.shuffle_subarray(arr, 0, len(arr)-1)
-
-        for i in range(4):
-            self.option_buttons[i-1].config(text=question_data[arr[i]], bg=self.default_color) #chèn 4 lựa chọn và màu bg mặc định là màu cửa sổ
+        for i in range(1,len(question_data)-1):
+            self.option_buttons[i-1].config(text=question_data[i], bg=self.default_color) #chèn 4 lựa chọn và màu bg mặc định là màu cửa sổ
 
         selected_index = self.answers[index] #lấy dữ liệu của đáp án (0,1,2,3)
         if selected_index != -1: #nếu lựa chọn nào được chọn thì nó sẽ đổi màu ô đó
@@ -94,7 +89,6 @@ class QuizApp:
 
     def save_answer(self, idx):
         self.answers[self.current_question_index] = idx
-        # Đổi màu lại như cũ nếu chuyển sang câu kế tiếp
         for i in range(len(self.option_buttons)):
             if i != idx:
                 self.option_buttons[i].config(bg=self.default_color)
@@ -128,7 +122,6 @@ class QuizApp:
         
         result = {
             "score": score,
-            "subject": self.subject,
             "soDe": self.soDe,  # Thêm số đề vào kết quả
             "time_completed": str(datetime.datetime.now())
         }
@@ -156,5 +149,5 @@ class QuizApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00003", "sinh học",'2033225436')
+    app = QuizApp(root,"DT00001","MH00003",'2033225436')
     root.mainloop()

@@ -46,7 +46,6 @@ class ExamScheduler:
             label.grid(row=i + 2, column=0, sticky="nsew")
     
     def update_calendar(self):
-        # Hàm tạo lịch
         start_of_week = self.current_date - timedelta(days=self.current_date.weekday())
         for i in range(7):
             date = start_of_week + timedelta(days=i)

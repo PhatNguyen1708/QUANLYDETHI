@@ -35,8 +35,9 @@ else:
 		# dob = datetime.strptime(dob, "%d-%m-%Y")
 		# cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
 		# con.commit()
-		cur.execute('select cauhoi,dapana,dapanb,dapanc,dapand from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
+		cur.execute('select macauhoi,cauhoi,dapana,dapanb,dapanc,dapand,f_decryptData(DAPAN_DUNG) from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
 		rows = cur.fetchall()
+		rows = list(rows)
 		for data in rows:
 			print(data)
 

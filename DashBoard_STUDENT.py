@@ -226,9 +226,42 @@ class dashBoard_student:
 
         #-------tạo frame đồ đó
         self.funtion = Frame(self.studentView, bd=0, relief=RIDGE, bg='white',width=712,height=328,highlightbackground="black", highlightthickness=2)
-        self.funtion.place(x=210,y=200)
+        self.funtion.place(x=240,y=200)
 
+        self.current_date = datetime.now()
+
+        self.days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"]
+        self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}  # Monday=2, Sunday=8
+
+        def create_time_slots():
+            # Hàm tạo các buổi trong ngày được phân chia bằng các tiết học
+            periods = ["Sáng (1-6)", "Chiều (7-12)", "Tối (13-15)"]
+            for i, period in enumerate(periods):
+                label = Label(self.funtion, text=period, font=("Arial", 12), padx=10, pady=10, relief="ridge", bg="lightyellow", height=3)
+                label.grid(row=i + 2, column=0, sticky="nsew")
+
+        def update_calendar():
+            start_of_week = self.current_date - timedelta(days=self.current_date.weekday())
+            for i in range(7):
+                date = start_of_week + timedelta(days=i)
+                label = Label(self.funtion, text=self.days[i] + '\n' + date.strftime("%d/%m/%Y"), font=("Arial", 10), relief="ridge",width=9)
+                label.grid(row=1, column=i + 1, sticky="nsew")
+            
+            self.date_label.config(text=f"Tuần {start_of_week.strftime('%d/%m')} - {(start_of_week + timedelta(days=6)).strftime('%d/%m')}")
+
+        self.header_frame = Frame(self.funtion)
+        self.header_frame.grid(row=0, column=0, columnspan=9)
+
+        prev_button = Button(self.header_frame, text="Tuần trước")
+        prev_button.grid(row=0, column=0, padx=10)
         
+        self.date_label = Label(self.header_frame, text="")
+        self.date_label.grid(row=0, column=1, padx=10)
+        
+        next_button = Button(self.header_frame, text="Tuần sau")
+        next_button.grid(row=0, column=2, padx=10)
+        update_calendar()
+        create_time_slots()
 
 
 
