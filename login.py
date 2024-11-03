@@ -5,12 +5,8 @@ import json, ast, re, string, os.path
 import cx_Oracle
 from DashBoard_TEACHER import *
 from DashBoard_STUDENT import *
-from cryptogram import *
 
 class signin:
-
-    def __init__(self):
-        self.aes_cipher = AES_Cipher()
         
     def Signin(self):
         root = Tk()
@@ -32,10 +28,7 @@ class signin:
             try:
                 accountFound=False
                 for account in data:
-                    encrypted_pass = self.aes_cipher.encrypt(passWord)
-                    print("MK đã mã hóa: ", encrypted_pass)
-
-                    if id == account[0] and encrypted_pass == account[1] and re.search(r'^HS',id):
+                    if id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]) and re.search(r'^HS',id):
                         screen=Tk()
                         cur.execute('select HOTENHS from TAIKHOAN,HOCSINH where TAIKHOAN.ID=HOCSINH.MSHS and TAIKHOAN.ID=:a',{'a':account[0]})
                         HS_name=cur.fetchall()
@@ -44,8 +37,7 @@ class signin:
                         screen.mainloop()
                         accountFound=True
                         return
-                    elif id == account[0] and encrypted_pass == account[1]:
-                        print("Đăng nhập thành công với ID:", id)
+                    elif id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
                         screen=Tk()
                         cur.execute('select HOTENGV from TAIKHOAN,GIAOVIEN where TAIKHOAN.ID=GIAOVIEN.MSGV and TAIKHOAN.ID=:a',{'a':account[0]})
                         gv_name=cur.fetchall()
@@ -54,13 +46,13 @@ class signin:
                         screen.mainloop()
                         accountFound=True
                         return
-                    elif id == account[0] and encrypted_pass != account[1]:
+                    elif id == account[0] and passWord != cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
                         messagebox.showwarning("Wrong password",'Nhập sai mật khẩu, vui lòng nhập lại')
                         return
                 if not accountFound:
                     messagebox.showwarning("Wrong ",'Tài khoản không tồn tại')
             except FileNotFoundError:
-                print("Không tìm thấy file Accounts.json")
+                print("Không tìm thấy file Accounts.json")                          
 
         def signupCommand():
                 root.destroy()
@@ -108,8 +100,8 @@ class signin:
                     
                     p=r'[A-Za-z0-9_#@$%&*^+=]{8,}'
                     if passWord==passWordConfirm and re.fullmatch(p,passWord): #kiểm tra mật khẩu có đúng định dạng và id có phải là một chuối 10 chữ số k
-                        encrypted_passWord = self.aes_cipher.encrypt(passWord)
-                        cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id':  id, 'passWord': encrypted_passWord})
+                        passWord = cur.callfunc("f_encryptData", cx_Oracle.STRING, [passWord])
+                        cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id':  id, 'passWord': passWord})
                         if re.search(r'^HS',id):
                             cur.execute('INSERT INTO HOCSINH (MSHS, HOTENHS) VALUES (:MSHS, :HOTENHS)', {'MSHS': id, 'HOTENHS': fullName})
                         else:
