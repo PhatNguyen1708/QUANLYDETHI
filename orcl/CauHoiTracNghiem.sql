@@ -236,7 +236,7 @@ DELETE FROM CAUHOI
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
 values ('MH00001', 'CH00001', N'Economic analyses of soil_______ conservation investments may be done from private and social perspectives.', N'information', N'conservation', N'dictionary', N'supermarket', N'1');
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
-values ('MH00001', 'CH00002', N'The by-laws say that all dogs_______be kept on a lead in the park.', N'ought', N'need', N'must', N'have', N'must');
+values ('MH00001', 'CH00002', N'The by-laws say that all dogs_______be kept on a lead in the park.', N'ought', N'need', N'must', N'have', N'2');
 
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
 values ('MH00002', 'CH00001', N'Nước ta nằm ở vị trí:', N'rìa phía Đông của bán đảo Đông Dương', N'rìa phía Tây của bán đảo Đông Dương', N'trung tâm châu Á', N'phía đông Đông Nam Á', N'0');
