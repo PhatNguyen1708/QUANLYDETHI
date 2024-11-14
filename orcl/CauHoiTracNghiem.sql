@@ -236,7 +236,7 @@ DELETE FROM CAUHOI
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
 values ('MH00001', 'CH00001', N'Economic analyses of soil_______ conservation investments may be done from private and social perspectives.', N'information', N'conservation', N'dictionary', N'supermarket', N'1');
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
-values ('MH00001', 'CH00002', N'The by-laws say that all dogs_______be kept on a lead in the park.', N'ought', N'need', N'must', N'have', N'must');
+values ('MH00001', 'CH00002', N'The by-laws say that all dogs_______be kept on a lead in the park.', N'ought', N'need', N'must', N'have', N'3');
 
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
 values ('MH00002', 'CH00001', N'Nước ta nằm ở vị trí:', N'rìa phía Đông của bán đảo Đông Dương', N'rìa phía Tây của bán đảo Đông Dương', N'trung tâm châu Á', N'phía đông Đông Nam Á', N'0');
@@ -306,12 +306,14 @@ BEGIN
     RETURN decryptedData;
 END;
 
+
 --- TEST HÀM MÃ HÓA & GIẢI MÃ
-SELECT ID, f_encryptData(MATKHAU) AS MATKHAU FROM TAIKHOAN;
+    SELECT ID, MATKHAU AS MATKHAU FROM TAIKHOAN;
 
 SELECT * FROM HOCSINH;
 
-UPDATE TAIKHOAN SET MATKHAU = f_encryptData(MATKHAU);
+UPDATE TAIKHOAN SET MATKHAU =  'E1477168F2D5507DE165D10E2D6CBAFB'
+where id = 'HS00001'
 
 update cauhoi set DAPAN_DUNG = f_encryptData(DAPAN_DUNG)
 
