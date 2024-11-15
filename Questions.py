@@ -32,16 +32,6 @@ class Questions():
 
             self.questions.append(question_data)
     
-    # def add_fileJson(self,jsonFilePath):
-    #     file=open(jsonFilePath,"r",encoding='utf-8')
-    #     y=json.load(file)
-    #     for i in y:
-    #         self.questions.append(i)
-
-    # def save_question(self,jsonFilePath):
-    #     with open(jsonFilePath, 'w',encoding='utf-8') as file:
-    #         json.dump(self.questions,file, indent=4)
-
     def display_question(self, index):
             if 0 <= index < len(self.questions):
                 question_data = self.questions[index]

@@ -54,11 +54,10 @@ class Application:
         self.tree.column("DAPAN_DUNG",width=60,anchor='nw')
         self.tree.place(x=20,y=50,width=880,height=280)
 
-        self.load_questions()
         self.display_questions()
         
-        # self.countLabel=Label(self.teacherView,text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()),bg='white',font=('Arial', 13, 'italic'))
-        # self.countLabel.place(x=10,y=410)
+        self.countLabel=Label(self.teacherView,text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()),bg='white',font=('Arial', 13, 'italic'))
+        self.countLabel.place(x=10,y=410)
 
     def load_questions(self):
         self.teacher.add_question_file()
@@ -69,43 +68,55 @@ class Application:
         create_window.geometry('450x300+550+350')
         create_window.config(background='white')
 
-        question_label = Label(create_window, text="Question: ",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
-        question_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
-        question_entry.place(x=100,y=22)
-        # question_entry.insert(0,'Nhập câu hỏi')
+        id_question_label = Label(create_window, text="ID: ",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
+        id_question_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
+        id_question_entry.place(x=100,y=22)
         Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=45)
 
-        options_label = Label(create_window, text="Options:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=60)
-        options_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
-        options_entry.place(x=100,y=62)
-        # options_entry.insert(0,'Nhập lựa chọn, ngăn cách bằng dấu phẩy')
+    
+        question_label = Label(create_window, text="Question: ",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=60)
+        question_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
+        question_entry.place(x=100,y=62)
+        # question_entry.insert(0,'Nhập câu hỏi')
         Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=85)
 
-        answer_label = Label(create_window, text="Answer:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=100)
-        answer_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
-        answer_entry.place(x=100,y=102)
-        answer_entry.insert(0,'Nhập câu trả lời đúng (0,1,2,3)')
+        options_label = Label(create_window, text="Options:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=100)
+        options_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
+        options_entry.place(x=100,y=102)
+        # options_entry.insert(0,'Nhập lựa chọn, ngăn cách bằng dấu phẩy')
         Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=125)
+
+        answer_label = Label(create_window, text="Answer:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=140)
+        answer_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
+        answer_entry.place(x=100,y=142)
+        answer_entry.insert(0,'Nhập câu trả lời đúng (0,1,2,3)')
+        Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=165)
 
 
         def create():
+            id = id_question_entry.get()
             question = question_entry.get()
             options = options_entry.get().split(',')
             answer = answer_entry.get()
-            if question == '' or options == '' or answer == '':
+            for data in self.teacher.questions:
+                if data['id']==id:
+                    messagebox.showwarning('Lỗi','Vui lòng nhập lại thông tin, mã số id đã tồn tại')
+                    return
+            if question == '' or options == '' or answer == '' or id in self.teacher.questions:
+                print("hello")
                 messagebox.showwarning('Lỗi','Vui lòng nhập lại và điền đầy đủ thông tin')
             else:
-                self.teacher.Create(question, options, int(answer), self.jsonFilePath)
+                self.teacher.Create(id,question, options, int(answer))
                 create_window.destroy()
                 self.display_questions()
-                self.countLabel.config(text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()))
+                self.countLabel.config(text=f"Tổng câu hỏi trong môn học này: ")
 
-        create_button = Button(create_window, text="Create", command=create, fg='white',bg='#57a1f8',border=0, font=('Microsoft YaHei UI Light', 13, 'bold')).place(x=150,y=145,width=160,height=40)
+        create_button = Button(create_window, text="Create", command=create, fg='white',bg='#57a1f8',border=0, font=('Microsoft YaHei UI Light', 13, 'bold')).place(x=150,y=185,width=160,height=40)
 
     def edit_question(self):
         edit_window = Toplevel(self.teacherView)
         edit_window.title("Edit Question")
-        edit_window.geometry('450x300+550+350')
+        edit_window.geometry('450x300+550+350') 
         edit_window.config(background='white')
 
         index_label = Label(edit_window, text="Index:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
@@ -154,21 +165,20 @@ class Application:
         remove_window.geometry('450x200+550+350')
         remove_window.config(background='white')
 
-        index_label = Label(remove_window, text="Index:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
+        index_label = Label(remove_window, text="Mã Câu Hỏi:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
         index_entry = Entry(remove_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
-        index_entry.place(x=100,y=22)
-        index_entry.insert(0,'Nhập số thứ tự câu muốn xóa')
-        Frame(remove_window, width=310, height=2, bg='black',border=0).place(x=100,y=45)
+        index_entry.place(x=130,y=22)
+        index_entry.insert(0,'Nhập Mã câu hỏi muốn xóa')
+        Frame(remove_window, width=310, height=2, bg='black',border=0).place(x=130,y=45) 
 
         def remove():
             index = index_entry.get()
             if index == '':
                 messagebox.showwarning('Lỗi','Vui lòng nhập lại và điền đầy đủ thông tin')
             else:
-                self.teacher.remove(self.jsonFilePath,int(index))
+                self.teacher.remove(index)
                 remove_window.destroy()
                 self.display_questions()
-                self.countLabel.config(text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()))
 
         remove_button = Button(remove_window, text="Remove", command=remove, fg='white',bg='#57a1f8',border=0, font=('Microsoft YaHei UI Light', 13, 'bold')).place(x=150,y=65,width=160,height=40)
 
@@ -196,6 +206,7 @@ class Application:
         creatWeb_button = Button(windowCreatWeb, text="Create", command=creatWeb, fg='white',bg='#57a1f8',border=0, font=('Microsoft YaHei UI Light', 13, 'bold')).place(x=150,y=65,width=160,height=40)
 
     def display_questions(self):
+        self.load_questions()
         self.tree.delete(*self.tree.get_children())
         for idx, question in enumerate(self.teacher.questions, 1):
             id,question_text, A,B,C,D,answer = self.teacher.display_question(idx-1)
