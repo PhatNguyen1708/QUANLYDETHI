@@ -3,11 +3,13 @@ from email.charset import Charset
 import json
 from os import name
 import string
+from cryptogram import *
 import cx_Oracle
 
 class Questions():
     def __init__(self):
         self.questions=[]
+        self.aes_cipher = AES_Cipher()
         try:
             self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
             self.cursor = self.con.cursor()
@@ -22,12 +24,12 @@ class Questions():
         self.questions = []
         
         for row in self.cursor.fetchall():
-            de_answer = self.cursor.callfunc("f_decryptData", cx_Oracle.STRING, [row[6]])
+            de_answer = self.aes_cipher.decrypt(row[6])
             question_data = {
                 "id": row[0],  # MACAUHOI
                 "question": row[1],  # CAUHOI
                 "option": [row[2], row[3], row[4], row[5]],  # DAPANA, DAPANB, DAPANC, DAPAND
-                "answer": ord(de_answer[0]) - 65
+                "answer": ord(de_answer[1]) - 65
             }
 
             self.questions.append(question_data)

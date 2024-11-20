@@ -37,7 +37,6 @@ class Teacher(Questions):
     def remove(self,index):
         if 0 <= index-1 < len(self.questions):
             self.questions.remove(self.questions[index-1])
-        super().save_question(filepath)
 
 
 
