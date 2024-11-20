@@ -234,7 +234,7 @@ class dashBoard_student:
         self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}  # Monday=2, Sunday=8
 
         def create_time_slots():
-            # Hàm tạo các buổi trong ngày được phân chia bằng các tiết học
+
             periods = ["Sáng (1-6)", "Chiều (7-12)", "Tối (13-15)"]
             for i, period in enumerate(periods):
                 label = Label(self.funtion, text=period, font=("Arial", 12), padx=10, pady=10, relief="ridge", bg="lightyellow", height=3)

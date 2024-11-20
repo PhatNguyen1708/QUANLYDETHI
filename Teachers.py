@@ -29,14 +29,19 @@ class Teacher(Questions):
         self.con.commit()
 
 
-    def edit(self,filepath,index,replace):
-        if 0 <= index-1 < len(self.questions):
-            self.questions[index-1]=replace
-        super().save_question(filepath)
+    def edit(self,id,question, options, answer):
+        DAPANA = options[0]
+        DAPANB = options[1]
+        DAPANC = options[2]
+        DAPAND = options[3]
+        answer= self.cur.callfunc("f_encryptData", cx_Oracle.STRING, [answer])
+        self.cur.execute('UPDATE CAUHOI SET CAUHOI =:CAUHOI, DAPANA =:DAPANA,DAPANB =:DAPANB,DAPANC =:DAPANC,DAPAND =:DAPAND,DAPAN_DUNG =:DAPAN_DUNG WHERE MAMONHOC =:MAMONHOC AND MACAUHOI =:MACAUHOI',
+                         {'MAMONHOC':self.subject_code,'MACAUHOI':id,'CAUHOI':question,'DAPANA':DAPANA,'DAPANB':DAPANB,'DAPANC':DAPANC,'DAPAND':DAPAND,'DAPAN_DUNG':answer})
+        self.con.commit()
 
-    def remove(self,index):
-        if 0 <= index-1 < len(self.questions):
-            self.questions.remove(self.questions[index-1])
+    def remove(self,id):
+        self.cur.execute('delete from CAUHOI where MAMONHOC = :MAMONHOC and MACAUHOI = :MACAUHOI',{'MAMONHOC':self.subject_code,'MACAUHOI':id})
+        self.con.commit()
 
 
 

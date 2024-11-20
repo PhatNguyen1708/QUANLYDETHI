@@ -1,4 +1,4 @@
-
+ 
 --TẠO BẢNG
 CREATE TABLE HOCSINH    
 (
@@ -334,7 +334,7 @@ from Taikhoan
 where ID='HV00002'
 
 UPDATE HOCSINH
-SET LOP = '13DHBM01', DIACHI = 'HCM'
+    SET LOP = '13DHBM01', DIACHI = 'HCM'
 WHERE MSHS = 'HS00001'
 
 ----ĐỀ THI NHIỀU MÔN HỌC & MÔN HỌC NHIỀU CÂU HỎI--------- 
@@ -358,6 +358,8 @@ JOIN
     CAUHOI ch ON mh.MAMONHOC = ch.MAMONHOC
 ORDER BY 
     dt.MADETHI, mh.TENMONHOC, ch.MACAUHOI;
+
+select * from cauhoi
 
 
 --------XÓA BẢNG------------

@@ -77,13 +77,12 @@ class Application:
         question_label = Label(create_window, text="Question: ",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=60)
         question_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
         question_entry.place(x=100,y=62)
-        # question_entry.insert(0,'Nhập câu hỏi')
         Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=85)
 
         options_label = Label(create_window, text="Options:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=100)
         options_entry = Entry(create_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
         options_entry.place(x=100,y=102)
-        # options_entry.insert(0,'Nhập lựa chọn, ngăn cách bằng dấu phẩy')
+        options_entry.insert(0,'Nhập lựa chọn, ngăn cách bằng dấu phẩy')
         Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=125)
 
         answer_label = Label(create_window, text="Answer:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=140)
@@ -92,6 +91,9 @@ class Application:
         answer_entry.insert(0,'Nhập câu trả lời đúng (0,1,2,3)')
         Frame(create_window, width=310, height=2, bg='black',border=0).place(x=100,y=165)
 
+        def getfocus():
+            item = self.tree.focus()
+            print(item)
 
         def create():
             id = id_question_entry.get()
@@ -103,7 +105,6 @@ class Application:
                     messagebox.showwarning('Lỗi','Vui lòng nhập lại thông tin, mã số id đã tồn tại')
                     return
             if question == '' or options == '' or answer == '' or id in self.teacher.questions:
-                print("hello")
                 messagebox.showwarning('Lỗi','Vui lòng nhập lại và điền đầy đủ thông tin')
             else:
                 self.teacher.Create(id,question, options, int(answer))
@@ -119,44 +120,54 @@ class Application:
         edit_window.geometry('450x300+550+350') 
         edit_window.config(background='white')
 
-        index_label = Label(edit_window, text="Index:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
-        index_entry = Entry(edit_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
-        index_entry.place(x=100,y=22)
-        index_entry.insert(0,'Nhập số thứ tự câu muốn sửa')
+        id_label = Label(edit_window, text="Id:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
+        id_entry = Entry(edit_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
+        id_entry.place(x=100,y=22)
         Frame(edit_window, width=310, height=2, bg='black',border=0).place(x=100,y=45)
 
         question_label = Label(edit_window, text="Question:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=60)
         question_entry = Entry(edit_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
         question_entry.place(x=100,y=62)
-        question_entry.insert(0,'Nhập câu hỏi')
         Frame(edit_window, width=310, height=2, bg='black',border=0).place(x=100,y=85)
 
         options_label = Label(edit_window, text="Options:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=100)
         options_entry = Entry(edit_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
         options_entry.place(x=100,y=102)
-        options_entry.insert(0,'Nhập lựa chọn, ngăn cách bằng dấu phẩy')
         Frame(edit_window, width=310, height=2, bg='black',border=0).place(x=100,y=125)
 
         answer_label = Label(edit_window, text="Answer:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=140)
         answer_entry = Entry(edit_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
         answer_entry.place(x=100,y=142)
-        answer_entry.insert(0,'Nhập câu trả lời đúng (0,2,3,4)')
         Frame(edit_window, width=310, height=2, bg='black',border=0).place(x=100,y=165)
 
+        def getfocus():
+            item = self.tree.focus()
+            if item == "":
+                item=self.tree.get_children()[0]
+            id_entry.insert(0,self.tree.item(item)['values'][0])
+            question_entry.insert(0,self.tree.item(item)['values'][1])
+            options_entry.insert(0,str(self.tree.item(item)['values'][2])+','+str(self.tree.item(item)['values'][3])+','+str(self.tree.item(item)['values'][4])+','+str(self.tree.item(item)['values'][5]))
+            answer_entry.insert(0,str(self.tree.item(item)['values'][6]))
+
+
         def edit():
-            index = index_entry.get()
+            id = id_entry.get()
             question = question_entry.get()
             options = options_entry.get().split(',')
             answer = answer_entry.get()
-            if question == '' or options == '' or answer == '' or index == '':
+            if question == '' or options == '' or answer == '' or id in self.teacher.questions:
                 messagebox.showwarning('Lỗi','Vui lòng nhập lại và điền đầy đủ thông tin')
             else:
-                self.teacher.edit(self.jsonFilePath,int(index), {"question": question, "option": options, "answer": int(answer)})
-                edit_window.destroy()
-                self.display_questions()
-                self.countLabel.config(text=f"Tổng câu hỏi trong môn học này: " + str(self.count_question()))
+                for data in self.teacher.questions:
+                    if data['id']==id:
+                        self.teacher.edit(id,question, options, int(answer))
+                        edit_window.destroy()
+                        self.display_questions()
+                        self.countLabel.config(text=f"Tổng câu hỏi trong môn học này: ")
+                        return
+            messagebox.showwarning('Lỗi','Vui lòng nhập lại thông tin, mã số id không tồn tại')
 
-
+        getfocus()
         edit_button = Button(edit_window, text="Update", command=edit, fg='white',bg='#57a1f8',border=0, font=('Microsoft YaHei UI Light', 13, 'bold')).place(x=150,y=185,width=160,height=40)
 
     def remove_question(self):
@@ -165,20 +176,27 @@ class Application:
         remove_window.geometry('450x200+550+350')
         remove_window.config(background='white')
 
-        index_label = Label(remove_window, text="Mã Câu Hỏi:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
-        index_entry = Entry(remove_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
-        index_entry.place(x=130,y=22)
-        index_entry.insert(0,'Nhập Mã câu hỏi muốn xóa')
+        id_label = Label(remove_window, text="Mã Câu Hỏi:",bg='white',fg='black', font=('Arial', 13)).place(x=20,y=20)
+        id_entry = Entry(remove_window,width=35, fg='black', border=0, bg='white',font=('Arial', 13))
+        id_entry.place(x=130,y=22)
+        id_entry.insert(0,'Nhập Mã câu hỏi muốn xóa')
         Frame(remove_window, width=310, height=2, bg='black',border=0).place(x=130,y=45) 
 
         def remove():
-            index = index_entry.get()
-            if index == '':
+            id = id_entry.get()
+            if id == '':
                 messagebox.showwarning('Lỗi','Vui lòng nhập lại và điền đầy đủ thông tin')
-            else:
-                self.teacher.remove(index)
-                remove_window.destroy()
-                self.display_questions()
+                return
+            for data in self.teacher.questions:
+                if data['id'] == id:
+                        self.teacher.remove(id)
+                        remove_window.destroy()
+                        self.display_questions()
+                        messagebox.showwarning('Thành Công',f'Đã xóa câu hỏi có mã là {id}')
+                        return
+            messagebox.showwarning('Lỗi','Vui lòng nhập lại thông tin, mã số id không tồn tại')
+                    
+    
 
         remove_button = Button(remove_window, text="Remove", command=remove, fg='white',bg='#57a1f8',border=0, font=('Microsoft YaHei UI Light', 13, 'bold')).place(x=150,y=65,width=160,height=40)
 
@@ -224,6 +242,6 @@ class Application:
 if __name__ == "__main__":
     questions=Questions()
     teacherView=Tk()
-    subject_code = "MH00001"
+    subject_code = "MH00004"
     obj = Application(teacherView, subject_code)
     teacherView.mainloop()
