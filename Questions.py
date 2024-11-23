@@ -10,6 +10,7 @@ class Questions():
     def __init__(self):
         self.questions=[]
         self.aes_cipher = AES_Cipher()
+        self.rsa_cipher = RSA_Cipher()
         try:
             self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
             self.cursor = self.con.cursor()
@@ -24,12 +25,12 @@ class Questions():
         self.questions = []
         
         for row in self.cursor.fetchall():
-            de_answer = self.aes_cipher.decrypt(row[6])
+            answer = self.cur.callfunc("CRYPTO.RSA_DECRYPT", cx_Oracle.STRING, [row[6],'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q='])
             question_data = {
                 "id": row[0],  # MACAUHOI
                 "question": row[1],  # CAUHOI
                 "option": [row[2], row[3], row[4], row[5]],  # DAPANA, DAPANB, DAPANC, DAPAND
-                "answer": ord(de_answer[1]) - 65
+                "answer": answer
             }
 
             self.questions.append(question_data)
@@ -44,10 +45,15 @@ class Questions():
                 B=options[1]
                 C=options[2]
                 D=options[3]
-                answer = chr(65 + question_data["answer"])
+                answer = question_data["answer"]
+                #answer = chr(65 + question_data["answer"])
+                # try:
+                #     decrypted_answer=self.rsa_cipher.decrypt(question_data["answer"])
+                #     answer =  decrypted_answer # Chuyển số nguyên thành ký tự (A, B, C, D)
+                # except (ValueError, IndexError) as e:
+                #     print(f"Decryption failed: {e}")
+                #     answer="N\A"
                 return question_id,question_text,A,B,C,D, answer
-            else:
-                return "Invalid question index."
 
     def count_ques(self):
         return len(self.questions)

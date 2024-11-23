@@ -45,8 +45,10 @@ class testcryyogram:
                 rows = cur.fetchall()
                 rows = list(rows)
                 for data in rows:
-                    print(data[0],self.aes_cipher.decrypt(data[1]))
-                    print(self.aes_cipher.encrypt(self.aes_cipher.decrypt(data[1])))
+                    check = self.aes_cipher.decrypt(data[1])
+                    if check.encode('latin1').decode('unicode_escape') == '\x001\x002\x003':
+                        print(data[0],self.aes_cipher.decrypt(data[1]))
+                        print(self.aes_cipher.encrypt(self.aes_cipher.decrypt(data[1])))
 
             except cx_Oracle.DatabaseError as er:
                 print('There is an error in the Oracle database:', er)
