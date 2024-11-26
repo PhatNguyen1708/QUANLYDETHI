@@ -196,13 +196,17 @@ values ('MH00005', N'Toán');
 ---------------------NHẬP LIỆU CHO BẢNG ĐỀ THI TRƯỚC---------------------------
 SELECT * FROM DETHI 
 insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00001', NULL, NULL);
+values ('DT00001', '25-11-2024', 2);
 insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00002', NULL, NULL);
+values ('DT00002', '25-11-2024', 2);
 insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00003', NULL, NULL);
+values ('DT00003','25-11-2024', 2);
 insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00004', NULL, NULL);
+values ('DT00004','25-11-2024', 2);
+
+alter session set NLS_DATE_FORMAT = 'DD-MM-YYYY';
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
+UPDATE DETHI SET THOIGIAN_BATDAU='25-11-2024 03:45',SOCAUHOI= 2 
 
 ---------------------NHẬP LIỆU CHO BẢNG DETHI_MONHOC TRƯỚC---------------------------
 SELECT * FROM DETHI_MONHOC
@@ -261,8 +265,11 @@ values ('MH00005', 'CH00002', N'Cho phương trình ax2 + bx + c = 0 (a ≠ 0) c
 
 
 ---------------------NHẬP LIỆU CHO BẢNG KETQUA TRƯỚC---------------------------
-SELECT * KETQUA
+SELECT * from KETQUA
+insert into KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
+values ('HS00001','MH00001','DT00002',10,NULL)]
 
+delete from KETQUA
 
         ---LỖI---
 

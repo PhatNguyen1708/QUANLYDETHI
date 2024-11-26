@@ -87,22 +87,6 @@ class dashBoard_student:
 
         self.refreshButton=Button(self.funtion, text='Refresh',bg='#64a587',fg='black',command=self.refresh,activebackground='white',font=('Arial',7,'bold'),width=10).place(x=635,y=300)
       
-    def select_subject(self, subject):
-        filepath = f"data/{subject}.json"
-        while True:
-            self.soDe = simpledialog.askinteger("Chọn số đề", "Nhập số đề bạn muốn làm:", initialvalue=0) 
-            if  self.soDe < 0 : 
-                messagebox.showerror("Lỗi","Vui lòng nhập số đề lớn hơn 0")
-                return
-            elif self.soDe > len(filepath): 
-                messagebox.showerror("Lỗi","Không tìm thấy mã đề") 
-                return
-            else:
-                break
-        if self.soDe is not None:
-                self.sub = Toplevel(self.studentView)
-                # self.obj=QuizApp(self.sub, filepath, self.soDe, subject,self.id)
-
 #--------------------------------- KHỞI TẠO KHU VỰC HIỂN THỊ THÔNG TIN HỌC SINH
     def studentInfoView(self):
         self.studentInfo = Label(self.studentView,text='Thông tin học sinh', bg='white',  fg='black', font=('Arial', 15, 'bold')).place(x=450,y=50)
@@ -191,13 +175,6 @@ class dashBoard_student:
                 messagebox.showerror('Error','Tuổi không hợp lệ')
                 return False
             
-        def checkClass(Class):
-            # self.cur.execute('select * from HOCSINH')
-            # if Class < 10 or Class > 12:
-            #     messagebox.showerror('Error','Lớp không hợp lệ')
-            #     return False
-            return True
-
         def updateData():
             fullname=fullnameEntry.get()
             gender=genderEntry.get()
@@ -263,12 +240,25 @@ class dashBoard_student:
         update_calendar()
         create_time_slots()
 
+    def select_subject(self, subject):
+        filepath = f"data/{subject}.json"
+        while True:
+            self.soDe = simpledialog.askinteger("Chọn số đề", "Nhập số đề bạn muốn làm:", initialvalue=0) 
+            if  self.soDe < 0 : 
+                messagebox.showerror("Lỗi","Vui lòng nhập số đề lớn hơn 0")
+                return
+            elif self.soDe > len(filepath): 
+                messagebox.showerror("Lỗi","Không tìm thấy mã đề") 
+                return
+            else:
+                break
+        if self.soDe is not None:
+                self.sub = Toplevel(self.studentView)
+                # self.obj=QuizApp(self.sub, filepath, self.soDe, subject,self.id)
+
 
 
         
-
-
-
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
     def refresh(self):
         for result in self.tree.get_children():

@@ -25,7 +25,9 @@ class Teacher(Questions):
         DAPANC = options[2]
         DAPAND = options[3]
         answer= self.cur.callfunc("f_encryptData", cx_Oracle.STRING, [answer])
-        self.cur.execute('insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)' 'values (:MAMONHOC,:MACAUHOI,:CAUHOI, :DAPANA,:DAPANB,:DAPANC,:DAPAND,:DAPAN_DUNG)',{'MAMONHOC':self.subject_code,'MACAUHOI':id,'CAUHOI':question,'DAPANA':DAPANA,'DAPANB':DAPANB,'DAPANC':DAPANC,'DAPAND':DAPAND,'DAPAN_DUNG':answer})
+        self.cur.execute('insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)' 
+                         'values (:MAMONHOC,:MACAUHOI,:CAUHOI, :DAPANA,:DAPANB,:DAPANC,:DAPAND,:DAPAN_DUNG)',
+                         {'MAMONHOC':self.subject_code,'MACAUHOI':id,'CAUHOI':question,'DAPANA':DAPANA,'DAPANB':DAPANB,'DAPANC':DAPANC,'DAPAND':DAPAND,'DAPAN_DUNG':answer})
         self.con.commit()
 
 
