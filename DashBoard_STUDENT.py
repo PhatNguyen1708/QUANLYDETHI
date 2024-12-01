@@ -85,7 +85,7 @@ class dashBoard_student:
         scrolly.config(command=self.tree.yview)
         
 
-        self.refreshButton=Button(self.funtion, text='Refresh',bg='#64a587',fg='black',command=self.refresh,activebackground='white',font=('Arial',7,'bold'),width=10).place(x=635,y=300)
+        self.refreshButton=Button(self.funtion, text='Refresh',bg='#64a587',fg='black',command=self.exam_results,activebackground='white',font=('Arial',7,'bold'),width=10).place(x=635,y=300)
       
 #--------------------------------- KHỞI TẠO KHU VỰC HIỂN THỊ THÔNG TIN HỌC SINH
     def studentInfoView(self):
@@ -226,16 +226,26 @@ class dashBoard_student:
             
             self.date_label.config(text=f"Tuần {start_of_week.strftime('%d/%m')} - {(start_of_week + timedelta(days=6)).strftime('%d/%m')}")
 
+        def show_prev_week():
+            # Hàm tạo lệnh quay về tuần trước
+            self.current_date -= timedelta(weeks=1)
+            update_calendar()
+    
+        def show_next_week():
+            # Hàm tạo lệnh quay về tuần sau
+            self.current_date += timedelta(weeks=1)
+            update_calendar()
+
         self.header_frame = Frame(self.funtion)
         self.header_frame.grid(row=0, column=0, columnspan=9)
 
-        prev_button = Button(self.header_frame, text="Tuần trước")
+        prev_button = Button(self.header_frame, text="Tuần trước",command=show_prev_week)
         prev_button.grid(row=0, column=0, padx=10)
         
         self.date_label = Label(self.header_frame, text="")
         self.date_label.grid(row=0, column=1, padx=10)
         
-        next_button = Button(self.header_frame, text="Tuần sau")
+        next_button = Button(self.header_frame, text="Tuần sau",command=show_next_week)
         next_button.grid(row=0, column=2, padx=10)
         update_calendar()
         create_time_slots()
@@ -260,12 +270,6 @@ class dashBoard_student:
 
         
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
-    def refresh(self):
-        for result in self.tree.get_children():
-            self.tree.delete(result)
-        data=self.load_student_result(r'data\Accounts.json')    
-        self.insert(data)
-
     def help(self):
         window = Toplevel(self.studentView)
         window.title("Hướng dẫn sử đụng")
