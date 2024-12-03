@@ -208,7 +208,7 @@ class dashBoard_student:
 
         self.schedule_labels = []
         self.day_in_weak = []
-        self.var = IntVar()
+        self.var = IntVar(self.funtion)
 
         self.current_date = datetime.now()
 
@@ -262,7 +262,9 @@ class dashBoard_student:
 
     def get_schedule(self):
         self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}
-        self.cur.execute('select * from dethi')
+        self.cur.execute('''select TENMONHOC,THOIGIAN_BATDAU, MONHOC.MAMONHOC
+                            from DETHI_MONHOC , MONHOC
+                            where MONHOC.MAMONHOC = DETHI_MONHOC.MAMONHOC''')
         rows = self.cur.fetchall()
         rows = list(rows)
         for data in self.day_in_weak:
@@ -285,7 +287,8 @@ class dashBoard_student:
                         # Lưu thông tin môn học
                         self.schedule_data[int(so)][session].append({
                             "subject": time[0],
-                            "periodStart": int(time[1].strftime("%H"))
+                            "periodStart": int(time[1].strftime("%H")),
+                            "id_subject": time[2]
                         })
 
                         self.display_schedule()
@@ -306,7 +309,7 @@ class dashBoard_student:
                     # Tạo nhãn cho mỗi môn học
                     schedule_label = Label(
                         self.funtion,
-                        text=f"{subject_info['subject']}\nTiết: {subject_info['periodStart']}",
+                        text=f"{subject_info['subject']}\n{subject_info['id_subject']}\nTiết: {subject_info['periodStart']}",
                         font=("Arial", 10),
                         padx=5,
                         pady=5,
@@ -320,9 +323,9 @@ class dashBoard_student:
 
     def select_subject(self,data):
         chuoi = data.cget("text")
-        made, tiet = chuoi.strip().split('\n')  
+        temmon , mamon, tiet = chuoi.strip().split('\n')  
         self.sub = Toplevel(self.studentView)
-        self.obj=QuizApp(self.sub, made, 'MH00002',self.id)
+        self.obj=QuizApp(self.sub, 'DT00001', mamon,self.id)
         self.sub.mainloop
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
     def help(self):
