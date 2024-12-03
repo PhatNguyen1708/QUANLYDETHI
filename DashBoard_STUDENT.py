@@ -323,10 +323,16 @@ class dashBoard_student:
 
     def select_subject(self,data):
         chuoi = data.cget("text")
-        temmon , mamon, tiet = chuoi.strip().split('\n')  
-        self.sub = Toplevel(self.studentView)
-        self.obj=QuizApp(self.sub, 'DT00001', mamon,self.id)
-        self.sub.mainloop
+        temmon , mamon, tiet = chuoi.strip().split('\n')
+        id_hs = self.id
+        sub = Tk()
+        self.obj=QuizApp(sub, 'DT00001', mamon,id_hs)
+        self.studentView.destroy()
+        sub.mainloop()
+
+
+
+
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
     def help(self):
         window = Toplevel(self.studentView)

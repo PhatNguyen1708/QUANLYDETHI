@@ -112,12 +112,13 @@ class QuizApp:
             messagebox.showinfo("Thông báo", "Đã đến câu hỏi đầu tiên.")
 
     def finish_quiz(self):
+        def decrypt_answer(data):
+            return self.cur.callfunc("CRYPTO.RSA_DECRYPT", cx_Oracle.STRING, [data,'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q='])
         if -1 in self.answers: #nếu vẫn còn câu chưa làm
             messagebox.showwarning("Cảnh báo", "Vui lòng chọn đáp án cho tất cả các câu hỏi.")
             return
 
-
-        correct_answers = sum(1 for user_ans, correct_ans in zip(self.answers, [q[5] for q in self.questions]) if user_ans == int(correct_ans))
+        correct_answers = sum(1 for user_ans, correct_ans in zip(self.answers, [decrypt_answer(q[5]) for q in self.questions]) if user_ans == int(correct_ans))
         score = round(correct_answers / self.num_questions * 10, 2)
         
         result = {
@@ -146,8 +147,12 @@ class QuizApp:
 
         messagebox.showinfo("Thông báo", f"Điểm của bạn là: {score}. Kết quả đã được lưu vào kết quả học tập\n Mã số học sinh: {self.id}.")
         self.window.destroy()
+        from DashBoard_STUDENT import dashBoard_student
+        studentView = tk.Tk()
+        obj = dashBoard_student(studentView,None,self.id)
+        studentView.mainloop()
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00002",'2033225436')
+    app = QuizApp(root,"DT00001","MH00002",'HS00001')
     root.mainloop()
