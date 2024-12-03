@@ -4,11 +4,12 @@ import json, random, datetime
 import cx_Oracle
 
 class QuizApp: 
-    def __init__(self, window,soDe,mamonhoc,id):
+    def __init__(self, window,soDe,mamonhoc,id,later):
 
         self.id=id
         self.soDe=soDe
         self.mamonhoc=mamonhoc
+        self.time = (40*60) - (later*60)
 
         try:
             self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
@@ -20,14 +21,19 @@ class QuizApp:
         self.window.title("Bài tập Multiple Choice")
         self.window.geometry('925x520+300+200')
         self.window.config(bg='white')
+        self.window.protocol("WM_DELETE_WINDOW", self.on_close)
 #------------------------ KHỞI TẠO CÁC KHUNG VÀ CHÈN CÂU HỎI, ĐÁP ÁN
-
         self.questions = list(self.load_questions_from_file(self.soDe,self.mamonhoc))
         self.questions = self.shuffle_subarray(self.questions,0,len(self.questions)-1)# RANDOM CÂU HỎI NÈ
     
         self.num_questions = min(len(self.questions), 10)
         self.current_question_index = 0
         self.answers = [-1] * self.num_questions  #khởi tạo giá trị mặc định là -1 cho những câu hỏi chưa chọn đáp án
+
+        self.clock = tk.Label(self.window, text="00:00:00", font=("Courier", 20), width=10,bg='white')
+        self.clock.pack(padx=10)
+
+        self.timer()
 
         self.question_label = tk.Label(self.window, text="", wraplength=750, font=('Arial', 18), bg='white')
         self.question_label.pack(pady=10)
@@ -54,6 +60,22 @@ class QuizApp:
 
         self.update_count_label()
         self.load_question(self.current_question_index)
+
+    def timer(self):
+        if self.time <= 0:
+            self.clock.configure(text="00:00:00")
+            for i in range(len(self.answers)):
+                if self.answers[i] == -1:
+                    self.answers[i] = 1000000
+            messagebox.showinfo("Thông báo", "Hết Thời Gian Làm Bài")
+            self.finish_quiz()
+        else:
+            hours = self.time // 3600
+            mins = (self.time // 60) % 60
+            secs = self.time % 60
+            self.clock.configure(text="{:02d}:{:02d}:{:02d}".format(hours,mins,secs))
+            self.time -= 1
+            self.window.after(1000, self.timer)
 
     def shuffle_subarray(self,arr, start, end):
         if start < 0 or end >= len(arr) or start > end:
@@ -112,6 +134,9 @@ class QuizApp:
             messagebox.showinfo("Thông báo", "Đã đến câu hỏi đầu tiên.")
 
     def finish_quiz(self):
+        if self.time > 15*60:
+            messagebox.showwarning("Cảnh báo", "Chưa hết giờ làm bài")
+            return
         def decrypt_answer(data):
             return self.cur.callfunc("CRYPTO.RSA_DECRYPT", cx_Oracle.STRING, [data,'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q='])
         if -1 in self.answers: #nếu vẫn còn câu chưa làm
@@ -151,8 +176,10 @@ class QuizApp:
         studentView = tk.Tk()
         obj = dashBoard_student(studentView,None,self.id)
         studentView.mainloop()
+    def on_close(self):
+        self.finish_quiz()
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00002",'HS00001')
+    app = QuizApp(root,"DT00001","MH00002",'HS00001',10)
     root.mainloop()

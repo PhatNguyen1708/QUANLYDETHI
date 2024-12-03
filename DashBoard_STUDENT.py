@@ -324,11 +324,29 @@ class dashBoard_student:
     def select_subject(self,data):
         chuoi = data.cget("text")
         temmon , mamon, tiet = chuoi.strip().split('\n')
-        id_hs = self.id
-        sub = Tk()
-        self.obj=QuizApp(sub, 'DT00001', mamon,id_hs)
-        self.studentView.destroy()
-        sub.mainloop()
+
+        current_time = datetime.now()
+
+        self.cur.execute('select THOIGIAN_BATDAU from DETHI_MONHOC where MAMONHOC=:MAMONHOC',{'MAMONHOC':mamon})
+        specific_time = self.cur.fetchall()[0][0]
+
+        if current_time < specific_time:
+            messagebox.showwarning(f"Chưa tới giờ",f"Chưa tới giờ làm bài. Thời gian làm bài là {specific_time}")
+        elif current_time > specific_time and int((current_time - specific_time).total_seconds() // 60) > 10:
+            messagebox.showwarning(f"Trễ Giờ",f"Đã quá giờ làm bài. Thời gian làm bài là {specific_time}")
+        elif current_time > specific_time:
+            minutes_late = int((current_time - specific_time).total_seconds() // 60)
+            id_hs = self.id
+            sub = Tk()
+            self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,minutes_late)
+            self.studentView.destroy()
+            sub.mainloop()
+        else:
+            id_hs = self.id
+            sub = Tk()
+            self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,0)
+            self.studentView.destroy()
+            sub.mainloop()
 
 
 
