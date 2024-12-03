@@ -9,7 +9,8 @@ class QuizApp:
         self.id=id
         self.soDe=soDe
         self.mamonhoc=mamonhoc
-        self.time = (40*60) - (later*60)
+        self.time = (15*60) - (later*60)
+        self.time_can_finish = (15*60)/3
 
         try:
             self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
@@ -134,7 +135,7 @@ class QuizApp:
             messagebox.showinfo("Thông báo", "Đã đến câu hỏi đầu tiên.")
 
     def finish_quiz(self):
-        if self.time > 15*60:
+        if self.time > self.time_can_finish:
             messagebox.showwarning("Cảnh báo", "Chưa hết giờ làm bài")
             return
         def decrypt_answer(data):

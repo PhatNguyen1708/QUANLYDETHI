@@ -322,31 +322,46 @@ class dashBoard_student:
 
 
     def select_subject(self,data):
-        chuoi = data.cget("text")
-        temmon , mamon, tiet = chuoi.strip().split('\n')
+        window = Toplevel(self.studentView)
+        window.title("Hướng dẫn sử đụng")
+        window.geometry('450x150+550+350')
+        window.config(background='white')
 
-        current_time = datetime.now()
+        l_made = Label(window,text="Nhập mã đề thi",font=('Times new roman', 15),bg="white").pack(pady=10)
+        e_ma_de = Entry(window,width=16, bg='white',font=('Arial', 13),highlightthickness=1, relief="solid")
+        e_ma_de.pack()
+        def dotest(data):
+            chuoi = data.cget("text")
+            temmon , mamon, tiet = chuoi.strip().split('\n')
 
-        self.cur.execute('select THOIGIAN_BATDAU from DETHI_MONHOC where MAMONHOC=:MAMONHOC',{'MAMONHOC':mamon})
-        specific_time = self.cur.fetchall()[0][0]
+            made = e_ma_de.get()
+            self.cur.execute('select madethi,THOIGIAN_BATDAU from DETHI_MONHOC where MAMONHOC=:MAMONHOC',{'MAMONHOC':mamon})
+            rows=self.cur.fetchall()
+            for row in rows:
+                if row[0] == made and row[1]!= None:
+                    specific_time = row[1]
+                    current_time = datetime.now()
+                    if current_time < specific_time:
+                        messagebox.showwarning(f"Chưa tới giờ",f"Chưa tới giờ làm bài. Thời gian làm bài là {specific_time}")
+                    elif current_time > specific_time and int((current_time - specific_time).total_seconds() // 60) > 10:
+                        messagebox.showwarning(f"Trễ Giờ",f"Đã quá giờ làm bài. Thời gian làm bài là {specific_time}")
+                    elif current_time > specific_time:
+                        minutes_late = int((current_time - specific_time).total_seconds() // 60)
+                        id_hs = self.id
+                        sub = Tk()
+                        self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,minutes_late)
+                        self.studentView.destroy()
+                        sub.mainloop()
+                    else:
+                        id_hs = self.id
+                        sub = Tk()
+                        self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,0)
+                        self.studentView.destroy()
+                        sub.mainloop()
+                    return
+            messagebox.showwarning(f"Lỗi",f"Không có mã đề: {made}")
+        b_do_test = Button(window,text="Làm Bài",command=lambda:dotest(data)).pack(pady=20)
 
-        if current_time < specific_time:
-            messagebox.showwarning(f"Chưa tới giờ",f"Chưa tới giờ làm bài. Thời gian làm bài là {specific_time}")
-        elif current_time > specific_time and int((current_time - specific_time).total_seconds() // 60) > 10:
-            messagebox.showwarning(f"Trễ Giờ",f"Đã quá giờ làm bài. Thời gian làm bài là {specific_time}")
-        elif current_time > specific_time:
-            minutes_late = int((current_time - specific_time).total_seconds() // 60)
-            id_hs = self.id
-            sub = Tk()
-            self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,minutes_late)
-            self.studentView.destroy()
-            sub.mainloop()
-        else:
-            id_hs = self.id
-            sub = Tk()
-            self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,0)
-            self.studentView.destroy()
-            sub.mainloop()
 
 
 
