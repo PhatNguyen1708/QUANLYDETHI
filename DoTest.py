@@ -68,7 +68,7 @@ class QuizApp:
         return arr
 
     def load_questions_from_file(self,sode,mamonhoc):
-        self.cur.execute('select cauhoi,dapana,dapanb,dapanc,dapand,f_decryptData(DAPAN_DUNG) from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
+        self.cur.execute('select cauhoi,dapana,dapanb,dapanc,dapand,DAPAN_DUNG from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
         data = self.cur.fetchall()
         return data
 
@@ -149,5 +149,5 @@ class QuizApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00003",'2033225436')
+    app = QuizApp(root,"DT00001","MH00002",'2033225436')
     root.mainloop()

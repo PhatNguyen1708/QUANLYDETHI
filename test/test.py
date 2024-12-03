@@ -40,7 +40,7 @@ class ExamScheduler:
         self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}  # Monday=2, Sunday=8
         
         # Nút thêm lịch thi/học
-        add_button = tk.Button(self.root, text="Thêm tiết học / Lịch thi", command=self.save_schedule)
+        add_button = tk.Button(self.root, text="Thêm tiết học / Lịch thi", command=self.get_schedule)
         add_button.grid(row=0, column=8, padx=10)
         
         # Hiện thị tuần chứa ngày hiện tại khi khởi động chương trình
@@ -66,7 +66,7 @@ class ExamScheduler:
             self.day_in_weak.append(label)
         
         self.date_label.config(text=f"Tuần {start_of_week.strftime('%d/%m')} - {(start_of_week + timedelta(days=6)).strftime('%d/%m')}")
-        self.save_schedule()
+        self.get_schedule()
 
     def show_prev_week(self):
         # Hàm tạo lệnh quay về tuần trước
@@ -107,7 +107,7 @@ class ExamScheduler:
         self.statusLabel = tk.Label(self.add_window, text='')
         self.statusLabel.grid(row=6, columnspan=2)
 
-    def save_schedule(self):
+    def get_schedule(self):
         self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}
         self.cur.execute('select * from dethi')
         rows = self.cur.fetchall()

@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import json, tkinter, string
 from tkinter import messagebox, simpledialog
 import cx_Oracle
+from DoTest import QuizApp
 
 class dashBoard_student:
     def __init__(self, studentView,fullName,id):
@@ -15,7 +16,6 @@ class dashBoard_student:
         self.dob = ""
         self.address = ""
         self.funtion = None
-        self.exam_schedule()
 
         self.studentView.geometry('925x530+300+200')
         self.studentView.title('Dashboard - Trang chủ học sinh')
@@ -27,6 +27,7 @@ class dashBoard_student:
             print('There is an error in the Oracle database:',er)
         self.cur = self.con.cursor()
 
+        self.exam_schedule()
         self.studentInfoView()
         self.refreshInfoView()
 
@@ -205,6 +206,10 @@ class dashBoard_student:
         self.funtion = Frame(self.studentView, bd=0, relief=RIDGE, bg='white',width=712,height=328,highlightbackground="black", highlightthickness=2)
         self.funtion.place(x=240,y=200)
 
+        self.schedule_labels = []
+        self.day_in_weak = []
+        self.var = IntVar()
+
         self.current_date = datetime.now()
 
         self.days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"]
@@ -217,13 +222,19 @@ class dashBoard_student:
                 label.grid(row=i + 2, column=0, sticky="nsew")
 
         def update_calendar():
+            for label in self.schedule_labels:
+                label.destroy()
+            self.schedule_labels = []
+            self.day_in_weak = []
             start_of_week = self.current_date - timedelta(days=self.current_date.weekday())
             for i in range(7):
                 date = start_of_week + timedelta(days=i)
                 label = Label(self.funtion, text=self.days[i] + '\n' + date.strftime("%d/%m/%Y"), font=("Arial", 10), relief="ridge",width=9)
                 label.grid(row=1, column=i + 1, sticky="nsew")
+                self.day_in_weak.append(label)
             
             self.date_label.config(text=f"Tuần {start_of_week.strftime('%d/%m')} - {(start_of_week + timedelta(days=6)).strftime('%d/%m')}")
+            self.get_schedule()
 
         def show_prev_week():
             # Hàm tạo lệnh quay về tuần trước
@@ -249,25 +260,70 @@ class dashBoard_student:
         update_calendar()
         create_time_slots()
 
-    def select_subject(self, subject):
-        filepath = f"data/{subject}.json"
-        while True:
-            self.soDe = simpledialog.askinteger("Chọn số đề", "Nhập số đề bạn muốn làm:", initialvalue=0) 
-            if  self.soDe < 0 : 
-                messagebox.showerror("Lỗi","Vui lòng nhập số đề lớn hơn 0")
-                return
-            elif self.soDe > len(filepath): 
-                messagebox.showerror("Lỗi","Không tìm thấy mã đề") 
-                return
+    def get_schedule(self):
+        self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}
+        self.cur.execute('select * from dethi')
+        rows = self.cur.fetchall()
+        rows = list(rows)
+        for data in self.day_in_weak:
+            chuoi = data.cget("text")
+            dong1, dong2=chuoi.strip().split('\n')
+            if dong1 != "Chủ nhật":
+                thu, so =  dong1.split()
             else:
-                break
-        if self.soDe is not None:
-                self.sub = Toplevel(self.studentView)
-                # self.obj=QuizApp(self.sub, filepath, self.soDe, subject,self.id)
+                so = 8
+            for time in rows:
+                if time[1] != None:
+                    if time[1].strftime("%d/%m/%Y") == dong2:
+                        if 6 <= int(time[1].strftime("%H")) <= 12:
+                            session = "morning"   
+                        elif 12 <= int(time[1].strftime("%H")) <= 17:
+                            session = "afternoon"    
+                        else:
+                            session = "evening"   
+                        
+                        # Lưu thông tin môn học
+                        self.schedule_data[int(so)][session].append({
+                            "subject": time[0],
+                            "periodStart": int(time[1].strftime("%H"))
+                        })
+
+                        self.display_schedule()
+                        
+
+    def display_schedule(self):
+        for widget in self.funtion.grid_slaves():
+            if int(widget.grid_info()["row"]) >= 2 and int(widget.grid_info()["column"]) >= 1:
+                widget.destroy()
+
+        # Hiển thị lịch
+        for day, periods in self.schedule_data.items():
+            col = day-1 # Từ T2-CN tương ứng với các cột
+
+            for period, subjects in periods.items():
+                row = 2 if period == "morning" else 3 if period == "afternoon" else 4
+                for subject_info in subjects:
+                    # Tạo nhãn cho mỗi môn học
+                    schedule_label = Label(
+                        self.funtion,
+                        text=f"{subject_info['subject']}\nTiết: {subject_info['periodStart']}",
+                        font=("Arial", 10),
+                        padx=5,
+                        pady=5,
+                        relief="ridge",
+                        bg="lightpink" if self.var.get() == 1 else "lightblue"
+                    )
+                    schedule_label.bind('<Double-1>',lambda event: self.select_subject(schedule_label))
+                    schedule_label.grid(row=row, column=col, sticky="nsew", pady=5, ipadx=5, ipady=10)
+                    self.schedule_labels.append(schedule_label)
 
 
-
-        
+    def select_subject(self,data):
+        chuoi = data.cget("text")
+        made, tiet = chuoi.strip().split('\n')  
+        self.sub = Toplevel(self.studentView)
+        self.obj=QuizApp(self.sub, made, 'MH00002',self.id)
+        self.sub.mainloop
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
     def help(self):
         window = Toplevel(self.studentView)
