@@ -1,4 +1,5 @@
 import tkinter as tk
+import cx_Oracle
 from tkinter import messagebox
 from datetime import datetime, timedelta
 
@@ -7,6 +8,13 @@ class ExamScheduler:
         self.root = root
         self.root.title("Exam Scheduler")
         self.var = tk.IntVar()
+        self.schedule_labels = []
+        self.day_in_weak = []
+        try:
+            self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
+            self.cur = self.con.cursor()
+        except cx_Oracle.DatabaseError as er:
+            print('There is an error in the Oracle database:', er)
         
         # Khởi tạo ngày hiện tại bằng ngày của hệ thống
         self.current_date = datetime.now()
@@ -32,7 +40,7 @@ class ExamScheduler:
         self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}  # Monday=2, Sunday=8
         
         # Nút thêm lịch thi/học
-        add_button = tk.Button(self.root, text="Thêm tiết học / Lịch thi", command=self.add_schedule)
+        add_button = tk.Button(self.root, text="Thêm tiết học / Lịch thi", command=self.save_schedule)
         add_button.grid(row=0, column=8, padx=10)
         
         # Hiện thị tuần chứa ngày hiện tại khi khởi động chương trình
@@ -46,13 +54,19 @@ class ExamScheduler:
             label.grid(row=i + 2, column=0, sticky="nsew")
     
     def update_calendar(self):
+        for label in self.schedule_labels:
+            label.destroy()
+        self.schedule_labels = []
+        self.day_in_weak = []
         start_of_week = self.current_date - timedelta(days=self.current_date.weekday())
         for i in range(7):
             date = start_of_week + timedelta(days=i)
             label = tk.Label(self.root, text=self.days[i] + '\n' + date.strftime("%d/%m/%Y"), font=("Arial", 10), relief="ridge")
             label.grid(row=1, column=i + 1, sticky="nsew")
+            self.day_in_weak.append(label)
         
         self.date_label.config(text=f"Tuần {start_of_week.strftime('%d/%m')} - {(start_of_week + timedelta(days=6)).strftime('%d/%m')}")
+        self.save_schedule()
 
     def show_prev_week(self):
         # Hàm tạo lệnh quay về tuần trước
@@ -93,56 +107,46 @@ class ExamScheduler:
         self.statusLabel = tk.Label(self.add_window, text='')
         self.statusLabel.grid(row=6, columnspan=2)
 
-        tk.Button(self.add_window, text="Thêm", command=self.save_schedule).grid(row=5, column=0, columnspan=2)
-
     def save_schedule(self):
-        subject = self.subject_entry.get()
-        day = int(self.day_entry.get())
-        periodStart = int(self.periodStart_entry.get())
-        periodEnd = int(self.periodEnd_entry.get())
-        
-        if not subject or not day or not periodStart or not periodEnd:
-            messagebox.showwarning("Input Error", "Vui lòng điền đầy đủ thông tin.")
-            return
-        
-        # Phân biệt buổi học
-        if 1 <= periodStart <= 6:
-            session = "morning"   # Sáng
-        elif 7 <= periodStart <= 12:
-            session = "afternoon"    # Chiều
-        else:
-            session = "evening"   # Tối
-        
-        # Kiểm tra số môn học trong buổi
-        if len(self.schedule_data[day][session]) >= 3:
-            self.statusLabel.config(text="Buổi này đã đầy môn học", fg="red")
-            return
+        self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}
+        self.cur.execute('select * from dethi')
+        rows = self.cur.fetchall()
+        rows = list(rows)
+        for data in self.day_in_weak:
+            chuoi = data.cget("text")
+            dong1, dong2=chuoi.strip().split('\n')
+            if dong1 != "Chủ nhật":
+                thu, so =  dong1.split()
+            else:
+                so = 8
+            for time in rows:
+                if time[1] != None:
+                    if time[1].strftime("%d/%m/%Y") == dong2:
+                        if 6 <= int(time[1].strftime("%H")) <= 12:
+                            session = "morning"   
+                        elif 12 <= int(time[1].strftime("%H")) <= 17:
+                            session = "afternoon"    
+                        else:
+                            session = "evening"   
+                        
+                        # Lưu thông tin môn học
+                        self.schedule_data[int(so)][session].append({
+                            "subject": time[0],
+                            "periodStart": int(time[1].strftime("%H")),
+                            "periodEnd": int(time[1].strftime("%H"))
+                        })
 
-        # Kiểm tra trùng thời gian tiết học
-        for scheduled in self.schedule_data[day][session]:
-            if not (periodEnd < scheduled["periodStart"] or periodStart > scheduled["periodEnd"]):
-                self.statusLabel.config(text="Tiết học trùng thời gian với môn khác", fg='red')
-                return
-        
-        # Lưu thông tin môn học
-        self.schedule_data[day][session].append({
-            "subject": subject,
-            "periodStart": periodStart,
-            "periodEnd": periodEnd
-        })
-
-        self.display_schedule()
-        self.add_window.destroy()
+                        self.display_schedule()
+                        
 
     def display_schedule(self):
-        # Xóa lịch cũ
         for widget in self.root.grid_slaves():
             if int(widget.grid_info()["row"]) >= 2 and int(widget.grid_info()["column"]) >= 1:
                 widget.destroy()
 
         # Hiển thị lịch
         for day, periods in self.schedule_data.items():
-            col = day  # Từ T2-CN tương ứng với các cột
+            col = day-1 # Từ T2-CN tương ứng với các cột
 
             for period, subjects in periods.items():
                 row = 2 if period == "morning" else 3 if period == "afternoon" else 4
@@ -150,7 +154,7 @@ class ExamScheduler:
                     # Tạo nhãn cho mỗi môn học
                     schedule_label = tk.Label(
                         self.root,
-                        text=f"{'Lịch thi' if self.var.get() == 1 else 'Lịch học'}: {subject_info['subject']}\nTiết: {subject_info['periodStart']} - {subject_info['periodEnd']}",
+                        text=f"Đề thi: {subject_info['subject']}\nTiết: {subject_info['periodStart']} - {subject_info['periodEnd']}",
                         font=("Arial", 10),
                         padx=5,
                         pady=5,
@@ -160,6 +164,7 @@ class ExamScheduler:
                     # Điều chỉnh chiều cao của nhãn dựa trên số tiết học
                     period_length = subject_info["periodEnd"] - subject_info["periodStart"] + 1
                     schedule_label.grid(row=row, column=col, sticky="nsew", pady=5, ipadx=5, ipady=period_length * 10)
+                    self.schedule_labels.append(schedule_label)
 
 if __name__ == "__main__":
     root = tk.Tk()

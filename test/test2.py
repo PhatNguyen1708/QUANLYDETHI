@@ -1,10 +1,7 @@
 import cx_Oracle
 from datetime import datetime
-from cryptogram import AES_Cipher
 
 class testcryyogram:
-    def __init__(self):
-            self.aes_cipher = AES_Cipher()
 
     def getdata(self):
         try:
@@ -41,14 +38,13 @@ class testcryyogram:
                 # cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
                 # con.commit()
                 #cur.execute('select macauhoi,cauhoi,dapana,dapanb,dapanc,dapand,f_decryptData(DAPAN_DUNG) from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
-                cur.execute('select id,MATKHAU from taikhoan')
+                cur.execute('select * from dethi')
                 rows = cur.fetchall()
                 rows = list(rows)
                 for data in rows:
-                    check = self.aes_cipher.decrypt(data[1])
-                    if check.encode('latin1').decode('unicode_escape') == '\x001\x002\x003':
-                        print(data[0],self.aes_cipher.decrypt(data[1]))
-                        print(self.aes_cipher.encrypt(self.aes_cipher.decrypt(data[1])))
+                    print(data)
+                    # print(data[1].time())
+                    # print(data[1].strftime("%d/%m/%Y"))
 
             except cx_Oracle.DatabaseError as er:
                 print('There is an error in the Oracle database:', er)
