@@ -53,6 +53,22 @@ class dashBoard_student:
 
 #--------------------------------- KHỞI TẠO BẢNG KẾT QUẢ HỌC TẬP CỦA HỌC SINH
     def exam_results(self):
+        def insert_resultData(data):
+            idx=1
+            for i, data in enumerate(data):
+                name =data[0]
+                id = data[1]
+                score = data[2]
+                time = data[3]
+                self.tree.insert("", "end", text=str(idx), values=(name,id, score, time))
+                idx +=1
+
+        def load_resultData():
+            self.cur.execute('''select TENMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH 
+                                from KETQUA,HOCSINH,monhoc
+                                where KETQUA.MSHS=HOCSINH.MSHS and KETQUA.MSHS= :MSHS and ketqua.mamonhoc = monhoc.mamonhoc''',{'MSHS':self.id} )
+            student_accounts = self.cur.fetchall()
+            return student_accounts
         #-------kiểm tra xem có cái frame chưa nè
         if self.funtion:
             self.funtion.destroy()
@@ -68,7 +84,7 @@ class dashBoard_student:
         #-------này là cái bản kết quả
         self.tableLabel=Label(self.funtion,text='----Kết quả học tập----', bg='white',fg='black', font=('Arial', 15, 'bold')).place(x=230,y=0)
         self.tree= ttk.Treeview(self.funtion,columns=("subject","soDe","score","time_completed"),xscrollcommand=scrollx.set,yscrollcommand=scrolly.set)
-        self.tree.heading("#0",text='ID')
+        self.tree.heading("#0",text='STT')
         self.tree.column("#0",width=45,anchor='nw')
         self.tree.heading("subject",text='Môn học')
         self.tree.column("subject",width=90,anchor='nw')
@@ -84,10 +100,13 @@ class dashBoard_student:
 
         scrolly.place(x=675,y=30,height=250)
         scrolly.config(command=self.tree.yview)
+
+        data =load_resultData()
+        insert_resultData(data)
         
 
         self.refreshButton=Button(self.funtion, text='Refresh',bg='#64a587',fg='black',command=self.exam_results,activebackground='white',font=('Arial',7,'bold'),width=10).place(x=635,y=300)
-      
+
 #--------------------------------- KHỞI TẠO KHU VỰC HIỂN THỊ THÔNG TIN HỌC SINH
     def studentInfoView(self):
         self.studentInfo = Label(self.studentView,text='Thông tin học sinh', bg='white',  fg='black', font=('Arial', 15, 'bold')).place(x=450,y=50)
@@ -103,7 +122,7 @@ class dashBoard_student:
         self.addressLabel = Label(self.studentView,text=f'Địa chỉ thường trú: {self.address}', bg='white',  fg='black', font=('Times new roman', 13),wraplength=450)
         self.addressLabel.place(x=320,y=155)
         self.dobLabel = Label(self.studentView,text=f'Ngày sinh: {self.dob}', bg='white',  fg='black', font=('Times new roman', 13))
-        self.dobLabel.place(x=320,y=130)        
+        self.dobLabel.place(x=320,y=130)     
 #--------------------------------- KHỞI TẠO GIAO DIỆN CẬP NHẬT THÔNG TIN HỌC SINH
     def refreshInfoView(self):
         self.cur.execute('select * from HOCSINH')
@@ -196,7 +215,7 @@ class dashBoard_student:
         
         updateButton = Button(self.funtion,text='Cập nhật thông tin',activebackground='white',bg='#64a587', font=('Arial', 10, 'bold'),command=updateData).place(x=300,y=200)
 
-#---------------------------------- TẠO LỊCH THI
+#----------------------------------Hiển thị LỊCH THI
     def exam_schedule(self):
          #-------kiểm tra xem có cái frame chưa nè
         if self.funtion:
@@ -382,5 +401,5 @@ class dashBoard_student:
 
 if __name__ == "__main__":
     studentView = Tk()
-    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HS00006')
+    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HS00001')
     studentView.mainloop()

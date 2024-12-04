@@ -5,6 +5,14 @@ from Crypto.Cipher import AES,PKCS1_OAEP
 from Crypto.Util.Padding import pad, unpad
 import binascii
 
+import os
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding as asymmetric_padding
+from cryptography.hazmat.primitives.ciphers import Cipher
+from cryptography.hazmat.primitives.ciphers.algorithms import AES
+from cryptography.hazmat.primitives.ciphers.modes import CBC
+from cryptography.hazmat.primitives.hashes import SHA256
+
 password = "12345678901234567890123456789012"  
 iv_hex = "1234567890123456"  
 
@@ -62,6 +70,40 @@ MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+
     
     def get_private_key(self):
         return self.private_key.decode()
+    
+
+class Hybrid_Cipher:
+    default_key = b'\x13\xc1.\x97Za,\x8f3J[\xa5\x0e\x9d\xaed\xa6\xcd\x9dHQ\xb3\x91\xce,\xa9\xda\xf0?\xc7f\x9f'
+    default_iv = b'\xb3\xec\xa7\x80\xbc\x1a\xbc;\xb6\xcd\x87V\x8e\x04\x11/'
+    def hybrid_encrypt(plaintext, public_key):
+
+        pkcs7_padder = padding.PKCS7(AES.block_size).padder()
+        padded_plaintext = pkcs7_padder.update(plaintext) + pkcs7_padder.finalize()
+
+        key = Hybrid_Cipher.default_key
+        print("key",key)
+        iv = Hybrid_Cipher.default_iv
+        print("iv",iv)
+
+        aes_cbc_cipher = Cipher(AES(key), CBC(iv))
+        ciphertext = aes_cbc_cipher.encryptor().update(padded_plaintext)
+        oaep_padding = asymmetric_padding.OAEP(mgf=asymmetric_padding.MGF1(algorithm=SHA256()), algorithm=SHA256(), label=None)
+        cipherkey = public_key.encrypt(key, oaep_padding)
+
+        return {'iv': iv, 'ciphertext': ciphertext}, cipherkey
+
+    def hybrid_decrypt(ciphertext, cipherkey, private_key):
+
+        oaep_padding = asymmetric_padding.OAEP(mgf=asymmetric_padding.MGF1(algorithm=SHA256()), algorithm=SHA256(), label=None)
+        recovered_key = private_key.decrypt(cipherkey, oaep_padding)
+
+        aes_cbc_cipher = Cipher(AES(recovered_key), CBC(ciphertext['iv']))
+        recovered_padded_plaintext = aes_cbc_cipher.decryptor().update(ciphertext['ciphertext'])
+
+        pkcs7_unpadder = padding.PKCS7(AES.block_size).unpadder()
+        recovered_plaintext = pkcs7_unpadder.update(recovered_padded_plaintext) + pkcs7_unpadder.finalize()
+
+        return recovered_plaintext
 
 if __name__ == "__main__":
     # cipher = RSA_Cipher()
@@ -74,9 +116,26 @@ if __name__ == "__main__":
     # print(f"Decrypted: {decrypted_message}")
 
 
-    aes_cipher = AES_Cipher()
-    encrypted = aes_cipher.encrypt("1")
-    print(f"Encrypted: {encrypted}")
-    decrypted = aes_cipher.decrypt(encrypted)
-    print(f"Decrypted: {decrypted}")
-   
+    # aes_cipher = AES_Cipher()
+    # encrypted = aes_cipher.encrypt("1")
+    # print(f"Encrypted: {encrypted}")
+    # decrypted = aes_cipher.decrypt(encrypted)
+    # print(f"Decrypted: {decrypted}")
+
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048
+    )
+
+    public_key = private_key.public_key()
+
+
+    plaintext = b'Hello everyone. Nice to meet you. My name is Sarah'
+
+    ciphertext, cipherkey = Hybrid_Cipher.hybrid_encrypt(plaintext, public_key)
+    print("Ciphertext:", ciphertext)
+    print("Cipherkey:", cipherkey)
+    recovered_plaintext = Hybrid_Cipher.hybrid_decrypt(ciphertext, cipherkey, private_key)
+    print("Plaintext:", recovered_plaintext)
+    assert (recovered_plaintext == plaintext)
+  

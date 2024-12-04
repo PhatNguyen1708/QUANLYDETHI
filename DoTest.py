@@ -147,29 +147,13 @@ class QuizApp:
         correct_answers = sum(1 for user_ans, correct_ans in zip(self.answers, [decrypt_answer(q[5]) for q in self.questions]) if user_ans == int(correct_ans))
         score = round(correct_answers / self.num_questions * 10, 2)
         
-        result = {
-            "score": score,
-            "soDe": self.soDe,  # Thêm số đề vào kết quả
-            "time_completed": str(datetime.datetime.now())
-        }
+        current_time = datetime.datetime.now()
 
-        # accounts_file = r'data\Accounts.json'
-        # try:
-        #     with open(accounts_file, 'r', encoding='utf-8') as file:
-        #         accounts_data = json.load(file)
-        # except FileNotFoundError:
-        #     accounts_data = []
-
-        # user_exists = False        # Kiểm tra nếu người dùng đã tồn tại trong danh sách tài khoản
-        # for account in accounts_data:
-        #     if account['id'] == self.id:
-        #         if 'quizzes' not in account:
-        #             account['quizzes'] = []  # Tạo một danh sách mới nếu 'quizzes' không tồn tại
-        #         account['quizzes'].append(result)
-        #         user_exists = True
-        #         break
-        # with open(accounts_file, 'w', encoding='utf-8') as file:
-        #     json.dump(accounts_data, file, ensure_ascii=False)
+        self.cur.execute('ALTER SESSION SET NLS_TIMESTAMP_FORMAT = "DD-MM-YYYY HH24:MI:SS"')
+        self.cur.execute('''insert into KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
+                        values (:MSHS,:MAMONHOC,:MADETHI,:DIEMTHI,:THOIGIAN_HOANTHANH)''',
+                        {'MSHS':self.id,'MAMONHOC':self.mamonhoc,'MADETHI':self.soDe,'DIEMTHI':int(score),'THOIGIAN_HOANTHANH':current_time.strftime("%d/%m/%Y")+' '+current_time.strftime("%H:%M")})
+        self.con.commit()
 
         messagebox.showinfo("Thông báo", f"Điểm của bạn là: {score}. Kết quả đã được lưu vào kết quả học tập\n Mã số học sinh: {self.id}.")
         self.window.destroy()
@@ -182,5 +166,5 @@ class QuizApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00002",'HS00001',10)
+    app = QuizApp(root,"DT00001","MH00001",'HS00001',10)
     root.mainloop()

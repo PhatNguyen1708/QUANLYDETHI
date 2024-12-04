@@ -38,9 +38,9 @@ class testcryyogram:
                 # cur.execute("UPDATE SINHVIEN SET NGAYSINH = :dob WHERE MSSV = :a",{'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'a':a})
                 # con.commit()
                 #cur.execute('select macauhoi,cauhoi,dapana,dapanb,dapanc,dapand,f_decryptData(DAPAN_DUNG) from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
-                cur.execute('''select TENMONHOC,MONHOC.MAMONHOC,MADETHI,THOIGIAN_BATDAU
-                            from DETHI_MONHOC , MONHOC
-                            where MONHOC.MAMONHOC = DETHI_MONHOC.MAMONHOC''')
+                cur.execute('''select KETQUA.MSHS,HOTENHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH 
+                            from KETQUA,HOCSINH
+                            where KETQUA.MSHS=HOCSINH.MSHS''')
                 rows = cur.fetchall()
                 rows = list(rows)
                 for data in rows:
