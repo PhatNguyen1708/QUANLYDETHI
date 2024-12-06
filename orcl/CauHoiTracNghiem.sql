@@ -277,8 +277,9 @@ values ('MH00005', 'CH00002', N'Cho phương trình ax2 + bx + c = 0 (a ≠ 0) c
 
 ---------------------NHẬP LIỆU CHO BẢNG KETQUA TRƯỚC---------------------------
 SELECT * from KETQUA
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
 insert into KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
-values ('HS00001','MH00001','DT00002',10,NULL)]
+values ('HS00001','MH00001','DT00002',10,'3-12-2024 22:38')
 
 delete from KETQUA
 

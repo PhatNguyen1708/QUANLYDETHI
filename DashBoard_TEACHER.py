@@ -50,7 +50,7 @@ class dashBoard_teacher:
         self.dobLabel.place(x=10, y=130)
 
         self.refreshInfoView()
-        self.DSMONHOC()
+        self.MONHOC_cua_giao_vien()
 
 #-------------------------------------- KHỞI TẠO CÁC NÚT LỰA CHỌN MÔN HỌC 
         self.menuLabel=Label(self.leftFrame,text='Danh sách môn học',fg='white',bg='#57a1f8',font=('Arial', 15, 'bold'))
@@ -335,7 +335,7 @@ class dashBoard_teacher:
         obj=Application(teacherView, subject_code)
         teacherView.mainloop()
 
-    def DSMONHOC(self):
+    def MONHOC_cua_giao_vien(self):
         self.cur.execute('select TENMONHOC from MONHOC,GIAOVIEN where MSGV =:a and GIAOVIEN.MAMONHOC = MONHOC.MAMONHOC',{'a':self.id})
         data = self.cur.fetchall()
         print(data)
@@ -343,8 +343,8 @@ class dashBoard_teacher:
             return
         self.cur.execute('select MAMONHOC from GIAOVIEN where MSGV =:a',{'a':self.id})
         tenmon = self.cur.fetchall()
-        button = Button(self.leftFrame,text=data[0][0],font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=partial(self.question,tenmon[0][0]))
-        button.place(x=10,y=290)
+        button_mon = Button(self.leftFrame,text=data[0][0],font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=partial(self.question,tenmon[0][0]))
+        button_mon.place(x=10,y=290)
         
 
     def query_questions(self):
