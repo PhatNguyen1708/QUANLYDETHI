@@ -17,6 +17,7 @@ class dashBoard_teacher:
         self.id = id
         self.gender = ""
         self.dob = ""
+        self.frame_data =None
 
         self.dB.geometry('925x700+300+200')
         self.dB.title('Dashboard - Trang chủ giáo viên')
@@ -49,19 +50,24 @@ class dashBoard_teacher:
         self.dobLabel = Label(self.leftFrame, text=f"Ngày sinh: {self.dob}", bg='white', fg='#57a1f8',justify = "left", font=('Arial', 12, 'bold'))
         self.dobLabel.place(x=10, y=130)
 
+        b_student = Button(self.leftFrame,text="Danh Sách Học Sinh",font=('Arial', 13, 'bold'),width=18,bg='white',bd=0,activebackground='#57a1f8',command=self.show_student)
+        b_student.place(x=10,y=250)
+
         self.refreshInfoView()
         self.MONHOC_cua_giao_vien()
-
-#-------------------------------------- KHỞI TẠO CÁC NÚT LỰA CHỌN MÔN HỌC 
-        self.menuLabel=Label(self.leftFrame,text='Danh sách môn học',fg='white',bg='#57a1f8',font=('Arial', 15, 'bold'))
-        self.menuLabel.place(x=10,y=230)
-
+        self.show_student()
 #-------------------------------------- TẠO BẢNG HIỂN THỊ KẾT QUẢ HỌC TẬP HỌC SINH
-        scrolly1 = Scrollbar(self.dB,orient='vertical')
-        scrollx1 = Scrollbar(self.dB, orient="horizontal")
+    def show_student(self):
+        if self.frame_data:
+            self.frame_data.destroy()
+        self.frame_data = Frame(self.dB,bd=0,relief=RIDGE, bg='white')
+        self.frame_data.place(x=210, y=40, width=715, height=661)
 
-        self.tableLabel=Label(self.dB,text='---Kết quả học tập của học sinh---', bg='white',fg='black', font=('Arial', 15, 'bold')).place(x=385,y=45)
-        self.tree= ttk.Treeview(self.dB,columns=("MSHS","fullname","subject","soDe","score","time_completed"),xscrollcommand=scrollx1.set,yscrollcommand=scrolly1.set)
+        scrolly1 = Scrollbar(self.frame_data,orient='vertical')
+        scrollx1 = Scrollbar(self.frame_data, orient="horizontal")
+
+        self.tableLabel=Label(self.frame_data,text='---Kết quả học tập của học sinh---', bg='white',fg='black', font=('Arial', 15, 'bold')).place(x=175,y=5)
+        self.tree= ttk.Treeview(self.frame_data,columns=("MSHS","fullname","subject","soDe","score","time_completed"),xscrollcommand=scrollx1.set,yscrollcommand=scrolly1.set)
         self.tree.heading("#0",text='ID')
         self.tree.column("#0",width=45,anchor='nw')
         self.tree.heading("MSHS",text='MSHS')
@@ -74,36 +80,36 @@ class dashBoard_teacher:
         self.tree.heading("score",text='Điểm')
         self.tree.column("score",width=45,anchor='nw')
         self.tree.heading("time_completed",text='Thời gian hoàn thành')
-        self.tree.place(x=230,y=85,width=635)
+        self.tree.place(x=20,y=45,width=635)
         data=self.load_resultData()
         self.insert_resultData(data)
         
-        scrollx1.place(x=230,y=310,width=635)
+        scrollx1.place(x=20,y=270,width=635)
         scrollx1.config(command=self.tree.xview)
 
-        scrolly1.place(x=865,y=85,height=225)
+        scrolly1.place(x=655,y=45,height=225)
         scrolly1.config(command=self.tree.yview)
 
 #--------------------- TẠO CHỨC NĂNG TÌM KIẾM BẰNG SỬ DỤNG KEY COMBOBOX
-        self.searchButton=Button(self.dB, text='Tìm kiếm',bg='white',command=self.search,activebackground='#57a1f8',font=('Arial',8,'bold'),width=8).place(x=800,y=335)
-        self.searchEntry=Entry(self.dB,width=54, bd=2)
-        self.searchEntry.place(x=230,y=337)
+        self.searchButton=Button(self.frame_data, text='Tìm kiếm',bg='white',command=self.search,activebackground='#57a1f8',font=('Arial',8,'bold'),width=8).place(x=590,y=295)
+        self.searchEntry=Entry(self.frame_data,width=54, bd=2)
+        self.searchEntry.place(x=20,y=297)
 
         self.filter = StringVar()
-        self.combobox = ttk.Combobox(self.dB,textvariable=self.filter)
+        self.combobox = ttk.Combobox(self.frame_data,textvariable=self.filter)
         self.combobox['value']=('MSHS','Họ và tên','Môn học','Mã đề','Thời gian hoàn thành')
-        self.combobox.place(x=670,y=335,width=125)
+        self.combobox.place(x=460,y=295,width=125)
 
-        self.viewButton=Button(self.dB, text='Hiển thị',bg='white',command=self.view,activebackground='#57a1f8',font=('Arial',8,'bold'),width=8).place(x=800,y=365)
+        self.viewButton=Button(self.frame_data, text='Hiển thị',bg='white',command=self.view,activebackground='#57a1f8',font=('Arial',8,'bold'),width=8).place(x=590,y=325)
 
-        self.countStudentLabel=Label(self.dB,text='Tổng số lượng học sinh: '+ str(self.count_students(r'data\Accounts.json')),bg='white').place(x=230,y=655)
+        self.countStudentLabel=Label(self.frame_data,text='Tổng số lượng học sinh: '+ str(self.count_students(r'data\Accounts.json')),bg='white').place(x=20,y=615)
 
 #-------------------------------------- TẠO BẢNG HIỂN THỊ THÔNG TIN HỌC SINH 
-        scrolly2 = Scrollbar(self.dB,orient='vertical')
-        scrollx2 = Scrollbar(self.dB, orient="horizontal")
+        scrolly2 = Scrollbar(self.frame_data,orient='vertical')
+        scrollx2 = Scrollbar(self.frame_data, orient="horizontal")
 
-        self.tableLabel=Label(self.dB,text='---Danh sách học sinh---', bg='white',fg='black', font=('Arial', 15, 'bold')).place(x=440,y=375)
-        self.tree2= ttk.Treeview(self.dB,columns=("id","fullname","gender","lop","dob","address"),xscrollcommand=scrollx2.set,yscrollcommand=scrolly2.set)
+        self.tableLabel=Label(self.frame_data,text='---Danh sách học sinh---', bg='white',fg='black', font=('Arial', 15, 'bold')).place(x=230,y=335)
+        self.tree2= ttk.Treeview(self.frame_data,columns=("id","fullname","gender","lop","dob","address"),xscrollcommand=scrollx2.set,yscrollcommand=scrolly2.set)
         self.tree2.heading("#0",text='ID')
         self.tree2.column("#0",width=45,anchor='nw')
         self.tree2.heading("id",text='MSHS')
@@ -115,17 +121,17 @@ class dashBoard_teacher:
         self.tree2.column("lop",width=55,anchor='nw')
         self.tree2.heading("dob",text='Ngày sinh')
         self.tree2.heading("address",text='Địa chỉ')
-        self.tree2.place(x=230,y=410,width=635)
+        self.tree2.place(x=20,y=370,width=635)
         data=self.load_student_accounts()
         self.insert_Data(data)
         
-        scrollx2.place(x=230,y=635,width=635)
+        scrollx2.place(x=20,y=595,width=635)
         scrollx2.config(command=self.tree2.xview)
 
-        scrolly2.place(x=865,y=410,height=225)
+        scrolly2.place(x=655,y=370,height=225)
         scrolly2.config(command=self.tree2.yview)
 
-        self.helpButton=Button(self.dB, text='?',bg='#57a1f8',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
+        self.helpButton=Button(self.frame_data, text='?',bg='#57a1f8',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 
 
     def help(self):
@@ -157,79 +163,6 @@ class dashBoard_teacher:
                 self.genderLabel.config(text=f'Giới tính: {self.gender}')
                 self.dobLabel.config(text=f'Ngày sinh: {self.dob}')
                 break
-
-    # def updateInfo(self):
-    #     window = Toplevel(self.studentView)
-    #     window.title("Cập nhật thông tin ")
-    #     window.geometry('450x300+550+350')
-    #     window.config(background='white')
-
-    #     updateLabel = Label(window,text='Cập nhật thông tin học sinh', bg='white',  fg='black', font=('Arial', 15, 'bold')).place(x=90,y=10)
-
-    #     fullnameLabel=Label(window,text='Họ và tên: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=45)
-    #     fullnameEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-    #     fullnameEntry.place(x=110,y=45)
-    #     fullnameEntry.insert(0,self.fullName)
-
-    #     idLabel=Label(window,text='Mã số: ' + self.id, bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=75)
-
-    #     genderLabel=Label(window,text='Giới tính: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=200,y=75)
-    #     genderEntry=Entry(window,width=16, bg='white',font=('Arial', 13))
-    #     genderEntry.place(x=280,y=75)
-    #     genderEntry.insert(0,self.gender)
-
-
-    #     classLabel=Label(window,text='Lớp: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=105)
-    #     classEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-    #     classEntry.place(x=110,y=105)
-    #     classEntry.insert(0,str(self.lop))
-
-    #     dobLabel=Label(window,text='Ngày sinh: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=135)
-    #     dobEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-    #     dobEntry.place(x=110,y=135)
-    #     dobEntry.insert(0,self.dob)
-
-    #     addressLabel=Label(window,text='Địa chỉ: ', bg='white',  fg='black', font=('Times new roman', 13)).place(x=30,y=165)
-    #     addressEntry=Entry(window,width=35, bg='white',font=('Arial', 13))
-    #     addressEntry.place(x=110,y=165)
-    #     addressEntry.insert(0,self.address)
-
-    #     def checkDOB(dob):
-    #         ngay_sinh = dob
-    #         ngay_hien_tai = datetime.now()
-    #         tuoi = ngay_hien_tai.year - ngay_sinh.year - ((ngay_hien_tai.month, ngay_hien_tai.day) < (ngay_sinh.month, ngay_sinh.day))
-    #         if tuoi >= 16:
-    #             return True
-    #         else:
-    #             messagebox.showerror('Error','Tuổi không hợp lệ')
-    #             return False
-            
-    #     def checkClass(Class):
-    #         # Class = int(Class)
-    #         # if Class < 10 or Class > 12:
-    #         #     messagebox.showerror('Error','Lớp không hợp lệ')
-    #         #     return False
-    #         return True
-
-    #     def updateData():
-    #         fullname=fullnameEntry.get()
-    #         gender=genderEntry.get()
-    #         Class=classEntry.get()
-    #         dob=dobEntry.get()
-    #         dob = datetime.strptime(dob, "%d-%m-%Y")
-    #         address=addressEntry.get()
-    #         if checkDOB(dob) == True:
-    #             self.cur.execute("UPDATE HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
-    #             self.con.commit()
-    #             userExist=True
-    #         if not userExist:
-    #                 messagebox.showwarning("Lỗi","Không tìm thấy mã số")
-    #         self.refreshInfoView()
-    #         window.destroy()
-        
-    #     updateButton = Button(window,text='Cập nhật thông tin',activebackground='white',bg='#64a587', font=('Arial', 10, 'bold'),command=updateData).place(x=160,y=200)
-
-
 #-------------------------------- CÁC FUNC LÀM VIỆC VỚI BẢNG KQHT
     def search(self):
         idx=1
@@ -344,7 +277,7 @@ class dashBoard_teacher:
         self.cur.execute('select MAMONHOC from GIAOVIEN where MSGV =:a',{'a':self.id})
         tenmon = self.cur.fetchall()
         button_mon = Button(self.leftFrame,text=data[0][0],font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=partial(self.question,tenmon[0][0]))
-        button_mon.place(x=10,y=290)
+        button_mon.place(x=10,y=200)
         
 
     def query_questions(self):

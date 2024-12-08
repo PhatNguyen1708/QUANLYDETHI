@@ -195,14 +195,14 @@ values ('MH00005', N'Toán');
 
 ---------------------NHẬP LIỆU CHO BẢNG ĐỀ THI TRƯỚC---------------------------
 SELECT * FROM DETHI 
-insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00001', '3-12-2024 13:45', 2);
-insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00002', '25-11-2024', 2);
-insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00003','25-11-2024', 2);
-insert into DETHI (MADETHI,THOIGIAN_BATDAU,SOCAUHOI)
-values ('DT00004','25-11-2024', 2);
+insert into DETHI (MADETHI,SOCAUHOI)
+values ('DT00001',2);
+insert into DETHI (MADETHI,SOCAUHOI)
+values ('DT00002',2);
+insert into DETHI (MADETHI,SOCAUHOI)
+values ('DT00003',2);
+insert into DETHI (MADETHI,SOCAUHOI)
+values ('DT00004',2);
 
 
 
