@@ -53,6 +53,9 @@ class dashBoard_teacher:
         b_student = Button(self.leftFrame,text="Danh Sách Học Sinh",font=('Arial', 13, 'bold'),width=18,bg='white',bd=0,activebackground='#57a1f8',command=self.show_student)
         b_student.place(x=10,y=250)
 
+        b_test = Button(self.leftFrame,text="Tạo đề thi",font=('Arial', 13, 'bold'),width=18,bg='white',bd=0,activebackground='#57a1f8',command=self.show_student)
+        b_test.place(x=10,y=290)
+
         self.refreshInfoView()
         self.MONHOC_cua_giao_vien()
         self.show_student()
@@ -98,6 +101,7 @@ class dashBoard_teacher:
         self.filter = StringVar()
         self.combobox = ttk.Combobox(self.frame_data,textvariable=self.filter)
         self.combobox['value']=('MSHS','Họ và tên','Môn học','Mã đề','Thời gian hoàn thành')
+        self.combobox.current(0)
         self.combobox.place(x=460,y=295,width=125)
 
         self.viewButton=Button(self.frame_data, text='Hiển thị',bg='white',command=self.view,activebackground='#57a1f8',font=('Arial',8,'bold'),width=8).place(x=590,y=325)
@@ -133,7 +137,6 @@ class dashBoard_teacher:
 
         self.helpButton=Button(self.frame_data, text='?',bg='#57a1f8',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 
-
     def help(self):
         window = Toplevel(self.dB)
         window.title("Hướng dẫn sử đụng")
@@ -166,47 +169,33 @@ class dashBoard_teacher:
 #-------------------------------- CÁC FUNC LÀM VIỆC VỚI BẢNG KQHT
     def search(self):
         idx=1
-        data = self.load_student_accounts(r'data\Accounts.json')
         filterVar = self.filter.get()
-        query = self.searchEntry.get().lower()
-        self.tree.delete(*self.tree.get_children())
-        for i,student in enumerate(data):
-            id=student.get('id','')
-            fullname=student.get('fullname','')
-            for quiz in student.get('quizzes', []):
-                score = quiz.get("score", "")
-                subject = quiz.get("subject", "")
-                if subject == 'hoahoc':
-                    subject = 'Hóa học'
-                elif subject == 'sinhhoc':
-                    subject = 'Sinh học'
-                elif subject == 'vatly':
-                    subject = 'Vật lý'
-                elif subject == 'toan':
-                    subject = 'Toán'
-                elif subject == 'van':
-                    subject = 'Ngữ Văn'
-                elif subject == 'anh':
-                    subject = 'Tiếng Anh'
-                elif subject == 'su':
-                    subject = 'Lịch sử'
-                elif subject == 'dia':
-                    subject = 'Địa lý'
-                elif subject == 'gdcd':
-                    subject = 'GDCD'
-                soDe = quiz.get("soDe", "")
-                time_completed = quiz.get("time_completed", "")
-                if filterVar == 'Môn học' and query in quiz.get('subject', '').lower():
-                    self.tree.insert('', 'end',text=str(idx), values=(id,fullname, subject, soDe, score, time_completed))
-                elif filterVar == 'MSHS' and query == student.get('id', '').lower():
-                    self.tree.insert('', 'end',text=str(idx), values=(id,fullname, subject, soDe, score, time_completed))
-                elif filterVar == 'Họ và tên' and query in student.get('fullname', '').lower():
-                    self.tree.insert('', 'end',text=str(idx), values=(id,fullname, subject, soDe, score, time_completed))
-                elif filterVar == 'Mã đề' and query == str(quiz.get('soDe','')).lower():
-                    self.tree.insert('', 'end',text=str(idx), values=(id,fullname, subject, soDe, score, time_completed))
-                elif filterVar == 'Thời gian hoàn thành' and query in quiz.get('time_completed', '').lower():
-                    self.tree.insert('', 'end',text=str(idx), values=(id,fullname, subject, soDe, score, time_completed))
-                idx+=1
+        search = self.searchEntry.get()
+        query = ('''select KETQUA.MSHS,HOTENHS,TENMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH 
+                            from KETQUA,HOCSINH,monhoc
+                            where KETQUA.MSHS=HOCSINH.MSHS and ketqua.mamonhoc = monhoc.mamonhoc''' )
+        if filterVar == 'Môn học':
+            query += " AND TENMONHOC = :1"
+        elif filterVar == 'MSHS' :
+            query += " AND KETQUA.MSHS = :1"
+        elif filterVar == 'Họ và tên' :
+            query += " AND HOTENHS LIKE '%' || :1 || '%'"
+        elif filterVar == 'Mã đề':
+            query += " AND MADETHI LIKE '%' || :1 || '%'"
+        elif filterVar == 'Thời gian hoàn thành':
+            query += " AND THOIGIAN_HOANTHANH LIKE '%' || :1 || '%'"
+
+        if filterVar !="":
+            self.cur.execute(query,{'1':search})
+        else:
+            self.cur.execute(query)
+
+        for result in self.tree.get_children():
+            self.tree.delete(result)
+
+        for row in self.cur:
+            self.tree.insert("", "end", text=str(idx), values=(row[0],row[1], row[2], row[3], row[4], row[5]))
+            idx+=1
 
     def insert_resultData(self, data):
         idx=1
@@ -244,7 +233,7 @@ class dashBoard_teacher:
         for result in self.tree.get_children():
             self.tree.delete(result)
         self.tree.delete(*self.tree.get_children())
-        data=self.load_student_accounts()
+        data=self.load_resultData()
         self.insert_resultData(data)
 
 #-------------------------------- CÁC FUNC LÀM VIỆC VỚI BẢNG TTHS
@@ -279,7 +268,6 @@ class dashBoard_teacher:
         button_mon = Button(self.leftFrame,text=data[0][0],font=('Arial', 15, 'bold'),width=15,bg='white',bd=0,activebackground='#57a1f8',command=partial(self.question,tenmon[0][0]))
         button_mon.place(x=10,y=200)
         
-
     def query_questions(self):
         question_window = Toplevel(self.dB)
         question_window.title("Truy vấn câu hỏi")
@@ -323,6 +311,14 @@ class dashBoard_teacher:
         else:
             messagebox.showwarning("Thông báo", "Không tìm thấy môn học của giáo viên.")
 
+#-------------------------------------- Bảng tạo đề thi
+    def make_test(self):
+        if self.frame_data:
+            self.frame_data.destroy()
+        self.frame_data = Frame(self.dB,bd=0,relief=RIDGE, bg='red')
+        self.frame_data.place(x=210, y=40, width=715, height=661)
+
+        
 
 if __name__ == "__main__":
     menu=Tk()
