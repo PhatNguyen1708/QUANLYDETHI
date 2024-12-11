@@ -24,6 +24,8 @@ create table GIAOVIEN
     GIOITINH nvarchar2(10),
     MAMONHOC VARCHAR2(12)
 )
+
+ 
 /
 create table MONHOC
 (
@@ -209,16 +211,16 @@ values ('DT00004',2);
 ---------------------NHẬP LIỆU CHO BẢNG DETHI_MONHOC TRƯỚC---------------------------
 SELECT * FROM DETHI_MONHOC
 
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00001', 'MH00001');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00001', 'MH00002');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00001', 'MH00003');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00001', 'MH00004');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00001', 'MH00005');
+insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
+values ('DT00001', 'MH00001',null);
+insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
+values ('DT00001', 'MH00002',null);
+insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
+values ('DT00001', 'MH00003',null);
+insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
+values ('DT00001', 'MH00004',null);
+insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
+values ('DT00001', 'MH00005',nu;;);
 
 
 insert into DETHI_MONHOC (MADETHI,MAMONHOC)
@@ -236,7 +238,12 @@ alter table DETHI_MONHOC add THOIGIAN_BATDAU TIMESTAMP
 
 alter session set NLS_DATE_FORMAT = 'DD-MM-YYYY';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
-UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='3-12-2024 22:38' where MADETHI = 'DT00001' and MAMONHOC = 'MH00001'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='11-12-2024 7:51' where MADETHI = 'DT00001' and MAMONHOC = 'MH00001'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='11-12-2024 7:51' where MADETHI = 'DT00002' and MAMONHOC = 'MH00001'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='13-12-2024 13:00' where MADETHI = 'DT00001' and MAMONHOC = 'MH00002'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='13-12-2024 13:00' where MADETHI = 'DT00002' and MAMONHOC = 'MH00002'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='12-12-2024 18:00' where MADETHI = 'DT00001' and MAMONHOC = 'MH00003'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='12-12-2024 18:00' where MADETHI = 'DT00002' and MAMONHOC = 'MH00003'
 
 UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU= null
 
@@ -503,7 +510,121 @@ select * from HocsINH
 SELECT CRYPTO.RSA_ENCRYPT('This is my secret message','MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeautJPn9t6V5NcncuX7DHZdG+j/Hlfl9au9wmkjk1Tv85zf8FgmSKmnl/7vX5/+Gp8rbBamWETDX1akykeyKrS4uuYwFa4IPglvzAGGeLwd6N61uIZTb79nDECTf95/9ot2DepqFbzZrk4aoVR8vLPC/jduQcT7EFmkV13ZnrVwIDAQAB')
     FROM DUAL;
     
-SELECT CRYPTO.RSA_DECRYPT('LsDhxD8ZHmEopKXT5toO6MztfUhKKObOlipn4zjrtj48vVp0zL5BeRRaaQT//VO51a9PBRILikSF6RE2aTgthtSQGIIoYnumC8az7pv3RCE+3lNAwoW34Q4vUWEM5cYZefID1/TK/FwRg2mJVket0Oxt3VrRojItj34VhNKb93w=','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q=')
+SELECT CRYPTO.RSA_DECRYPT('ElPQFVNCJR6ksuqvRIZTsFEac+sMKcpm3h8Z6h25HR4sJiQG16PftoXc3doKCPUw4aSs6a67jA7ax1M3SWyphePDSJfjKHaxAkGweAJM6FIWF9p1btZDsxufAG1TGzeApEqSaspJKEiSQzMbw8qElzqgGuJJzod9sDFLr/jx5vg=','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q=')
     FROM DUAL;
+    
+-----Phân quyền user
 
-select cauhoi,dapana,dapanb,dapanc,dapand,CRYPTO.RSA_DECRYPT(DAPAN_DUNG) from dethi, dethi_monhoc , cauhoi cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc
+create or replace procedure pro_create_user(username in varchar2, pass in varchar2, profile in varchar2 )
+is 
+begin
+  EXECUTE IMMEDIATE 'CREATE USER ' || username || ' IDENTIFIED BY "' || pass || '"';
+  execute immediate 'GRANT CREATE SESSION TO"' || username || '"';
+   EXECUTE IMMEDIATE 'ALTER USER ' || username || ' PROFILE "' || profile || '"';
+end;
+
+create or replace function fun_check_account(user in varchar2)
+return int 
+is
+  t varchar2(50);
+  kq int;
+begin
+  select account_status into t from dba_users where username=user;
+  if t is null then
+    kq:=0;
+  else 
+    kq:=1;
+  end if;
+  return kq;
+exception when others then kq:=0;
+  return kq;
+end;
+
+create or replace procedure pro_alter_user(username in varchar2, pass in varchar2)
+is
+begin
+  execute immediate 'ALTER USER' || username || 'IDENTIFIED BY"' || pass || '"';
+  
+end;
+
+create or replace procedure Pro_CrUser(username in varchar2, pass in varchar2,profile in varchar2)
+is
+  ckUser int:=fun_check_account(username);
+begin
+  if ckUser=0 then
+    pro_create_user(username, pass, profile);
+  else
+    pro_alter_user(username,pass);
+  end if;
+  commit work;
+end;
+
+alter session set "_ORACLE_SCRIPT"=true; 
+
+create profile HocSinh limit
+  password_life_time 60
+  password_grace_time 10
+  password_reuse_time 1
+  password_reuse_max 5
+  failed_login_attempts 3;
+  
+create or replace function fun_account_status(user in varchar2)
+return varchar2
+is
+  t varchar2(50);
+begin
+  select account_status into t from DBA_USERS where username=user;
+  return t;
+exception when others then t:=' ';
+  return t;
+end;
+
+-------- phân quyền ---------
+
+create role DataEntry_HOCSINH
+grant select,insert,update on HOCSINH to DataEntry_HOCSINH
+
+create role DataEntry_GIAOVIEN
+grant select,insert,update on GIAOVIEN to DataEntry_GIAOVIEN
+grant select,insert,update on CAUHOI to DataEntry_GIAOVIEN
+
+------- Thủ tục phân quyền cho HOCSINH -------
+
+create or replace procedure quyen_hs (username in varchar2)
+is
+begin
+  execute immediate 'GRANT DATAENTRY_HOCSINH TO"' || username || '"';
+end;
+
+create or replace procedure quyen_gv (username in varchar2)
+is
+begin
+  execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
+end;
+
+create role DataEntry_HOCSINH
+grant select,insert,update on HOCSINH to DataEntry_HOCSINH
+grant select,insert on KETQUA to DataEntry_HOCSINH
+grant select on DETHI_MONHOC  to DataEntry_HOCSINH
+grant select on MonHoc  to DataEntry_HOCSINH
+
+create role DataEntry_GIAOVIEN
+grant select,insert,update on GIAOVIEN to DataEntry_GIAOVIEN
+grant select,insert,update on CAUHOI to DataEntry_GIAOVIEN
+grant select,insert,update on KETQUA to DataEntry_GIAOVIEN
+grant select on MonHoc to DataEntry_GIAOVIEN
+grant select,insert,update on HOCSINH to DataEntry_GIAOVIEN
+grant select,insert,update DETHI_MONHOC  to DataEntry_GIAOVIEN
+
+create or replace procedure quyen_hs (username in varchar2)
+is
+begin
+  execute immediate 'GRANT DATAENTRY_HOCSINH TO"' || username || '"';
+end;
+
+create or replace procedure quyen_gv (username in varchar2)
+is
+begin
+  execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
+end;
+

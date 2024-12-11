@@ -16,41 +16,80 @@ class signin:
         root.resizable(False,False)
         try:
             con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
+            
         except cx_Oracle.DatabaseError as er:
             print('There is an error in the Oracle database:',er)
-        cur = con.cursor()
+        
+        con.cursor().execute('alter session set "_ORACLE_SCRIPT"=true')
+        
+        
+        def checkconnect(id,passw):
+            try:
+                connect=cx_Oracle.connect(id+'/'+passw+'@localhost:1521/free')
+                print(connect)
+                return connect
+            except cx_Oracle.DatabaseError as er:
+                print('There is an error in the Oracle database:',er)
+                return None
 
         def signin():
             id=user.get()
             passWord=passw.get()
+            cur = con.cursor()
             cur.execute('select * from TAIKHOAN')
             data = cur.fetchall()
+            
+            
+            if checkconnect(id,passWord):
+                messagebox.showinfo('success','Dang nhap thanh cong')
+            else:
+                try:
+                    status=cur.callfunc("fun_account_status",cx_Oracle.STRING, [id])
+                    if status=='LOCKED' or status=='LOCKED(TIMED)':
+                        messagebox.showwarning("warning account",'Tài khoản của bạn đã bị khóa')
+                        return
+                    elif status=='EXEXPIRED(GRACE)':
+                        messagebox.showwarning("warning account",'Tài khoản của bạn sắp hết hạn')
+                        return
+                    elif status=='EXEXPIRED & LOCKED(TIMED)':
+                        messagebox.showwarning("warning account","Tài khoản của bạn bị khóa do hết hạn")
+                        return
+                    elif status=='EXEXPIRED':
+                        messagebox.showwarning("warning account",'Tài khoản của bạn đã hết hạn')
+                        return
+                    elif status==' ':
+                        messagebox.showwarning("warning account",'Tài khoản không tồn tại')
+                        return
+                    else: messagebox.showerror("error",'Đăng nhập thất bại')
+                    return
+                except cx_Oracle.DatabaseError as e:
+                        print("Lỗi khi thực thi thủ tục:", e)
+                
+            
             try:
-                accountFound=False
                 for account in data:
-                    if id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]) and re.search(r'^HS',id):
+                    if id == account[0] and re.search(r'^HS',id) and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
                         screen=Tk()
                         cur.execute('select HOTENHS from TAIKHOAN,HOCSINH where TAIKHOAN.ID=HOCSINH.MSHS and TAIKHOAN.ID=:a',{'a':account[0]})
                         HS_name=cur.fetchall()
-                        obj=dashBoard_student(screen,HS_name[0][0],account[0])
+                        con.close()
+                        obj=dashBoard_student(screen,HS_name[0][0],account[0],passWord)
                         root.destroy()
                         screen.mainloop()
-                        accountFound=True
                         return
                     elif id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
                         screen=Tk()
                         cur.execute('select HOTENGV from TAIKHOAN,GIAOVIEN where TAIKHOAN.ID=GIAOVIEN.MSGV and TAIKHOAN.ID=:a',{'a':account[0]})
                         gv_name=cur.fetchall()
-                        obj=dashBoard_teacher(screen,gv_name[0][0],account[0])
+                        con.close()
+                        obj=dashBoard_teacher(screen,gv_name[0][0],account[0],passWord)
                         root.destroy()  
                         screen.mainloop()
-                        accountFound=True
                         return
                     elif id == account[0] and passWord != cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
                         messagebox.showwarning("Wrong password",'Nhập sai mật khẩu, vui lòng nhập lại')
                         return
-                if not accountFound:
-                    messagebox.showwarning("Wrong ",'Tài khoản không tồn tại')
+                
             except FileNotFoundError:
                 print("Không tìm thấy file Accounts.json")                          
 
@@ -75,6 +114,18 @@ class signin:
                     typeAccount = selec_option.get()
                     fullName=fname.get()
                     cur = con.cursor()
+                    profile='HOCSINH'
+                    
+                    try:
+                    
+                        cur.callproc("Pro_CrUser", [id, passWord,profile])
+
+                        print(f"Đã thực thi thủ tục đăng ký cho user '{id}'.")
+                    except cx_Oracle.DatabaseError as e:
+                        print("Lỗi khi thực thi thủ tục:", e)
+                    
+                    
+                    
                     cur.execute('select * from TAIKHOAN')
                     data = cur.fetchall()
 
@@ -104,8 +155,18 @@ class signin:
                         cur.execute('INSERT INTO TAIKHOAN (ID, MATKHAU) VALUES (:id, :passWord)', {'id':  id, 'passWord': passWord})
                         if re.search(r'^HS',id):
                             cur.execute('INSERT INTO HOCSINH (MSHS, HOTENHS) VALUES (:MSHS, :HOTENHS)', {'MSHS': id, 'HOTENHS': fullName})
+                            try:
+                                cur.callproc("quyen_hs", [id])
+                                print(f"Đã thực thi thủ tục cấp quyền cho user '{id}'.")
+                            except cx_Oracle.DatabaseError as e:
+                                print("Lỗi khi thực thi thủ tục:", e)
                         else:
                             cur.execute('INSERT INTO GIAOVIEN (MSGV, hotengv) VALUES (:MSGV, :hotengv)', {'MSGV': id, 'hotengv': fullName})
+                            try:
+                                cur.callproc("quyen_gv", [id])
+                                print(f"Đã thực thi thủ tục cấp quyền cho user '{id}'.")
+                            except cx_Oracle.DatabaseError as e:
+                                print("Lỗi khi thực thi thủ tục:", e)
                         con.commit()
                         messagebox.showinfo('Sign up','Đăng ký thành công')
                         sign()

@@ -8,3 +8,8 @@ grant create table to CauHoiTracNghiem
 
 alter user CauHoiTracNghiem quota 100M on users
 
+GRANT SELECT ON SYS.DBA_USERS TO CauHoiTracNghiem;
+GRANT SELECT ON SYS.DBA_PROFILES TO CauHoiTracNghiem;
+GRANT CREATE PROFILE TO CauHoiTracNghiem;
+GRANT CREATE ROLE TO CauHoiTracNghiem;
+

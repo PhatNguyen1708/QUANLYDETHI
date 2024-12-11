@@ -7,10 +7,11 @@ import cx_Oracle
 from DoTest import QuizApp
 
 class dashBoard_student:
-    def __init__(self, studentView,fullName,id):
+    def __init__(self, studentView,fullName,id,passwd):
         self.studentView = studentView
         self.fullName=fullName
         self.id=id
+        self.passwd =passwd
         self.gender = ""
         self.lop = ""
         self.dob = ""
@@ -22,7 +23,7 @@ class dashBoard_student:
         self.studentView.config(bg='white')
         self.studentView.resizable(width=FALSE, height=FALSE)
         try:
-            self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
+            self.con = cx_Oracle.connect(f'{self.id}/{self.passwd}@localhost:1521/free')
         except cx_Oracle.DatabaseError as er:
             print('There is an error in the Oracle database:',er)
         self.cur = self.con.cursor()
@@ -50,7 +51,6 @@ class dashBoard_student:
 
         self.helpButton=Button(self.studentView, text='?',bg='#64a587',fg='black',command=self.help,activebackground='white',font=('Arial',10,'bold'),width=3).place(x=885,y=5)
 
-
 #--------------------------------- KHỞI TẠO BẢNG KẾT QUẢ HỌC TẬP CỦA HỌC SINH
     def exam_results(self):
         def insert_resultData(data):
@@ -65,7 +65,7 @@ class dashBoard_student:
 
         def load_resultData():
             self.cur.execute('''select TENMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH 
-                                from KETQUA,HOCSINH,monhoc
+                                from cauhoitracnghiem.KETQUA,cauhoitracnghiem.HOCSINH,cauhoitracnghiem.monhoc
                                 where KETQUA.MSHS=HOCSINH.MSHS and KETQUA.MSHS= :MSHS and ketqua.mamonhoc = monhoc.mamonhoc''',{'MSHS':self.id} )
             student_accounts = self.cur.fetchall()
             return student_accounts
@@ -125,7 +125,7 @@ class dashBoard_student:
         self.dobLabel.place(x=320,y=130)     
 #--------------------------------- KHỞI TẠO GIAO DIỆN CẬP NHẬT THÔNG TIN HỌC SINH
     def refreshInfoView(self):
-        self.cur.execute('select * from HOCSINH')
+        self.cur.execute('select * from cauhoitracnghiem.HOCSINH')
         data = self.cur.fetchall()
         for student in data:
             if student[0] == self.id:
@@ -206,7 +206,7 @@ class dashBoard_student:
                 return
             dob = datetime.strptime(dob, "%d-%m-%Y")
             if checkDOB(dob) == True:
-                self.cur.execute("UPDATE HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
+                self.cur.execute("UPDATE cauhoitracnghiem.HOCSINH SET HOTENHS = :fullname, GIOITINH = :gender,NGAYSINH = :dob, LOP = :Class, DIACHI = :address WHERE MSHS = :a",{'fullname':fullname,'gender':gender,'Class':Class,'dob': cx_Oracle.Date(dob.year, dob.month, dob.day),'address':address,'a':self.id})
                 self.con.commit()
                 userExist=True
             if not userExist:
@@ -222,8 +222,23 @@ class dashBoard_student:
             self.funtion.destroy()
 
         #-------tạo frame đồ đó
-        self.funtion = Frame(self.studentView, bd=0, relief=RIDGE, bg='white',width=712,height=328,highlightbackground="black", highlightthickness=2)
-        self.funtion.place(x=240,y=200)
+        self.funtion = Frame(self.studentView, bd=0, relief=RIDGE, bg='white',width=712,height=310,highlightbackground="black")
+        self.funtion.place(x=230,y=200)
+        self.funtion.grid_propagate(False)
+
+        canvas= Canvas(self.funtion,width=650,height=290,background="white")
+        scrolly=ttk.Scrollbar(self.funtion, orient='vertical', command=canvas.yview)
+        scrollx=ttk.Scrollbar(self.funtion, orient='horizontal', command=canvas.xview)
+        self.scrollyFrame=Frame(canvas,background="white")
+        scrolly.pack(side='right', fill='y')
+        scrollx.pack(side='bottom', fill='x')
+        canvas.pack(side='left', fill='both', expand=True)
+        canvas.create_window((0,0), window=self.scrollyFrame, anchor='nw')
+        canvas.configure(yscrollcommand=scrolly.set)
+        self.scrollyFrame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
 
         self.schedule_labels = []
         self.day_in_weak = []
@@ -237,7 +252,7 @@ class dashBoard_student:
         def create_time_slots():
             periods = ["Sáng (1-6)", "Chiều (7-12)", "Tối (13-15)"]
             for i, period in enumerate(periods):
-                label = Label(self.funtion, text=period, font=("Arial", 12), padx=10, pady=10, relief="ridge", bg="lightyellow", height=3)
+                label = Label(self.scrollyFrame, text=period, font=("Arial", 9), padx=10, pady=10, relief="ridge", bg="lightyellow", height=3)
                 label.grid(row=i + 2, column=0, sticky="nsew")
 
         def update_calendar():
@@ -248,7 +263,7 @@ class dashBoard_student:
             start_of_week = self.current_date - timedelta(days=self.current_date.weekday())
             for i in range(7):
                 date = start_of_week + timedelta(days=i)
-                label = Label(self.funtion, text=self.days[i] + '\n' + date.strftime("%d/%m/%Y"), font=("Arial", 10), relief="ridge",width=9)
+                label = Label(self.scrollyFrame, text=self.days[i] + '\n' + date.strftime("%d/%m/%Y"), font=("Arial", 10), relief="ridge",width=9)
                 label.grid(row=1, column=i + 1, sticky="nsew")
                 self.day_in_weak.append(label)
             
@@ -265,7 +280,7 @@ class dashBoard_student:
             self.current_date += timedelta(weeks=1)
             update_calendar()
 
-        self.header_frame = Frame(self.funtion)
+        self.header_frame = Frame(self.scrollyFrame)
         self.header_frame.grid(row=0, column=0, columnspan=9)
 
         prev_button = Button(self.header_frame, text="Tuần trước",command=show_prev_week)
@@ -282,7 +297,7 @@ class dashBoard_student:
     def get_schedule(self):
         self.schedule_data = {i: {"morning": [], "afternoon": [], "evening": []} for i in range(2, 9)}
         self.cur.execute('''select TENMONHOC,THOIGIAN_BATDAU, MONHOC.MAMONHOC
-                            from DETHI_MONHOC , MONHOC
+                            from cauhoitracnghiem.DETHI_MONHOC , cauhoitracnghiem.MONHOC
                             where MONHOC.MAMONHOC = DETHI_MONHOC.MAMONHOC''')
         rows = self.cur.fetchall()
         rows = list(rows)
@@ -312,7 +327,6 @@ class dashBoard_student:
 
                         self.display_schedule()
                         
-
     def display_schedule(self):
         for widget in self.funtion.grid_slaves():
             if int(widget.grid_info()["row"]) >= 2 and int(widget.grid_info()["column"]) >= 1:
@@ -327,7 +341,7 @@ class dashBoard_student:
                 for subject_info in subjects:
                     # Tạo nhãn cho mỗi môn học
                     schedule_label = Label(
-                        self.funtion,
+                        self.scrollyFrame,
                         text=f"{subject_info['subject']}\n{subject_info['id_subject']}\nTiết: {subject_info['periodStart']}",
                         font=("Arial", 10),
                         padx=5,
@@ -336,13 +350,12 @@ class dashBoard_student:
                         bg="lightpink" if self.var.get() == 1 else "lightblue"
                     )
                     schedule_label.bind('<Double-1>',lambda event: self.select_subject(schedule_label))
-                    schedule_label.grid(row=row, column=col, sticky="nsew", pady=5, ipadx=5, ipady=10)
+                    schedule_label.grid(row=row, column=col, sticky="nsew", pady=5, ipadx=5, ipady=8)
                     self.schedule_labels.append(schedule_label)
-
 
     def select_subject(self,data):
         window = Toplevel(self.studentView)
-        window.title("Hướng dẫn sử đụng")
+        window.title("Chọn mã đề")
         window.geometry('450x150+550+350')
         window.config(background='white')
 
@@ -352,9 +365,8 @@ class dashBoard_student:
         def dotest(data):
             chuoi = data.cget("text")
             temmon , mamon, tiet = chuoi.strip().split('\n')
-
             made = e_ma_de.get()
-            self.cur.execute('select madethi,THOIGIAN_BATDAU from DETHI_MONHOC where MAMONHOC=:MAMONHOC',{'MAMONHOC':mamon})
+            self.cur.execute('select madethi,THOIGIAN_BATDAU from cauhoitracnghiem.DETHI_MONHOC where MAMONHOC=:MAMONHOC and madethi=:madethi',{'MAMONHOC':mamon,'madethi':made})
             rows=self.cur.fetchall()
             for row in rows:
                 if row[0] == made and row[1]!= None:
@@ -382,9 +394,6 @@ class dashBoard_student:
         b_do_test = Button(window,text="Làm Bài",command=lambda:dotest(data)).pack(pady=20)
 
 
-
-
-
 #--------------------------------- CÁC FUNCTION LÀM VIỆC VỚI BẢNG KẾT QUẢ
     def help(self):
         window = Toplevel(self.studentView)
@@ -401,5 +410,5 @@ class dashBoard_student:
 
 if __name__ == "__main__":
     studentView = Tk()
-    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HS00001')
+    obj = dashBoard_student(studentView,'Nguyễn Thị Thùy Trang','HS00001',123)
     studentView.mainloop()
