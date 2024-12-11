@@ -391,6 +391,10 @@ class dashBoard_teacher:
             for cur in self.cur:
                     if made == cur[0]:
                         return False
+            self.cur.execute('select MADETHI,THOIGIAN_BATDAU from cauhoitracnghiem.DETHI_MONHOC')
+            for cur in self.cur:
+                if made == cur[0] and datetime.strptime(time, "%d-%m-%Y %H:%M") == cur[1]:
+                    return False
             return True
 
 
@@ -414,15 +418,13 @@ class dashBoard_teacher:
                     self.cur.execute("""ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS'""")
                     self.cur.execute("""insert into cauhoitracnghiem.DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
                                         values (:MADETHI, :MAMONHOC,:THOIGIAN_BATDAU)""",{'MADETHI':made,'MAMONHOC':mamon,'THOIGIAN_BATDAU':time})
-                    self.con.commit()
-                    self.get_schedule()
             else:
                 self.cur.execute("""ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS'""")
                 self.cur.execute("""UPDATE cauhoitracnghiem.DETHI_MONHOC SET THOIGIAN_BATDAU= :time
                                  where MADETHI = :MADETHI and MAMONHOC = :MAMONHOC""",
                                  {'MADETHI':made,'MAMONHOC':mamon,'time':time})
-                self.con.commit()
-                self.get_schedule()
+            self.con.commit()
+            self.get_schedule()
                 
 
         b_add_update = Button(self.exam_schedule,text="Thêm hoặc chỉnh sửa",command=add_dethi)
@@ -545,7 +547,7 @@ class dashBoard_teacher:
                             "id_subject": time[2]
                         })
 
-                        self.display_schedule()
+        self.display_schedule()
                         
     def display_schedule(self):
         for widget in self.exam_schedule.grid_slaves():

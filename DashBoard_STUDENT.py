@@ -374,21 +374,25 @@ class dashBoard_student:
                     current_time = datetime.now()
                     if current_time < specific_time:
                         messagebox.showwarning(f"Chưa tới giờ",f"Chưa tới giờ làm bài. Thời gian làm bài là {specific_time}")
+                        return
                     elif current_time > specific_time and int((current_time - specific_time).total_seconds() // 60) > 10:
                         messagebox.showwarning(f"Trễ Giờ",f"Đã quá giờ làm bài. Thời gian làm bài là {specific_time}")
+                        return
                     elif current_time > specific_time:
                         minutes_late = int((current_time - specific_time).total_seconds() // 60)
                         id_hs = self.id
                         sub = Tk()
-                        self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,minutes_late)
+                        self.obj=QuizApp(sub, made, mamon,id_hs,self.passwd,minutes_late)
                         self.studentView.destroy()
                         sub.mainloop()
+                        return
                     else:
                         id_hs = self.id
                         sub = Tk()
-                        self.obj=QuizApp(sub, 'DT00001', mamon,id_hs,0)
+                        self.obj=QuizApp(sub, made, mamon,id_hs,self.passwd,0)
                         self.studentView.destroy()
                         sub.mainloop()
+                        return
                     return
             messagebox.showwarning(f"Lỗi",f"Không có mã đề: {made}")
         b_do_test = Button(window,text="Làm Bài",command=lambda:dotest(data)).pack(pady=20)

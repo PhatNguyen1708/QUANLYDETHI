@@ -160,7 +160,8 @@ class QuizApp:
         self.window.destroy()
         from DashBoard_STUDENT import dashBoard_student
         studentView = tk.Tk()
-        obj = dashBoard_student(studentView,None,self.id)
+        self.con.close()
+        obj = dashBoard_student(studentView,None,self.id,self.passwd)
         studentView.mainloop()
     def on_close(self):
         self.finish_quiz()
