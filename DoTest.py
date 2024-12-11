@@ -4,16 +4,17 @@ import json, random, datetime
 import cx_Oracle
 
 class QuizApp: 
-    def __init__(self, window,soDe,mamonhoc,id,later):
+    def __init__(self, window,soDe,mamonhoc,id,passwd,later):
 
         self.id=id
+        self.passwd = passwd
         self.soDe=soDe
         self.mamonhoc=mamonhoc
         self.time = (15*60) - (later*60)
         self.time_can_finish = (15*60)/3
 
         try:
-            self.con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
+            self.con = cx_Oracle.connect(f'{self.id}/{self.passwd}@localhost:1521/free')
         except cx_Oracle.DatabaseError as er:
             print('There is an error in the Oracle database:',er)
         self.cur = self.con.cursor()
@@ -91,7 +92,7 @@ class QuizApp:
         return arr
 
     def load_questions_from_file(self,sode,mamonhoc):
-        self.cur.execute('select cauhoi,dapana,dapanb,dapanc,dapand,DAPAN_DUNG from dethi, dethi_monhoc , cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
+        self.cur.execute('select cauhoi,dapana,dapanb,dapanc,dapand,DAPAN_DUNG from CauHoiTracNghiem.dethi, CauHoiTracNghiem.dethi_monhoc , CauHoiTracNghiem.cauhoi where dethi.madethi = dethi_monhoc.madethi  and dethi_monhoc.mamonhoc = cauhoi.mamonhoc and dethi.madethi = :madethi and dethi_monhoc.mamonhoc = : mamonhoc',{'madethi':sode,'mamonhoc':mamonhoc})
         data = self.cur.fetchall()
         return data
 
@@ -139,7 +140,7 @@ class QuizApp:
             messagebox.showwarning("Cảnh báo", "Chưa hết giờ làm bài")
             return
         def decrypt_answer(data):
-            return self.cur.callfunc("CRYPTO.RSA_DECRYPT", cx_Oracle.STRING, [data,'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q='])
+            return self.cur.callfunc("CauHoiTracNghiem.CRYPTO.RSA_DECRYPT", cx_Oracle.STRING, [data,'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q='])
         if -1 in self.answers: #nếu vẫn còn câu chưa làm
             messagebox.showwarning("Cảnh báo", "Vui lòng chọn đáp án cho tất cả các câu hỏi.")
             return
@@ -150,7 +151,7 @@ class QuizApp:
         current_time = datetime.datetime.now()
 
         self.cur.execute('ALTER SESSION SET NLS_TIMESTAMP_FORMAT = "DD-MM-YYYY HH24:MI:SS"')
-        self.cur.execute('''insert into KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
+        self.cur.execute('''insert into CauHoiTracNghiem.KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
                         values (:MSHS,:MAMONHOC,:MADETHI,:DIEMTHI,:THOIGIAN_HOANTHANH)''',
                         {'MSHS':self.id,'MAMONHOC':self.mamonhoc,'MADETHI':self.soDe,'DIEMTHI':int(score),'THOIGIAN_HOANTHANH':current_time.strftime("%d/%m/%Y")+' '+current_time.strftime("%H:%M")})
         self.con.commit()
@@ -166,5 +167,5 @@ class QuizApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00001",'HS00001',10)
+    app = QuizApp(root,"DT00001","MH00001",'HS00001',123,14)
     root.mainloop()

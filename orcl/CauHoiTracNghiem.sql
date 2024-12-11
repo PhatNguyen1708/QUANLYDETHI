@@ -220,17 +220,9 @@ values ('DT00001', 'MH00003',null);
 insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
 values ('DT00001', 'MH00004',null);
 insert into DETHI_MONHOC (MADETHI,MAMONHOC,THOIGIAN_BATDAU)
-values ('DT00001', 'MH00005',nu;;);
+values ('DT00001', 'MH00005',null);
 
 
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00002', 'MH00001');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00002', 'MH00002');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00003', 'MH00003');
-insert into DETHI_MONHOC (MADETHI,MAMONHOC)
-values ('DT00004', 'MH00004');
 
 alter table DETHI drop column THOIGIAN_BATDAU
 
@@ -253,7 +245,8 @@ where MONHOC.MAMONHOC = DETHI_MONHOC.MAMONHOC
 
 ---------------------NHẬP LIỆU CHO BẢNG CAU HOI TRƯỚC---------------------------
 SELECT * FROM CAUHOI
-DELETE FROM CAUHOI
+DELETE FROM CAUHOI where macauhoi ='CH00003'
+
 
 
 insert into CAUHOI (MAMONHOC,MACAUHOI,CAUHOI,DAPANA,DAPANB,DAPANC,DAPAND,DAPAN_DUNG)
@@ -484,7 +477,7 @@ END;
 /
 
 
-CREATE OR REPLACE TRIGGER encrypt_MSSH
+drop TRIGGER encrypt_MSSH
 BEFORE INSERT OR UPDATE ON HOCSINH
 FOR EACH ROW
 DECLARE
@@ -607,14 +600,27 @@ grant select,insert,update on HOCSINH to DataEntry_HOCSINH
 grant select,insert on KETQUA to DataEntry_HOCSINH
 grant select on DETHI_MONHOC  to DataEntry_HOCSINH
 grant select on MonHoc  to DataEntry_HOCSINH
+grant select on cauhoi to DataEntry_HOCSINH
+grant select on dethi to DataEntry_HOCSINH
+grant select on dethi_monhoc to DataEntry_HOCSINH
+GRANT EXECUTE ON CRYPTO TO DataEntry_HOCSINH
+grant execute on f_decryptData to DataEntry_HOCSINH
+grant execute on f_encryptData to DataEntry_HOCSINH
+
 
 create role DataEntry_GIAOVIEN
 grant select,insert,update on GIAOVIEN to DataEntry_GIAOVIEN
-grant select,insert,update on CAUHOI to DataEntry_GIAOVIEN
+grant select,insert,update,delete on CAUHOI to DataEntry_GIAOVIEN
 grant select,insert,update on KETQUA to DataEntry_GIAOVIEN
 grant select on MonHoc to DataEntry_GIAOVIEN
 grant select,insert,update on HOCSINH to DataEntry_GIAOVIEN
-grant select,insert,update DETHI_MONHOC  to DataEntry_GIAOVIEN
+grant select,insert,update on DETHI_MONHOC to DataEntry_GIAOVIEN
+grant select,insert,update on Dethi to DataEntry_GIAOVIEN
+GRANT EXECUTE ON CRYPTO TO DataEntry_GIAOVIEN
+grant execute on f_decryptData to DataEntry_GIAOVIEN
+grant execute on f_encryptData to DataEntry_GIAOVIEN
+
+
 
 create or replace procedure quyen_hs (username in varchar2)
 is
@@ -627,4 +633,5 @@ is
 begin
   execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
 end;
+
 

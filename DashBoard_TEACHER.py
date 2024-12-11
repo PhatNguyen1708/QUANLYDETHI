@@ -257,7 +257,7 @@ class dashBoard_teacher:
         self.window=Toplevel(self.dB)
         self.window.destroy()
         teacherView=Tk()
-        obj=Application(teacherView, subject_code)
+        obj=Application(teacherView, subject_code,self.id,self.passWord)
         teacherView.mainloop()
 
     def MONHOC_cua_giao_vien(self):

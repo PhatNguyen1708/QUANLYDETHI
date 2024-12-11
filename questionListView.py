@@ -5,11 +5,13 @@ from Teachers import *
 from tkinter import *
 
 class Application:
-    def __init__(self,teacherView,subject_code):
+    def __init__(self,teacherView,subject_code,id,passwd):
         super().__init__()
         self.teacherView=teacherView
-        self.questions = Questions()
-        self.teacher = Teacher(subject_code)
+        self.id = id
+        self.passwd = passwd
+        self.questions = Questions(self.id,self.passwd)
+        self.teacher = Teacher(subject_code,self.id,self.passwd)
 
         #### khởi tạo window
         self.teacherView.title("Quiz Management System")
@@ -240,8 +242,7 @@ class Application:
 
 
 if __name__ == "__main__":
-    questions=Questions()
     teacherView=Tk()
     subject_code = "MH00004"
-    obj = Application(teacherView, subject_code)
+    obj = Application(teacherView, subject_code,"GV0001",123)
     teacherView.mainloop()
