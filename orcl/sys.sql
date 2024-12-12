@@ -11,21 +11,17 @@ alter user CauHoiTracNghiem quota 100M on users
 GRANT CREATE USER TO cauhoitracnghiem;
 GRANT ALTER USER TO cauhoitracnghiem;
 GRANT GRANT ANY PRIVILEGE TO cauhoitracnghiem;
-
 GRANT SELECT ON SYS.DBA_USERS TO CauHoiTracNghiem;
 GRANT SELECT ON SYS.DBA_PROFILES TO CauHoiTracNghiem;
 GRANT CREATE PROFILE TO CauHoiTracNghiem;
 GRANT CREATE ROLE TO CauHoiTracNghiem;
 GRANT GRANT ANY PRIVILEGE TO CauHoiTracNghiem;
 
-drop user GV00007
 
 create user GV0001 identified by 123
 grant create session to GV0001
 alter user GV0001 PROFILE HocSinh
 GRANT DATAENTRY_GiaoVien TO GV0001
-
-----------ghi nhật ký và giải trình sử dụng Standard Auditing, trigger
 
 ----------ghi nhật ký và giải trình sử dụng Standard Auditing, trigger
 ---chạy sys:

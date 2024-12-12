@@ -494,133 +494,8 @@ SELECT CRYPTO.RSA_ENCRYPT('This is my secret message','MIGfMA0GCSqGSIb3DQEBAQUAA
     
 SELECT CRYPTO.RSA_DECRYPT('ElPQFVNCJR6ksuqvRIZTsFEac+sMKcpm3h8Z6h25HR4sJiQG16PftoXc3doKCPUw4aSs6a67jA7ax1M3SWyphePDSJfjKHaxAkGweAJM6FIWF9p1btZDsxufAG1TGzeApEqSaspJKEiSQzMbw8qElzqgGuJJzod9sDFLr/jx5vg=','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q=')
     FROM DUAL;
-    
------Phân quyền user
-select * from DBA_USERS
-
-create or replace procedure pro_create_user(username in varchar2, pass in varchar2, profile in varchar2 )
-is 
-begin
-    EXECUTE IMMEDIATE 'CREATE USER ' || username || ' IDENTIFIED BY "' || pass || '"';
-    EXECUTE IMMEDIATE 'grant create session to "' || username || '"';
-    EXECUTE IMMEDIATE 'ALTER USER ' || username || ' PROFILE "' || profile || '"';
-end;
-
-SELECT * FROM SESSION_PRIVS;
-
-begin
-    pro_create_user('HS14','123','HOCSINH');
-end;
-
-drop user HS14
 
 
-create or replace function fun_check_account(user in varchar2)
-return int 
-is
-  t varchar2(50);
-  kq int;
-begin
-  select account_status into t from dba_users where username=user;
-  if t is null then
-    kq:=0;
-  else 
-    kq:=1;
-  end if;
-  return kq;
-exception when others then kq:=0;
-  return kq;
-end;
-
-create or replace procedure pro_alter_user(username in varchar2, pass in varchar2)
-is
-begin
-  execute immediate 'ALTER USER' || username || 'IDENTIFIED BY"' || pass || '"';
-  
-end;
-
-create or replace procedure Pro_CrUser(username in varchar2, pass in varchar2,profile in varchar2)
-is
-  ckUser int:=fun_check_account(username);
-begin
-  if ckUser=0 then
-    pro_create_user(username, pass, profile);
-  else
-    pro_alter_user(username,pass);
-  end if;
-  commit work;
-end;
-
-alter session set "_ORACLE_SCRIPT"=true; 
-
-create profile HocSinh limit
-  password_life_time 60
-  password_grace_time 10
-  password_reuse_time 1
-  password_reuse_max 5
-  failed_login_attempts 3;
-  
-create or replace function fun_account_status(user in varchar2)
-return varchar2
-is
-  t varchar2(50);
-begin
-  select account_status into t from DBA_USERS where username=user;
-  return t;
-exception when others then t:=' ';
-  return t;
-end;
-
--------- phân quyền ---------
-
-create role DataEntry_HOCSINH
-grant select,insert,update on HOCSINH to DataEntry_HOCSINH
-grant select,insert on KETQUA to DataEntry_HOCSINH
-grant select on DETHI_MONHOC  to DataEntry_HOCSINH
-grant select on MonHoc  to DataEntry_HOCSINH
-grant select on cauhoi to DataEntry_HOCSINH
-grant select on dethi to DataEntry_HOCSINH
-grant select on dethi_monhoc to DataEntry_HOCSINH
-GRANT EXECUTE ON CRYPTO TO DataEntry_HOCSINH
-grant execute on f_decryptData to DataEntry_HOCSINH
-grant execute on f_encryptData to DataEntry_HOCSINH
-
-
-create role DataEntry_GIAOVIEN
-grant select,insert,update on GIAOVIEN to DataEntry_GIAOVIEN
-grant select,insert,update,delete on CAUHOI to DataEntry_GIAOVIEN
-grant select,insert,update on KETQUA to DataEntry_GIAOVIEN
-grant select on MonHoc to DataEntry_GIAOVIEN
-grant select,insert,update on HOCSINH to DataEntry_GIAOVIEN
-grant select,insert,update on DETHI_MONHOC to DataEntry_GIAOVIEN
-grant select,insert,update on Dethi to DataEntry_GIAOVIEN
-GRANT EXECUTE ON CRYPTO TO DataEntry_GIAOVIEN
-grant execute on f_decryptData to DataEntry_GIAOVIEN
-grant execute on f_encryptData to DataEntry_GIAOVIEN
-
-------- Thủ tục phân quyền cho HOCSINH -------
-
-create or replace procedure quyen_hs (username in varchar2)
-is
-begin
-  execute immediate 'GRANT DATAENTRY_HOCSINH TO"' || username || '"';
-end;
-
-create or replace procedure quyen_gv (username in varchar2)
-is
-begin
-  execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
-end;
-
-BEGIN
-    Pro_CrUser('HS14', '123','HOCSINH');
-END;
-
-drop user HS14
-
-GRANT SELECT ON SYS.DBA_USERS TO CauHoiTracNghiem;
-GRANT SELECT ON SYS.DBA_PROFILES TO CauHoiTracNghiem;
-GRANT CREATE PROFILE TO CauHoiTracNghiem;
 
 ====================================================================================================================================================
 ----------------------------MÃ HÓA LAI (HYBRID ENCRYPTION)------------------------------  
@@ -641,7 +516,7 @@ BEGIN
     RETURN decryptedData;
 END;
 
---giải mã key AES bằng RSA--
+--giải mã key AES bằng RSA--------------------------------------------------------
 CREATE OR REPLACE FUNCTION f_decryptAESKey(p_encrypted_aes_key CLOB, p_private_key CLOB)
 RETURN RAW IS
     decrypted_aes_key RAW(32);
@@ -651,7 +526,7 @@ BEGIN
 END;
 
 --giải mã data bằng RSA--
--- Hàm giải mã dữ liệu 
+-- Hàm giải mã dữ liệu ---------------------------------------------------------
 CREATE OR REPLACE FUNCTION f_decryptHybrid(p_encrypted_data RAW, key_ASE VARCHAR2, p_private_key VARCHAR2)
 RETURN NVARCHAR2 IS
     decryptedData NVARCHAR2(20000);
@@ -680,6 +555,153 @@ drop trigger encrypt_mk
 -- Truy vấn giải mã dữ liệu
 SELECT ID, f_decryptHybrid(MATKHAU,'UMkoN4Vxs5jH0RA0sBKZxn9hCvQzSCHkRRBimkbEQHxYxf/IEsQ2pHyj5XN6gBy1Wmwy5EqWkax0CUcMCg73iglv6MZRuFx0r3PGO3LYjdUhl5EoOd1lk3/67dLVJfuKgplaKOh5qrNxuZRwwmjdo0fGZVcgq7DOI3dxmN+bUhI=','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q=') AS DECRYPTED_MK
 FROM TAIKHOAN;
+---------------------------------------------------------------
+
+
+--------Cấp quyền cho bảng trắc nghiêm------------------------------------------------
+-----chay tren sys
+GRANT CREATE USER TO cauhoitracnghiem;
+GRANT ALTER USER TO cauhoitracnghiem;
+GRANT GRANT ANY PRIVILEGE TO cauhoitracnghiem;
+GRANT SELECT ON SYS.DBA_USERS TO CauHoiTracNghiem;
+GRANT SELECT ON SYS.DBA_PROFILES TO CauHoiTracNghiem;
+GRANT CREATE PROFILE TO CauHoiTracNghiem;
+GRANT CREATE ROLE TO CauHoiTracNghiem;
+GRANT GRANT ANY PRIVILEGE TO CauHoiTracNghiem;
+
+
+
+
+---------------từ đoạn này là chạy ở cauhoitracnghiem nhakkkkkkkkkk-------------
+-----kiểm tra quyền user-------------------------------------------------------
+select * from DBA_USERS
+
+---procedure tạo user-----------------------------------------------------------
+create or replace procedure pro_create_user(username in varchar2, pass in varchar2, profile in varchar2 )
+is 
+begin
+    EXECUTE IMMEDIATE 'CREATE USER ' || username || ' IDENTIFIED BY "' || pass || '"';
+    EXECUTE IMMEDIATE 'grant create session to "' || username || '"';
+    EXECUTE IMMEDIATE 'ALTER USER ' || username || ' PROFILE "' || profile || '"';
+end;
+
+SELECT * FROM SESSION_PRIVS;
+--------------------------------------------------------------------------
+create or replace function fun_check_account(user in varchar2)
+return int 
+is
+  t varchar2(50);
+  kq int;
+begin
+  select account_status into t from dba_users where username=user;
+  if t is null then
+    kq:=0;
+  else 
+    kq:=1;
+  end if;
+  return kq;
+exception when others then kq:=0;
+  return kq;
+end;
+------------------------------------------------------------------------
+create or replace procedure pro_alter_user(username in varchar2, pass in varchar2)
+is
+begin
+  execute immediate 'ALTER USER' || username || 'IDENTIFIED BY"' || pass || '"';
+  
+end;
+--------------------------------------------------------------------------
+create or replace procedure Pro_CrUser(username in varchar2, pass in varchar2,profile in varchar2)
+is
+  ckUser int:=fun_check_account(username);
+begin
+  if ckUser=0 then
+    pro_create_user(username, pass, profile);
+  else
+    pro_alter_user(username,pass);
+  end if;
+  commit work;
+end;
+
+----- Phần quyền-----------------------------------------
+alter session set "_ORACLE_SCRIPT"=true; 
+
+create profile HocSinh limit
+  password_life_time 60
+  password_grace_time 10
+  password_reuse_time 1
+  password_reuse_max 5
+  failed_login_attempts 3;
+-------------------------------------------------------------
+
+create or replace function fun_account_status(user in varchar2)
+return varchar2
+is
+  t varchar2(50);
+begin
+  select account_status into t from DBA_USERS where username=user;
+  return t;
+exception when others then t:=' ';
+  return t;
+end;
+
+-------- phân quyền(chạy từng dòng) ---------
+
+create role DataEntry_HOCSINH
+grant select,insert,update on HOCSINH to DataEntry_HOCSINH
+grant select,insert on KETQUA to DataEntry_HOCSINH
+grant select on DETHI_MONHOC  to DataEntry_HOCSINH
+grant select on MonHoc  to DataEntry_HOCSINH
+grant select on cauhoi to DataEntry_HOCSINH
+grant select on dethi to DataEntry_HOCSINH
+grant select on dethi_monhoc to DataEntry_HOCSINH
+GRANT EXECUTE ON CRYPTO TO DataEntry_HOCSINH
+grant execute on f_decryptData to DataEntry_HOCSINH
+grant execute on f_encryptData to DataEntry_HOCSINH
+----------------------------------------------------------
+
+create role DataEntry_GIAOVIEN
+grant select,insert,update on GIAOVIEN to DataEntry_GIAOVIEN
+grant select,insert,update,delete on CAUHOI to DataEntry_GIAOVIEN
+grant select,insert,update on KETQUA to DataEntry_GIAOVIEN
+grant select on MonHoc to DataEntry_GIAOVIEN
+grant select,insert,update on HOCSINH to DataEntry_GIAOVIEN
+grant select,insert,update on DETHI_MONHOC to DataEntry_GIAOVIEN
+grant select,insert,update on Dethi to DataEntry_GIAOVIEN
+GRANT EXECUTE ON CRYPTO TO DataEntry_GIAOVIEN
+grant execute on f_decryptData to DataEntry_GIAOVIEN
+grant execute on f_encryptData to DataEntry_GIAOVIEN
+
+------- Thủ tục phân quyền cho HOCSINH -------------------------
+
+create or replace procedure quyen_hs (username in varchar2)
+is
+begin
+  execute immediate 'GRANT DATAENTRY_HOCSINH TO"' || username || '"';
+end;
+----------------------------------------------------------------
+
+create or replace procedure quyen_gv (username in varchar2)
+is
+begin
+  execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
+end;
+
+----test tạo user
+alter session set "_ORACLE_SCRIPT"=true;
+
+BEGIN
+    Pro_CrUser('HS14', '123','HOCSINH');
+END;
+
+begin
+    quyen_hs('HS14');
+end;
+
+drop user HS14
+
+
+
 
 
 
