@@ -5,6 +5,7 @@ import json, ast, re, string, os.path
 import cx_Oracle
 from DashBoard_TEACHER import *
 from DashBoard_STUDENT import *
+from cryptogram import AES_Cipher
 
 class signin:
         
@@ -14,6 +15,7 @@ class signin:
         root.geometry('925x500+300+200')
         root.configure(bg='white')
         root.resizable(False,False)
+        aes_cipher = AES_Cipher()
         try:
             con = cx_Oracle.connect('CauHoiTracNghiem/123@localhost:1521/free')
             
@@ -68,7 +70,7 @@ class signin:
             
             try:
                 for account in data:
-                    if id == account[0] and re.search(r'^HS',id) and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
+                    if id == account[0] and re.search(r'^HS',id) and passWord == aes_cipher.decrypt(account[1]).replace('\x00', ''):
                         screen=Tk()
                         cur.execute('select HOTENHS from TAIKHOAN,HOCSINH where TAIKHOAN.ID=HOCSINH.MSHS and TAIKHOAN.ID=:a',{'a':account[0]})
                         HS_name=cur.fetchall()
@@ -77,7 +79,7 @@ class signin:
                         root.destroy()
                         screen.mainloop()
                         return
-                    elif id == account[0] and passWord == cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
+                    elif id == account[0] and passWord == aes_cipher.decrypt(account[1]).replace('\x00', ''):
                         screen=Tk()
                         cur.execute('select HOTENGV from TAIKHOAN,GIAOVIEN where TAIKHOAN.ID=GIAOVIEN.MSGV and TAIKHOAN.ID=:a',{'a':account[0]})
                         gv_name=cur.fetchall()
@@ -86,7 +88,7 @@ class signin:
                         root.destroy()  
                         screen.mainloop()
                         return
-                    elif id == account[0] and passWord != cur.callfunc("f_decryptData", cx_Oracle.STRING, [account[1]]):
+                    elif id == account[0] and passWord != aes_cipher.decrypt(account[1]).replace('\x00', ''):
                         messagebox.showwarning("Wrong password",'Nhập sai mật khẩu, vui lòng nhập lại')
                         return
                 

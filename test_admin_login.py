@@ -75,11 +75,10 @@ class ExamApp:
 
     def setup_audit_tab(self):
         # View Audit Logs
-        self.audit_tree = ttk.Treeview(self.audit_tab, columns=("ID", "Time", "Role", "User", "Action", "Table", "Details"), show="headings")
+        self.audit_tree = ttk.Treeview(self.audit_tab, columns=("ID", "Time", "User", "Action", "Table", "Details"), show="headings")
 
         self.audit_tree.heading("ID", text="ID")
         self.audit_tree.heading("Time", text="Action Time")
-        self.audit_tree.heading("Role", text="User Role")
         self.audit_tree.heading("User", text="User ID")
         self.audit_tree.heading("Action", text="Action Type")
         self.audit_tree.heading("Table", text="Table Name")
@@ -87,7 +86,6 @@ class ExamApp:
 
         self.audit_tree.column("ID", width=50)
         self.audit_tree.column("Time", width=150)
-        self.audit_tree.column("Role", width=100)
         self.audit_tree.column("User", width=100)
         self.audit_tree.column("Action", width=100)
         self.audit_tree.column("Table", width=100)
@@ -101,7 +99,7 @@ class ExamApp:
         for row in self.audit_tree.get_children():
             self.audit_tree.delete(row)
 
-        query = "SELECT logID, actionTime, userRole, ID, actionType, tableName, details FROM audit_log ORDER BY actionTime DESC"
+        query = "SELECT logID, actionTime, ID, actionType, tableName, details FROM audit_log ORDER BY actionTime DESC"
         logs = self.db.fetch_query(query)
 
         for log in logs:

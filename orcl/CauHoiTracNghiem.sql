@@ -157,6 +157,10 @@ INSERT INTO TAIKHOAN (ID,MATKHAU) VALUES ('GV0005','123');
 ---------------------NHẬP LIỆU CHO BẢNG HỌC SINH TRƯỚC---------------------------
 SELECT * FROM HOCSINH
 
+drop user HS0007
+
+delete from hocsinh where MSHS ='HS0007'
+
 INSERT INTO HOCSINH (MSHS, HOTENHS, NGAYSINH, GIOITINH,DIACHI, LOP)
 values ('HS00001',N'Nguyễn Thị Thùy Trang','01-02-2014',N'Nữ',NULL, NULL);
 INSERT INTO HOCSINH (MSHS, HOTENHS, NGAYSINH, GIOITINH,DIACHI, LOP)
@@ -230,7 +234,7 @@ alter table DETHI_MONHOC add THOIGIAN_BATDAU TIMESTAMP
 
 alter session set NLS_DATE_FORMAT = 'DD-MM-YYYY';
 ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
-UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='11-12-2024 7:51' where MADETHI = 'DT00001' and MAMONHOC = 'MH00001'
+UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='11-12-2024 13:33' where MADETHI = 'DT00001' and MAMONHOC = 'MH00001'
 UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='11-12-2024 7:51' where MADETHI = 'DT00002' and MAMONHOC = 'MH00001'
 UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='13-12-2024 13:00' where MADETHI = 'DT00001' and MAMONHOC = 'MH00002'
 UPDATE DETHI_MONHOC SET THOIGIAN_BATDAU='13-12-2024 13:00' where MADETHI = 'DT00002' and MAMONHOC = 'MH00002'
@@ -281,7 +285,7 @@ ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'DD-MM-YYYY HH24:MI:SS';
 insert into KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
 values ('HS00001','MH00001','DT00002',10,'3-12-2024 22:38')
 
-delete from KETQUA
+delete from KETQUA where mshs = 'HS00001'
 
         ---LỖI---
 
@@ -312,25 +316,8 @@ BEGIN
     RETURN encryptedData;
 END;
 
---GIẢI MÃ DATABASE BẰNG AES
-CREATE OR REPLACE FUNCTION f_decryptData(encryptedData RAW)
-RETURN NVARCHAR2 IS
-    decryptedData NVARCHAR2(20000);
-    l_key RAW(32) := UTL_RAW.CAST_TO_RAW('12345678901234567890123456789012');
-    l_iv  RAW(16) := UTL_RAW.CAST_TO_RAW('1234567890123456');
-BEGIN
-    -- Giải mã dữ liệu đã mã hóa
-    decryptedData := UTL_RAW.CAST_TO_NVARCHAR2(DBMS_CRYPTO.DECRYPT(
-        src => encryptedData, 
-        typ => DBMS_CRYPTO.ENCRYPT_AES256 + DBMS_CRYPTO.CHAIN_CBC + DBMS_CRYPTO.PAD_PKCS5, 
-        key => l_key,
-        iv  => l_iv));
-    RETURN decryptedData;
-END;
-
-
 --- TEST HÀM MÃ HÓA & GIẢI MÃ
-    SELECT ID, MATKHAU AS MATKHAU FROM TAIKHOAN;
+SELECT ID, MATKHAU AS MATKHAU FROM TAIKHOAN;
 
 SELECT * FROM HOCSINH;
 
@@ -345,11 +332,13 @@ SELECT ID, f_decryptData(MATKHAU) AS MATKHAU FROM TAIKHOAN;
 
 delete
 from HOCSINH
-where MSHS = 'HS00004'
+where MSHS = 'HS00007'
 
 delete
 from Taikhoan
-where ID='HV00002'
+where ID='HS00007'
+
+drop user HS00007
 
 UPDATE HOCSINH
     SET LOP = '13DHBM01', DIACHI = 'HCM'
@@ -507,14 +496,24 @@ SELECT CRYPTO.RSA_DECRYPT('ElPQFVNCJR6ksuqvRIZTsFEac+sMKcpm3h8Z6h25HR4sJiQG16Pft
     FROM DUAL;
     
 -----Phân quyền user
+select * from DBA_USERS
 
 create or replace procedure pro_create_user(username in varchar2, pass in varchar2, profile in varchar2 )
 is 
 begin
-  EXECUTE IMMEDIATE 'CREATE USER ' || username || ' IDENTIFIED BY "' || pass || '"';
-  execute immediate 'GRANT CREATE SESSION TO"' || username || '"';
-   EXECUTE IMMEDIATE 'ALTER USER ' || username || ' PROFILE "' || profile || '"';
+    EXECUTE IMMEDIATE 'CREATE USER ' || username || ' IDENTIFIED BY "' || pass || '"';
+    EXECUTE IMMEDIATE 'grant create session to "' || username || '"';
+    EXECUTE IMMEDIATE 'ALTER USER ' || username || ' PROFILE "' || profile || '"';
 end;
+
+SELECT * FROM SESSION_PRIVS;
+
+begin
+    pro_create_user('HS14','123','HOCSINH');
+end;
+
+drop user HS14
+
 
 create or replace function fun_check_account(user in varchar2)
 return int 
@@ -576,27 +575,6 @@ end;
 
 create role DataEntry_HOCSINH
 grant select,insert,update on HOCSINH to DataEntry_HOCSINH
-
-create role DataEntry_GIAOVIEN
-grant select,insert,update on GIAOVIEN to DataEntry_GIAOVIEN
-grant select,insert,update on CAUHOI to DataEntry_GIAOVIEN
-
-------- Thủ tục phân quyền cho HOCSINH -------
-
-create or replace procedure quyen_hs (username in varchar2)
-is
-begin
-  execute immediate 'GRANT DATAENTRY_HOCSINH TO"' || username || '"';
-end;
-
-create or replace procedure quyen_gv (username in varchar2)
-is
-begin
-  execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
-end;
-
-create role DataEntry_HOCSINH
-grant select,insert,update on HOCSINH to DataEntry_HOCSINH
 grant select,insert on KETQUA to DataEntry_HOCSINH
 grant select on DETHI_MONHOC  to DataEntry_HOCSINH
 grant select on MonHoc  to DataEntry_HOCSINH
@@ -620,7 +598,7 @@ GRANT EXECUTE ON CRYPTO TO DataEntry_GIAOVIEN
 grant execute on f_decryptData to DataEntry_GIAOVIEN
 grant execute on f_encryptData to DataEntry_GIAOVIEN
 
-
+------- Thủ tục phân quyền cho HOCSINH -------
 
 create or replace procedure quyen_hs (username in varchar2)
 is
@@ -633,5 +611,76 @@ is
 begin
   execute immediate 'GRANT DATAENTRY_GIAOVIEN TO"' || username || '"';
 end;
+
+BEGIN
+    Pro_CrUser('HS14', '123','HOCSINH');
+END;
+
+drop user HS14
+
+GRANT SELECT ON SYS.DBA_USERS TO CauHoiTracNghiem;
+GRANT SELECT ON SYS.DBA_PROFILES TO CauHoiTracNghiem;
+GRANT CREATE PROFILE TO CauHoiTracNghiem;
+
+====================================================================================================================================================
+----------------------------MÃ HÓA LAI (HYBRID ENCRYPTION)------------------------------  
+--key '12345678901234567890123456789012' 
+
+create or replace FUNCTION f_decryptData(encryptedData RAW,key_ASE RAW)
+RETURN NVARCHAR2 IS
+    decryptedData NVARCHAR2(20000);
+    l_key RAW(32) := UTL_RAW.CAST_TO_RAW(key_ASE);
+    l_iv  RAW(16) := UTL_RAW.CAST_TO_RAW('1234567890123456');
+BEGIN
+    -- Giải mã dữ liệu đã mã hóa
+    decryptedData := UTL_RAW.CAST_TO_NVARCHAR2(DBMS_CRYPTO.DECRYPT(
+        src => encryptedData, 
+        typ => DBMS_CRYPTO.ENCRYPT_AES256 + DBMS_CRYPTO.CHAIN_CBC + DBMS_CRYPTO.PAD_PKCS5, 
+        key => l_key,
+        iv  => l_iv));
+    RETURN decryptedData;
+END;
+
+--giải mã key AES bằng RSA--
+CREATE OR REPLACE FUNCTION f_decryptAESKey(p_encrypted_aes_key CLOB, p_private_key CLOB)
+RETURN RAW IS
+    decrypted_aes_key RAW(32);
+BEGIN
+    decrypted_aes_key := UTL_RAW.CAST_TO_RAW(CRYPTO.RSA_DECRYPT(p_private_key, p_encrypted_aes_key));
+    RETURN decrypted_aes_key;
+END;
+
+--giải mã data bằng RSA--
+-- Hàm giải mã dữ liệu 
+CREATE OR REPLACE FUNCTION f_decryptHybrid(p_encrypted_data RAW, key_ASE VARCHAR2, p_private_key VARCHAR2)
+RETURN NVARCHAR2 IS
+    decryptedData NVARCHAR2(20000);
+    l_decrypted_aes_key RAW(32) := CRYPTO.RSA_DECRYPT(key_ASE, p_private_key);
+BEGIN
+    decryptedData := f_decryptData(p_encrypted_data,l_decrypted_aes_key);
+    RETURN decryptedData;
+END; 
+/
+
+SELECT CRYPTO.RSA_ENCRYPT('12345678901234567890123456789012','MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeautJPn9t6V5NcncuX7DHZdG+j/Hlfl9au9wmkjk1Tv85zf8FgmSKmnl/7vX5/+Gp8rbBamWETDX1akykeyKrS4uuYwFa4IPglvzAGGeLwd6N61uIZTb79nDECTf95/9ot2DepqFbzZrk4aoVR8vLPC/jduQcT7EFmkV13ZnrVwIDAQAB')
+    FROM DUAL;
+    
+SELECT f_decryptData(CRYPTO.RSA_DECRYPT('UMkoN4Vxs5jH0RA0sBKZxn9hCvQzSCHkRRBimkbEQHxYxf/IEsQ2pHyj5XN6gBy1Wmwy5EqWkax0CUcMCg73iglv6MZRuFx0r3PGO3LYjdUhl5EoOd1lk3/67dLVJfuKgplaKOh5qrNxuZRwwmjdo0fGZVcgq7DOI3dxmN+bUhI=','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q=')
+    FROM DUAL;
+  
+
+
+---------------------test------------------------ 
+select f_decryptData(MATKHAU,'12345678901234567890123456789012'), ID from TAIKHOAN
+
+SELECT * FROM TAIKHOAN
+
+drop trigger encrypt_mk
+
+-- Truy vấn giải mã dữ liệu
+SELECT ID, f_decryptHybrid(MATKHAU,'UMkoN4Vxs5jH0RA0sBKZxn9hCvQzSCHkRRBimkbEQHxYxf/IEsQ2pHyj5XN6gBy1Wmwy5EqWkax0CUcMCg73iglv6MZRuFx0r3PGO3LYjdUhl5EoOd1lk3/67dLVJfuKgplaKOh5qrNxuZRwwmjdo0fGZVcgq7DOI3dxmN+bUhI=','MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ5q60k+f23pXk1ydy5fsMdl0b6P8eV+X1q73CaSOTVO/znN/wWCZIqaeX/u9fn/4anytsFqZYRMNfVqTKR7IqtLi65jAVrgg+CW/MAYZ4vB3o3rW4hlNvv2cMQJN/3n/2i3YN6moVvNmuThqhVHy8s8L+N25BxPsQWaRXXdmetXAgMBAAECgYBjhQGossV08/1VJAqxLFYu/c0FLQKmzHv00T2dUZD051q5IqsJ9/9Xf3HCqAkI8/H9RMgAu+lockQXl57sWZrOBDLCFsNP32Q3FJC6iSILv+QKq9g5xa0SZgy0i/s9jQeqcgjIaX/eM30/hct02qBWSxjvrrYDdKFkzMa6GXe3MQJBAPvvp5zhsRNSgB1oyc5AZNDfpahtWlTKKvQ4uBp9SaT0rXZVXW026pYIyT7ICzh/cseYPQU4TOAmx34P1g1vXLkCQQCg+RbJxWlnZElh+2KKBTJO6DIc66uWP8kS439HHnsHrxAuU9K9dw3dOIm80Xh4wo/izFlMxPYAc2H32YfcPiCPAkEA2eVbCHrC1j1ihQ0ejX5wM59a/aMmn3MDV5q+0FpQGZVteY03csAugHk05VHLMqA4O5zWGe+pvayMmeFEdvY8MQJBAJm/0Gg/ygEa5IxVkzTI6dg8J0FAR89mdSM5b2P6VQBt0UKuhWa5w+A8FDLoz+xnyQ6Sp+iPZ3fevQACIaXXITkCQBsFfjhKTH875WHKDD7oKFdkfo6kZV3E7OQ0c3jdsZDmBm1doPLPlHKjpd39YeNklGcK2LNDnaLerI7t2iQi52Q=') AS DECRYPTED_MK
+FROM TAIKHOAN;
+
+
 
 

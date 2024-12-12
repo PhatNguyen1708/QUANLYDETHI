@@ -247,7 +247,10 @@ class dashBoard_teacher:
             fullname = user[1]
             gender = user[3]
             lop = user[5]
-            dob = user[2].strftime('%d-%m-%Y')
+            if user[2] != None:
+                dob = user[2].strftime('%d-%m-%Y')
+            else:
+                dob = None
             address = user[4]
             self.tree2.insert("", "end", text=str(idx), values=(id,fullname, gender, lop, dob, address))
             idx +=1

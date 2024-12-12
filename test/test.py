@@ -1,21 +1,34 @@
-import tkinter as tk
+import cv2
 
-def on_select():
-    selected = var.get()
-    print(f"Bạn đã chọn: {selected}")
+# Tải mô hình Haar Cascade cho việc phát hiện khuôn mặt
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
-# Tạo cửa sổ
-root = tk.Tk()
-root.title("Check Box Hình Tròn")
-root.geometry("300x200")
+# Mở webcam
+video_capture = cv2.VideoCapture(0)
 
-# Tạo biến để lưu giá trị
-var = tk.StringVar(value="")
+while True:
+    # Đọc khung hình từ webcam
+    ret, frame = video_capture.read()
+    if not ret:
+        break
 
-# Tạo Radiobutton (mô phỏng check box hình tròn)
-tk.Radiobutton(root, text="Lựa chọn 1", value="Lựa chọn 1").pack(anchor="w", padx=10, pady=5)
-tk.Radiobutton(root, text="Lựa chọn 2", value="Lựa chọn 2").pack(anchor="w", padx=10, pady=5)
-tk.Radiobutton(root, text="Lựa chọn 3", value="Lựa chọn 3").pack(anchor="w", padx=10, pady=5)
+    # Chuyển sang ảnh xám
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-# Chạy ứng dụng
-root.mainloop()
+    # Phát hiện khuôn mặt
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+    # Vẽ khung bao quanh khuôn mặt
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+    # Hiển thị khung hình
+    cv2.imshow('Video', frame)
+
+    # Nhấn 'q' để thoát
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Giải phóng tài nguyên
+video_capture.release()
+cv2.destroyAllWindows()
