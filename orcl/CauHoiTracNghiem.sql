@@ -157,9 +157,9 @@ INSERT INTO TAIKHOAN (ID,MATKHAU) VALUES ('GV0005','123');
 ---------------------NHẬP LIỆU CHO BẢNG HỌC SINH TRƯỚC---------------------------
 SELECT * FROM HOCSINH
 
-drop user HS0007
+drop user HS00007
 
-delete from hocsinh where MSHS ='HS0007'
+delete from hocsinh where MSHS ='HS00007'
 
 INSERT INTO HOCSINH (MSHS, HOTENHS, NGAYSINH, GIOITINH,DIACHI, LOP)
 values ('HS00001',N'Nguyễn Thị Thùy Trang','01-02-2014',N'Nữ',NULL, NULL);
@@ -286,8 +286,7 @@ insert into KETQUA (MSHS,MAMONHOC,MADETHI,DIEMTHI,THOIGIAN_HOANTHANH)
 values ('HS00001','MH00001','DT00002',10,'3-12-2024 22:38')
 
 delete from KETQUA where mshs = 'HS00001'
-
-        ---LỖI---
+ 
 
 
 
@@ -701,8 +700,11 @@ end;
 drop user HS14
 
 
+alter user HS00001 account unlock;
 
+select * from cauhoi
 
+select * from dethi_monhoc
 
 
 

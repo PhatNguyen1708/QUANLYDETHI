@@ -168,5 +168,5 @@ class QuizApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = QuizApp(root,"DT00001","MH00001",'HS00001',123,14)
+    app = QuizApp(root,"DT00002","MH00001",'HS00001',123,14)
     root.mainloop()

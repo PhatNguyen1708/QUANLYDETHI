@@ -45,9 +45,9 @@ class ExamApp:
         self.schedule_tab = ttk.Frame(self.tab_control)
         self.audit_tab = ttk.Frame(self.tab_control)
 
-        self.tab_control.add(self.question_tab, text="Manage Questions")
-        self.tab_control.add(self.test_tab, text="Take Test")
-        self.tab_control.add(self.schedule_tab, text="Exam Schedule")
+        # self.tab_control.add(self.question_tab, text="Manage Questions")
+        # self.tab_control.add(self.test_tab, text="Take Test")
+        # self.tab_control.add(self.schedule_tab, text="Exam Schedule")
         self.tab_control.add(self.audit_tab, text="Audit Logs")
 
         self.tab_control.pack(expand=1, fill="both")

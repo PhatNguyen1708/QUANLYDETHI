@@ -78,7 +78,7 @@ class signin:
                         obj=dashBoard_student(screen,HS_name[0][0],account[0],passWord)
                         root.destroy()
                         screen.mainloop()
-                        return
+                        return   
                     elif id == account[0] and passWord == aes_cipher.decrypt(account[1]).replace('\x00', ''):
                         screen=Tk()
                         cur.execute('select HOTENGV from TAIKHOAN,GIAOVIEN where TAIKHOAN.ID=GIAOVIEN.MSGV and TAIKHOAN.ID=:a',{'a':account[0]})

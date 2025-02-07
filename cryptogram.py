@@ -108,20 +108,21 @@ class Hybrid_Cipher:
 if __name__ == "__main__":
     # cipher = RSA_Cipher()
 
-    # message = "123"
+    # message = "Hello everyone. Nice to meet you. My name is Sarah"
     # encrypted_message = cipher.encrypt(message)
     # print(f"Encrypted: {encrypted_message}")
 
     # decrypted_message = cipher.decrypt(encrypted_message)
     # print(f"Decrypted: {decrypted_message}")
 
+# AES
+    # aes_cipher = AES_Cipher()
+    # encrypted = aes_cipher.encrypt("123")
+    # print(f"Encrypted: {encrypted}")
+    # decrypted = aes_cipher.decrypt(encrypted)
+    # print(f"Decrypted: {decrypted}")
 
-    aes_cipher = AES_Cipher()
-    encrypted = aes_cipher.encrypt("123")
-    print(f"Encrypted: {encrypted}")
-    decrypted = aes_cipher.decrypt(encrypted)
-    print(f"Decrypted: {decrypted}")
-
+# HYBRID
     private_key = rsa.generate_private_key(
         public_exponent=65537,
         key_size=2048
